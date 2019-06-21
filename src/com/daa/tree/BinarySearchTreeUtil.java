@@ -20,23 +20,24 @@ public class BinarySearchTreeUtil {
 			TreeNode<Integer> root1 = BinaryTreeUtil.constructTreeFromConsole(sc);
 			TreeNode<Integer> root2 = BinaryTreeUtil.constructTreeFromConsole(sc);
 			System.out.println("Two tree has same elements : " + sameElements(root1, root2));
-
-			TreeNode<Integer> root = getBstFromInorder(new int[] { 1, 3, 5, 7, 9, 11, 13 });
-			String s = BinaryTreeUtil.preOrderTraversal(root);
-			System.out.println("Pre Order of tree - " + s);
-			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root));
-			IntStream.range(1, 8).forEach(k -> System.out.println(k + " smallest of tree is : " + findKthSmallestItem(root, k)));
-			IntStream.range(1, 9).forEach(k -> System.out.println("ceil node of " + k + " is : " + ceilNode(root, k)));
-			IntStream.range(1, 9).forEach(k -> System.out.println("floor Node of " + k + " is : " + floorNode(root, k)));
-			System.out.println("----------------------------------------");
-			System.out.println("is binary search tree : " + isBinarySearchTree(root));
-			System.out.println("convert binary search tree to double linked list ");
-			TreeNode<Integer> headDll = getDoublyLinkedList(root);
-			printDLL(headDll);
-			System.out.println("convert double linked list to binary search tree ");
-			TreeNode<Integer> node = getBSTfromDLL(headDll);
-			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(node));
-			testSll();
+			printIntersection(root1, root2);
+			printUnion(root1, root2);
+//			TreeNode<Integer> root = getBstFromInorder(new int[] { 1, 3, 5, 7, 9, 11, 13 });
+//			String s = BinaryTreeUtil.preOrderTraversal(root);
+//			System.out.println("Pre Order of tree - " + s);
+//			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root));
+//			IntStream.range(1, 8).forEach(k -> System.out.println(k + " smallest of tree is : " + findKthSmallestItem(root, k)));
+//			IntStream.range(1, 9).forEach(k -> System.out.println("ceil node of " + k + " is : " + ceilNode(root, k)));
+//			IntStream.range(1, 9).forEach(k -> System.out.println("floor Node of " + k + " is : " + floorNode(root, k)));
+//			System.out.println("----------------------------------------");
+//			System.out.println("is binary search tree : " + isBinarySearchTree(root));
+//			System.out.println("convert binary search tree to double linked list ");
+//			TreeNode<Integer> headDll = getDoublyLinkedList(root);
+//			printDLL(headDll);
+//			System.out.println("convert double linked list to binary search tree ");
+//			TreeNode<Integer> node = getBSTfromDLL(headDll);
+//			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(node));
+//			testSll();
 //			String[] ch = s.split(" ");
 //			for (int i = 0; i < ch.length; i++) {
 //				System.out.println("Search Node with data -> " + ch[i] + " : " + findNodeIterative(root, Integer.valueOf(ch[i])));
@@ -588,7 +589,7 @@ public class BinarySearchTreeUtil {
 
 	public static boolean sameElements(TreeNode<Integer> root1, TreeNode<Integer> root2) {
 		Queue<Integer> list1 = new LinkedList<>();
-		inOrderList(root1, list1);
+		inOrderQueue(root1, list1);
 		return checkSameElement(root2, list1);
 	}
 
@@ -599,18 +600,64 @@ public class BinarySearchTreeUtil {
 		if (queue.poll() != root.getData()) {
 			return false;
 		}
-		if(!res) {
+		if (!res) {
 			return false;
 		}
 		return checkSameElement(root.getRight(), queue);
 	}
 
-	private static void inOrderList(TreeNode<Integer> root1, Queue<Integer> list) {
+	private static void inOrderQueue(TreeNode<Integer> root1, Queue<Integer> list) {
 		if (root1 == null)
 			return;
-		inOrderList(root1.getLeft(), list);
+		inOrderQueue(root1.getLeft(), list);
 		list.add(root1.getData());
-		inOrderList(root1.getRight(), list);
+		inOrderQueue(root1.getRight(), list);
 	}
 
+	public static void printIntersection(TreeNode<Integer> root1, TreeNode<Integer> root2) {
+		Queue<Integer> list = new LinkedList<>();
+		System.out.println("Intersection fo two Trees are : ");
+		inOrderQueue(root1, list);
+		printIntersection(root2, list);
+		System.out.println();
+	}
+
+	private static void printIntersection(TreeNode<Integer> root2, Queue<Integer> list) {
+		if (root2 == null) {
+			return;
+		}
+		printIntersection(root2.getLeft(), list);
+		if (list.contains(root2.getData())) {
+			System.out.print(root2.getData() + " ");
+		}
+		printIntersection(root2.getRight(), list);
+	}
+
+	public static void printUnion(TreeNode<Integer> root1, TreeNode<Integer> root2) {
+		Queue<Integer> list = new LinkedList<>();
+		System.out.println("Union fo two Trees are : ");
+		printOrderQueue(root1, list);
+		printUnion(root2, list);
+		System.out.println();
+	}
+
+	private static void printUnion(TreeNode<Integer> root2, Queue<Integer> list) {
+		if (root2 == null) {
+			return;
+		}
+		printUnion(root2.getLeft(), list);
+		if (!list.contains(root2.getData())) {
+			System.out.print(root2.getData() + " ");
+		}
+		printUnion(root2.getRight(), list);
+	}
+
+	private static void printOrderQueue(TreeNode<Integer> root1, Queue<Integer> list) {
+		if (root1 == null)
+			return;
+		printOrderQueue(root1.getLeft(), list);
+		list.add(root1.getData());
+		System.out.print(root1.getData()+" ");
+		printOrderQueue(root1.getRight(), list);
+	}
 }
