@@ -469,6 +469,4 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 		return root;
 	}
 	
-	
-	
 }

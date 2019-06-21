@@ -6,26 +6,29 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 import com.daa.algo.SortUtil;
-import com.daa.model.Model;
 import com.daa.list.LinkedListUtil;
 import com.daa.list.Node;
+import com.daa.model.Model;
 
 public class BinarySearchTreeUtil {
 
 	public static void main(String[] args) {
 		try (Scanner sc = new Scanner(System.in)) {
 			TreeNode<Integer> root1 = BinaryTreeUtil.constructTreeFromConsole(sc);
+//			System.out.println("print nodes in range 10 and 22 : ");
+//			printNodesInRange(root1, 10, 22);
+//			System.out.println();
 			TreeNode<Integer> root2 = BinaryTreeUtil.constructTreeFromConsole(sc);
 			System.out.println("Two tree has same elements : " + sameElements(root1, root2));
 			printIntersection(root1, root2);
 			printUnion(root1, root2);
+			TreeNode<Integer> root = mergeTwoTrees(root1, root2);
 //			TreeNode<Integer> root = getBstFromInorder(new int[] { 1, 3, 5, 7, 9, 11, 13 });
-//			String s = BinaryTreeUtil.preOrderTraversal(root);
-//			System.out.println("Pre Order of tree - " + s);
-//			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root));
+			String s = BinaryTreeUtil.preOrderTraversal(root);
+			System.out.println("Pre Order of tree - " + s);
+			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root));
 //			IntStream.range(1, 8).forEach(k -> System.out.println(k + " smallest of tree is : " + findKthSmallestItem(root, k)));
 //			IntStream.range(1, 9).forEach(k -> System.out.println("ceil node of " + k + " is : " + ceilNode(root, k)));
 //			IntStream.range(1, 9).forEach(k -> System.out.println("floor Node of " + k + " is : " + floorNode(root, k)));
@@ -657,7 +660,98 @@ public class BinarySearchTreeUtil {
 			return;
 		printOrderQueue(root1.getLeft(), list);
 		list.add(root1.getData());
-		System.out.print(root1.getData()+" ");
+		System.out.print(root1.getData() + " ");
 		printOrderQueue(root1.getRight(), list);
+	}
+
+	/**
+	 * make two balanced bst into a single balanced bst. store inorder of r1 in arr1 store
+	 * inorder of 2 in arr2 merge arr1 and arr2 into arr3 convert arr3 in bst.
+	 * 
+	 * @param root1
+	 * @param root2
+	 * @return root
+	 */
+	public static TreeNode<Integer> mergeTwoTrees(TreeNode<Integer> root1, TreeNode<Integer> root2) {
+		List<Integer> arr1 = new ArrayList<>();
+		List<Integer> arr2 = new ArrayList<>();
+		System.out.println("balanced BST after merging two balanced BST : ");
+		inOrder(root1, arr1);
+		inOrder(root2, arr2);
+		List<Integer> arr3 = mergeTwoLists(arr1, arr2);
+		return getBstFromInorder(arr3);
+	}
+
+	private static TreeNode<Integer> getBstFromInorder(List<Integer> list) {
+		return getBstFromInorder(list, 0, list.size() - 1);
+	}
+
+	private static TreeNode<Integer> getBstFromInorder(List<Integer> list, int start, int end) {
+		if (start > end)
+			return null;
+		int mid = start + (end - start) / 2;
+		TreeNode<Integer> node = new TreeNode<>(list.get(mid));
+		node.setLeft(getBstFromInorder(list, start, mid - 1));
+		node.setRight(getBstFromInorder(list, mid + 1, end));
+		return node;
+	}
+
+	private static List<Integer> mergeTwoLists(List<Integer> arr1, List<Integer> arr2) {
+		List<Integer> list = new ArrayList<>();
+		int i = 0;
+		int j = 0;
+		while (arr1.size() > i && arr2.size() > j) {
+			if (arr1.get(i) < arr2.get(j)) {
+				list.add(arr1.get(i));
+				i++;
+			} else {
+				list.add(arr2.get(j));
+				j++;
+			}
+		}
+		while (arr1.size() > i) {
+			list.add(arr1.get(i));
+			i++;
+		}
+		while (arr2.size() > j) {
+			list.add(arr2.get(j));
+			j++;
+		}
+		return list;
+	}
+
+	private static void inOrder(TreeNode<Integer> root1, List<Integer> arr) {
+		if (root1 == null)
+			return;
+		inOrder(root1.getLeft(), arr);
+		arr.add(root1.getData());
+		inOrder(root1.getRight(), arr);
+	}
+
+	public static int size(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		}
+		return size(root.getLeft()) + size(root.getRight()) + 1;
+	}
+	
+	public static void printNodesInRange(TreeNode<Integer> root, int min, int max) {
+		if (root == null) {
+			return;
+		}
+		if (root.getData() > min) {
+			printNodesInRange(root.getLeft(), min, max);
+		}
+		if (root.getData() >= min && root.getData() <= max) {
+			System.out.print(root.getData()+" ");
+		}
+		if (root.getData() < max) {
+			printNodesInRange(root.getRight(), min, max);
+		}
+	}
+	
+	//TODO
+	public static TreeNode<Integer> removeNodesOutsideRange(TreeNode<Integer> root, int min, int max) {
+		return null;
 	}
 }
