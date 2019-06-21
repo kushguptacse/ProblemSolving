@@ -11,6 +11,7 @@ import com.daa.algo.SortUtil;
 import com.daa.list.LinkedListUtil;
 import com.daa.list.Node;
 import com.daa.model.Model;
+import com.daa.tree.model.TreeNodeSize;
 
 public class BinarySearchTreeUtil {
 
@@ -20,6 +21,9 @@ public class BinarySearchTreeUtil {
 //			System.out.println("print nodes in range 10 and 22 : ");
 //			printNodesInRange(root1, 10, 22);
 //			System.out.println();
+			System.out.println("remove node outside range -10 and 13");
+			 root1 = removeNodesOutsideRange(root1, -10, 13);
+			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root1));
 			TreeNode<Integer> root2 = BinaryTreeUtil.constructTreeFromConsole(sc);
 			System.out.println("Two tree has same elements : " + sameElements(root1, root2));
 			printIntersection(root1, root2);
@@ -750,8 +754,50 @@ public class BinarySearchTreeUtil {
 		}
 	}
 	
-	//TODO
+	/**
+	 * Traverse the tree in post order fashion. i.e. before deleting node its left and right tree already corrected.
+	 * @param root
+	 * @param min
+	 * @param max
+	 * @return root
+	 */
 	public static TreeNode<Integer> removeNodesOutsideRange(TreeNode<Integer> root, int min, int max) {
-		return null;
+		if(root==null) {
+			return null;			
+		}
+		root.setLeft(removeNodesOutsideRange(root.getLeft(), min, max));
+		root.setRight(removeNodesOutsideRange(root.getRight(), min, max));
+		if(root.getData()<min) {
+			return root.getRight();
+		}
+		if(root.getData()>max) {
+			return root.getLeft();
+		}
+		return root;
 	}
+	
+	/**
+	 * to count iterate till node are null.
+	 * if node.data == k . then
+	 * 
+	 * @param node
+	 * @param k
+	 * @return number of nodes Greater Than K
+	 */
+	public static int nodesGreaterThanK(TreeNodeSize<Integer> node, int k) {
+		int c = 0;
+		while (node != null) {
+			if (node.getData() == k) {
+				c = c + node.getRight().getSize();
+				break;
+			} else if (node.getData() < k) {
+				node = node.getRight();
+			} else {
+				c = c + node.getRight().getSize();
+				node = node.getLeft();
+			}
+		}
+		return c;
+	}
+	
 }
