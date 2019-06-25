@@ -34,6 +34,43 @@ public final class AVLTreeUtil {
 		}
 	}
 
+	public static AvlTreeNode<Integer> delete(AvlTreeNode<Integer> root, int data) {
+		if (root == null) {
+			return null;
+		}
+		if(root.getData()==data) {
+			// delete leaf
+			if(root.getLeft()==null && root.getRight()==null) {
+				return null;
+			}
+			//one child right only
+			if(root.getLeft()==null) {
+				return root.getRight();
+			}
+			//one child left only
+			if(root.getRight()==null) {
+				return root.getLeft();
+			}
+			//two node case
+			root.setData(findMax(root.getLeft()).getData());
+			root.setLeft(delete(root.getLeft(), root.getData()));
+		}
+		else if(root.getData()<data) {
+			root.setRight(delete(root.getRight(), data));
+		} else {
+			root.setLeft(delete(root.getLeft(), data));
+		}
+		
+		//set height
+		root.setHeight(MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight()))+1);
+		
+		//TODO -
+		//violation handle
+		int balance = getBalance(root);
+		
+		return root;
+	}
+	
 	public static AvlTreeNode<Integer> insert(AvlTreeNode<Integer> root, int data) {
 		// binary search insert
 		if (root == null) {
@@ -190,5 +227,19 @@ public final class AVLTreeUtil {
 		sb.append(node.getData()).append(" ");
 		preOrder(node.getLeft(), sb);
 		preOrder(node.getRight(), sb);
+	}
+	/**
+	 * find max node of the AVL
+	 * 
+	 * @param node
+	 * @return root
+	 */
+	public static AvlTreeNode<Integer> findMax(AvlTreeNode<Integer> node) {
+		if (node == null)
+			return null;
+		while (node.getRight() != null) {
+			node = node.getRight();
+		}
+		return node;
 	}
 }
