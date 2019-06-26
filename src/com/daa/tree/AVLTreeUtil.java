@@ -21,62 +21,93 @@ public final class AVLTreeUtil {
 			int data = sc.nextInt();
 			AvlTreeNode<Integer> root = null;
 			while (data != -1) {
-				System.out.println("-------------------");
+				System.out.println("---------------------");
 				System.out.println("Avl tree after inserting element : " + data);
 				root = insert(root, data);
 				System.out.println("Pre Order of tree - " + preOrderTraversal(root));
 				System.out.println("In order traversal : " + inOrderTraversalModified(root));
-				System.out.println("-------------------");
+				System.out.println("-------------------------");
 				System.out.println("Enter the element you want to insert in avl tree");
 				data = sc.nextInt();
 			}
+			System.out.println("--------------***-------------------------");
+			String[] s = preOrderTraversal(root).split(" ");
+			for (String s1 : s) {
+				System.out.println("Avl tree after deleting element : " + s1);
+				root = delete(root, Integer.valueOf(s1));
+				System.out.println("In order traversal : " + inOrderTraversal(root));
+			}
+
 			System.out.println("Bye");
 		}
 	}
 
+	/**
+	 * Perform delete operation avl tree.
+	 * @f:off
+	 * 1. pefrom normal delete operation in bst
+	 * 2. set height of current node.
+	 * 3. get balance factor of current node and check rotation needed.
+	 * 4. perform shift according to case .
+	 * 5. return current node.
+	 * @f:on
+	 * @param root
+	 * @param data
+	 * @return root of node after deletion
+	 */
 	public static AvlTreeNode<Integer> delete(AvlTreeNode<Integer> root, int data) {
 		if (root == null) {
 			return null;
 		}
-		if(root.getData()==data) {
-			// delete leaf
-			if(root.getLeft()==null && root.getRight()==null) {
+
+		if (root.getData() == data) {
+			if (root.getLeft() == null && root.getRight() == null) {
 				return null;
 			}
-			//one child right only
-			if(root.getLeft()==null) {
+			if (root.getLeft() == null) {
 				return root.getRight();
 			}
-			//one child left only
-			if(root.getRight()==null) {
+			if (root.getRight() == null) {
 				return root.getLeft();
 			}
-			//two node case
-			root.setData(findMax(root.getLeft()).getData());
-			root.setLeft(delete(root.getLeft(), root.getData()));
-		}
-		else if(root.getData()<data) {
+			// both child
+			AvlTreeNode<Integer> temp = findMax(root.getLeft());
+			if (temp != null) {
+				root.setData(temp.getData());
+				root.setLeft(delete(root.getLeft(), root.getData()));
+			}
+		} else if (root.getData() < data) {
 			root.setRight(delete(root.getRight(), data));
 		} else {
 			root.setLeft(delete(root.getLeft(), data));
 		}
-		
-		//set height
-		root.setHeight(MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight()))+1);
-		
-		//TODO -
-		//violation handle
-		int balance = getBalance(root);
-		
+		// set height of the current node
+		root.setHeight(MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight())) + 1);
+		// get balance factor of current node
+		int bal = getBalance(root);
+		// left-left or left-right shift case
+		if (bal > 1) {
+			if (getBalance(root.getLeft()) < 0) {
+				root.setLeft(leftRotate(root.getLeft()));
+			}
+			return rightRotate(root);
+		}
+		//right-right or right-left case.
+		if (bal < -1) {
+			if (getBalance(root.getRight()) > 0) {
+				root.setRight(rightRotate(root.getRight()));
+			}
+			return leftRotate(root);
+		}
 		return root;
 	}
-	
+
 	public static AvlTreeNode<Integer> insert(AvlTreeNode<Integer> root, int data) {
 		// binary search insert
 		if (root == null) {
 			return new AvlTreeNode<>(data);
 		}
-		
+
 		if (root.getData() > data) {
 			root.setLeft(insert(root.getLeft(), data));
 		} else {
@@ -85,10 +116,10 @@ public final class AVLTreeUtil {
 
 		// set height
 		updateHeight(root);
-		
+
 		// calculate balance factor
 		int balance = getBalance(root);
-		
+
 		// left left case
 		if (balance > 1 && root.getLeft().getData() > data) {
 			return rightRotate(root);
@@ -102,7 +133,7 @@ public final class AVLTreeUtil {
 			root.setLeft(leftRotate(root.getLeft()));
 			return rightRotate(root);
 		}
-		//right left case
+		// right left case
 		if (balance < -1 && root.getRight().getData() > data) {
 			root.setRight(rightRotate(root.getRight()));
 			return leftRotate(root);
@@ -159,6 +190,7 @@ public final class AVLTreeUtil {
 		updateHeight(temp);
 		return temp;
 	}
+
 	/**
 	 * get height of the given node. return 0 if node is null
 	 * 
@@ -171,7 +203,7 @@ public final class AVLTreeUtil {
 		}
 		return root.getHeight();
 	}
-	
+
 	private static int getBalance(AvlTreeNode<Integer> root) {
 		if (root == null)
 			return 0;
@@ -181,8 +213,6 @@ public final class AVLTreeUtil {
 	private static void updateHeight(AvlTreeNode<Integer> root) {
 		root.setHeight(MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight())) + 1);
 	}
-
-
 
 	public static String inOrderTraversal(AvlTreeNode<Integer> root) {
 		StringBuilder sb = new StringBuilder();
@@ -228,6 +258,7 @@ public final class AVLTreeUtil {
 		preOrder(node.getLeft(), sb);
 		preOrder(node.getRight(), sb);
 	}
+
 	/**
 	 * find max node of the AVL
 	 * 
