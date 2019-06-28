@@ -10,6 +10,7 @@ import java.util.Scanner;
 import com.daa.algo.SortUtil;
 import com.daa.list.LinkedListUtil;
 import com.daa.list.Node;
+import com.daa.math.MathUtil;
 import com.daa.model.Model;
 import com.daa.tree.model.TreeNodeSize;
 
@@ -22,7 +23,7 @@ public class BinarySearchTreeUtil {
 //			printNodesInRange(root1, 10, 22);
 //			System.out.println();
 			System.out.println("remove node outside range -10 and 13");
-			 root1 = removeNodesOutsideRange(root1, -10, 13);
+			root1 = removeNodeOutsideRange(root1, -10, 13);
 			System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root1));
 			TreeNode<Integer> root2 = BinaryTreeUtil.constructTreeFromConsole(sc);
 			System.out.println("Two tree has same elements : " + sameElements(root1, root2));
@@ -104,6 +105,12 @@ public class BinarySearchTreeUtil {
 		System.out.println("in order traversal : " + BinaryTreeUtil.inOrderTraversal(root));
 	}
 
+	public static int getHeight(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		}
+		return MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight())) + 1;
+	}
 	/**
 	 * 
 	 * check if both node smaller than root if yes go left else if both node are greater than
@@ -761,12 +768,12 @@ public class BinarySearchTreeUtil {
 	 * @param max
 	 * @return root
 	 */
-	public static TreeNode<Integer> removeNodesOutsideRange(TreeNode<Integer> root, int min, int max) {
+	public static TreeNode<Integer> removeNodeOutsideRange(TreeNode<Integer> root, int min, int max) {
 		if(root==null) {
-			return null;			
+			return null;
 		}
-		root.setLeft(removeNodesOutsideRange(root.getLeft(), min, max));
-		root.setRight(removeNodesOutsideRange(root.getRight(), min, max));
+		root.setLeft(removeNodeOutsideRange(root.getLeft(), min, max));
+		root.setRight(removeNodeOutsideRange(root.getRight(), min, max));
 		if(root.getData()<min) {
 			return root.getRight();
 		}

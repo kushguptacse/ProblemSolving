@@ -100,7 +100,7 @@ public class BinaryTree<T> implements Tree<T> {
 		}
 		int c = 0;
 		if (head.getLeft() != null && head.getRight() != null) {
-			c++;
+			c=1;
 		}
 		return c + numberOfFullNodes(head.getLeft()) + numberOfFullNodes(head.getRight());
 	}

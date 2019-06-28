@@ -15,7 +15,20 @@ public class BinaryTreeUtil {
 	private static int preIndex = 0;
 
 	public static void main(String[] args) {
-		TreeNode<Character> root = getTreeFromInAndPreOrder(new Character[] { 'D', 'B', 'E', 'A', 'F', 'C' }, new Character[] { 'A', 'B', 'D', 'E', 'C', 'F' });
+		try(Scanner sc= new Scanner(System.in)) {
+		TreeNode<Integer> root=constructTreeFromConsole(sc);
+		System.out.println("Remove half nodes from tree : ");
+		root = removeHalfNodes(root);
+//		TreeNode<Character> root = getTreeFromInAndPreOrder(new Character[] { 'D', 'B', 'E', 'A', 'F', 'C' }, new Character[] { 'A', 'B', 'D', 'E', 'C', 'F' });
+		System.out.println("In order :");
+		printInOrder(root);
+		System.out.println("\nPre order :");
+		printPreOrder(root);
+		System.out.println("\nPost order :");
+		printPostOrder(root);
+		System.out.println("\n-----------------");
+		System.out.println("Remove leaf nodes from tree : ");
+		root = removeLeafNodes(root);
 		System.out.println("In order :");
 		printInOrder(root);
 		System.out.println("\nPre order :");
@@ -23,17 +36,18 @@ public class BinaryTreeUtil {
 		System.out.println("\nPost order :");
 		printPostOrder(root);
 		System.out.println();
-		BinaryTree<Integer> tree = new BinaryTree<>();
-		tree.insert(7);
-		tree.insert(1);
-		tree.insert(6);
-		tree.insert(2);
-		tree.insert(0);
-		tree.insert(5);
-		System.out.println(tree.preOrderTraversal());
-		System.out.println(tree.inOrderTraversal());
-		System.out.println(findMax(tree.getRoot()));
-		System.out.println(findMaxIterative(tree.getRoot()));
+//		BinaryTree<Integer> tree = new BinaryTree<>();
+//		tree.insert(7);
+//		tree.insert(1);
+//		tree.insert(6);
+//		tree.insert(2);
+//		tree.insert(0);
+//		tree.insert(5);
+//		System.out.println(tree.preOrderTraversal());
+//		System.out.println(tree.inOrderTraversal());
+//		System.out.println(findMax(tree.getRoot()));
+//		System.out.println(findMaxIterative(tree.getRoot()));
+		}
 	}
 
 	public static String preOrderTraversal(TreeNode<Integer> root) {
@@ -361,4 +375,40 @@ public class BinaryTreeUtil {
 		inOrderSuccessor(root.getRight(), data, pair);
 	}
 	
+	/**
+	 * remove all nodes with 1 child
+	 * @param root
+	 * @return root node of modified tree
+	 */
+	public static TreeNode<Integer> removeHalfNodes(TreeNode<Integer> root) {
+		if(root==null) {
+			return null;
+		}
+		root.setLeft(removeHalfNodes(root.getLeft()));
+		root.setRight(removeHalfNodes(root.getRight()));
+		if((root.getLeft()==null&&root.getRight()!=null)) {
+			return root.getRight();
+		}
+		if((root.getRight()==null&&root.getLeft()!=null)) {
+			return root.getLeft();
+		}
+		return root;	
+	}
+	
+	/**
+	 * remove all leaf
+	 * @param root
+	 * @return root node of modified tree
+	 */
+	public static TreeNode<Integer> removeLeafNodes(TreeNode<Integer> root) {
+		if(root==null) {
+			return null;
+		}
+		if((root.getLeft()==null&&root.getRight()==null)) {
+			return null;
+		}
+		root.setLeft(removeLeafNodes(root.getLeft()));
+		root.setRight(removeLeafNodes(root.getRight()));
+		return root;	
+	}
 }
