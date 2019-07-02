@@ -80,7 +80,7 @@ public class RedBlackTree<T extends Comparable<T>> {
 
 			}
 		}
-		node.setRed(false);
+		root.setRed(false);
 	}
 
 	private void leftRotate(RBTreeNode<T> node) {
