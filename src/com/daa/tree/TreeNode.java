@@ -69,7 +69,7 @@ public class TreeNode<T> {
 	 */
 	@Override
 	public String toString() {
-		return "TreeNode [data=" + data + "]";
+		return "[data=" + data + "]";
 	}
 
 }
