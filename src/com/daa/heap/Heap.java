@@ -2,6 +2,7 @@ package com.daa.heap;
 
 /**
  * max heap implementation
+ * 
  * @author G521885
  *
  */
@@ -18,7 +19,7 @@ public class Heap implements PriorityQueue<Integer> {
 	public Heap(int initialCapicity) {
 		heapArray = new Integer[initialCapicity];
 	}
-	
+
 	@Override
 	public int size() {
 		return size;
@@ -28,8 +29,9 @@ public class Heap implements PriorityQueue<Integer> {
 	public void add(Integer element) {
 		checkRange();
 		heapArray[size] = element;
+		// fix up wards
 		int child = size;
-		int parent = (size-1)/2;
+		int parent = (size - 1) / 2;
 		while (child > 0 && heapArray[parent] < heapArray[child]) {
 			swap(parent, child);
 			child = parent;
@@ -40,7 +42,7 @@ public class Heap implements PriorityQueue<Integer> {
 	}
 
 	private void swap(int i, int j) {
-		int temp = heapArray[i];
+		Integer temp = heapArray[i];
 		heapArray[i] = heapArray[j];
 		heapArray[j] = temp;
 	}
@@ -65,8 +67,30 @@ public class Heap implements PriorityQueue<Integer> {
 
 	@Override
 	public Integer poll() {
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			return null;
+		}
+		Integer item = heapArray[0];
+		heapArray[0] = heapArray[--size];
+		// fix down wards
+		fixDown(0);
+		return item;
+	}
+
+	private void fixDown(int i) {
+		int lchild = 2 * i + 1;
+		int rchild = 2 * i + 2;
+		if(rchild<size) {
+			lchild = findMax(lchild, rchild);			
+		}
+		if (rchild <= size && heapArray[lchild] > heapArray[i]) {
+			swap(lchild, i);
+			fixDown(lchild);
+		}
+	}
+
+	private int findMax(int i, int child) {
+		return heapArray[i] > heapArray[child] ? i : child;
 	}
 
 	/*
@@ -80,7 +104,7 @@ public class Heap implements PriorityQueue<Integer> {
 		for (int i = 0; i < size(); i++) {
 			sb.append(heapArray[i] + ",");
 		}
-		return sb.substring(0, sb.length() - 1);
+		return sb.toString();
 //		return "Heap [heapArray=" + Arrays.toString(heapArray) + "]"
 	}
 
