@@ -77,11 +77,15 @@ public class Heap implements PriorityQueue<Integer> {
 		return item;
 	}
 
+	/**
+	 * heapify tree
+	 * @param i
+	 */
 	private void fixDown(int i) {
 		int lchild = 2 * i + 1;
 		int rchild = 2 * i + 2;
-		if(rchild<size) {
-			lchild = findMax(lchild, rchild);			
+		if (rchild < size) {
+			lchild = findMax(lchild, rchild);
 		}
 		if (rchild <= size && heapArray[lchild] > heapArray[i]) {
 			swap(lchild, i);
