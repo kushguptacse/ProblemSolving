@@ -1,6 +1,8 @@
 package com.daa.array;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class ArrayUtil {
 	private ArrayUtil() {
@@ -112,4 +114,19 @@ public final class ArrayUtil {
 		a[pos]=temp;
 	}
 	
+	/**
+	 * print pairs from a given array who has given sum
+	 * o(n)
+	 * @param a
+	 * @param sum
+	 */
+	public static void printPairWithSumK(int[] a,int sum) {
+		Set<Integer> set = new HashSet<>();
+		for(int i=0;i<a.length;i++) {
+			set.add(a[i]);
+			if(set.contains(sum-a[i])) {
+				System.out.println(a[i]+","+(sum-a[i]));
+			}
+		}
+	}
 }

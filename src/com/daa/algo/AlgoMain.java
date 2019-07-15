@@ -1,5 +1,8 @@
 package com.daa.algo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AlgoMain {
 	public static void main(String[] args) {
 //		int res  = new Recurrsion().towerOfHanoi(3, "A", "B", "C");
@@ -18,13 +21,14 @@ public class AlgoMain {
 //		Arrays.stream(arr).forEach(s->System.out.print(s+","));
 //		System.out.println();
 //		System.out.println("123".substring(0, 1/2)+"--"+"123".charAt(1/2)+"--"+"123".substring((1/2)+1, 1));
-//		int[] a= new int[] {7,2,5,6,3,4,0};
+		int[] a= new int[] {3,5,2,-4,8,11};
 //		SortUtil.mergeSort(a);
 //		System.out.println(Arrays.toString(a));
 //		int[] arr=new int[] {-5,15,25,71,63};
 //		closestNumbers(arr);
 //		System.out.println("\n"+Arrays.toString(arr));
-		System.out.println(5%1);
+//		System.out.println(5%1);
+		
 	}
 	
 	static void closestNumbers(int[] arr) {

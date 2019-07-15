@@ -7,21 +7,24 @@ public final class HeapUtil {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = new int[] { 1, 5, 14, 2, 10, 21, 18, 3, 11, 8, 7, 12 };
-		System.out.println("maximum element from min heap : " + findMaxFromMinHeap(arr));
+		int[] arr = new int[] { 10, 5, 6, 2 };
+		int[] arr2 = new int[] { 12, 7, 9 };
+//		printNodes(arr, 100);
+		arr = mergeMaxHeaps(arr, arr2);
+//		System.out.println("maximum element from min heap : " + findMaxFromMinHeap(arr));
 //		heapSort(arr);
 //		for (int i : arr) {
 //			System.out.print(i + " ");
 //		}
-		System.out.println();
-
-		System.out.println("convert min heap to max heap");
-		convertMinHeapToMaxHeap(arr);
+//		System.out.println();
+//
+//		System.out.println("convert min heap to max heap");
+//		convertMinHeapToMaxHeap(arr);
+		System.out.println("is valid max heap : " + isValidMaxHeap(arr));
 		for (int i : arr) {
 			System.out.print(i + " ");
 		}
 		System.out.println();
-		System.out.println("is valid max heap : " + isValidMaxHeap(arr));
 	}
 
 	/**
@@ -57,14 +60,14 @@ public final class HeapUtil {
 	}
 
 	private static void heapify(int[] arr, int length, int i) {
-		int lChild = 2 * i + 1;
-		int rChild = 2 * i + 2;
-		if (rChild < length) {
-			lChild = findMaxIndex(arr, rChild, lChild);
+		int first = 2 * i + 1;
+		int second = 2 * i + 2;
+		if (second < length) {
+			first = findMaxIndex(arr, second, first);
 		}
-		if (rChild <= length && arr[lChild] > arr[i]) {
-			swap(arr, lChild, i);
-			heapify(arr, length, lChild);
+		if (second <= length && arr[first] > arr[i]) {
+			swap(arr, first, i);
+			heapify(arr, length, first);
 		}
 	}
 
@@ -116,6 +119,15 @@ public final class HeapUtil {
 		}
 	}
 
+	/**
+	 * find the maximum element from min heap.
+	 * 
+	 * max element will always be present in the leaves . so, start from n/2 to n and find the
+	 * max o(n)
+	 * 
+	 * @param min
+	 * @return
+	 */
 	public static int findMaxFromMinHeap(int[] min) {
 		int n = min.length;
 		int max = min[(n / 2) - 1];
@@ -126,4 +138,59 @@ public final class HeapUtil {
 		}
 		return max;
 	}
+
+	/**
+	 * print all nodes < k in min heap
+	 * 
+	 * @param k
+	 */
+	public static void printNodes(int[] min, int k) {
+		System.out.println("Nodes less then: " + k);
+		printNodes(min, 0, k);
+		System.out.println();
+	}
+
+	private static void printNodes(int[] min, int index, int k) {
+		if (index >= min.length) {
+			return;
+		}
+		if (min[index] >= k) {
+			return;
+		}
+		System.out.print(min[index] + ",");
+		printNodes(min, 2 * index + 1, k);
+		printNodes(min, 2 * index + 2, k);
+	}
+
+	/**
+	 * Take two array and merge them and return max heap.
+	 * o(n+m)
+	 * 
+	 * @f:on
+	 * approach is just copy elements from first and second array to result array.
+	 * after that heapify the array to construct max heap.
+	 * @f:off
+	 * 
+	 * @param arr1
+	 * @param arr2
+	 * @return merge array
+	 */
+	public static int[] mergeMaxHeaps(int[] arr1, int[] arr2) {
+		int[] res = new int[arr1.length + arr2.length];
+		for (int i = 0; i < arr1.length; i++) {
+			res[i] = arr1[i];
+		}
+
+		for (int i = 0; i < arr2.length; i++) {
+			res[i + arr1.length] = arr2[i];
+		}
+		
+		for(int i=res.length/2-1;i>=0;i--) {
+			heapify(res, res.length, i);
+		}
+		return res;
+	}
+	
+	
+
 }

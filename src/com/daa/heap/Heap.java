@@ -79,17 +79,18 @@ public class Heap implements PriorityQueue<Integer> {
 
 	/**
 	 * heapify tree
+	 * 
 	 * @param i
 	 */
 	private void fixDown(int i) {
-		int lchild = 2 * i + 1;
-		int rchild = 2 * i + 2;
-		if (rchild < size) {
-			lchild = findMax(lchild, rchild);
+		int first = 2 * i + 1;
+		int second = 2 * i + 2;
+		if (second < size) {
+			first = findMax(first, second);
 		}
-		if (rchild <= size && heapArray[lchild] > heapArray[i]) {
-			swap(lchild, i);
-			fixDown(lchild);
+		if (second <= size && heapArray[first] > heapArray[i]) {
+			swap(first, i);
+			fixDown(first);
 		}
 	}
 
@@ -112,4 +113,36 @@ public class Heap implements PriorityQueue<Integer> {
 //		return "Heap [heapArray=" + Arrays.toString(heapArray) + "]"
 	}
 
+	/**
+	 * Delete element from Max Heap array.
+	 * 
+	 * @f:on
+	 * first find the element you wanted to delete. 
+	 * swap element with last element.
+	 * heapify(fix down) from index deleted.
+	 * @f:off
+	 * 
+	 * @param maxHeap
+	 * @param item to be deleted
+	 */
+	public  void deleteByValue(int item) {
+		for(int i=0;i<size;i++) {
+			if(item==heapArray[i]) {
+				swap(--size, i);
+				fixDown(i);
+				break;
+			}
+		}
+	} 
+	
+	public Integer deleteByIndex(int index) {
+		if(index>=size) {
+			return null;
+		}
+		int res = heapArray[index];
+		swap(--size, index);
+		fixDown(index);
+		return res;
+	}
+	
 }
