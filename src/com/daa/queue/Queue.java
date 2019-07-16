@@ -26,7 +26,7 @@ public class Queue<T extends Comparable<T>> {
 		size++;
 	}
 	
-	public T pop() {
+	public T poll() {
 		if(rear==null) {
 			return null;
 		}
