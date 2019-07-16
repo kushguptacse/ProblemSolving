@@ -3,8 +3,6 @@ package com.daa.heap;
 import java.util.PriorityQueue;
 
 import com.daa.model.Pair;
-import com.daa.queue.QueueUsingHeap;
-import com.daa.stack.StackUsingHeap;
 
 public final class HeapUtil {
 
@@ -13,9 +11,8 @@ public final class HeapUtil {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = new int[] {100, 50, 80, 10, 25, 20, 75};
-		testQueue();
-		testStack();
+		int[] arr = new int[] { 1,4,2,3,6,20,8,6,15,11,12,0,19 };
+		arr = maxKelements(2, arr);
 //		int[] arr2 = new int[] { 12, 7, 9 };
 //		printNodes(arr, 100);
 //		arr = mergeMaxHeaps(arr, arr2);
@@ -34,30 +31,8 @@ public final class HeapUtil {
 		}
 		System.out.println();
 		int k = 2;
-//		System.out.println(k + " th smallest element : " + findSmallest2(arr, k));
-		System.out.println(k + " th largest element : " + findLargest(arr, k));
-	}
-
-	private static void testStack() {
-		StackUsingHeap<Integer> stack = new StackUsingHeap<>();
-		stack.push(10);
-		stack.push(20);
-		stack.push(30);
-		System.out.println("stack size : "+stack.size());
-		System.out.println("stack pop: "+stack.pop());
-		System.out.println("stack pop : "+stack.pop());
-		System.out.println("stack pop : "+stack.pop());
-	}
-	
-	private static void testQueue() {
-		QueueUsingHeap<Integer> queue = new QueueUsingHeap<>();
-		queue.add(10);
-		queue.add(20);
-		queue.add(30);
-		System.out.println("queue size : "+queue.size());
-		System.out.println("queue poll: "+queue.poll());
-		System.out.println("queue poll : "+queue.poll());
-		System.out.println("queue poll : "+queue.poll());
+		System.out.println(k + " th smallest element : " + findSmallest2(arr, k));
+//		System.out.println(k + " th largest element : " + findLargest(arr, k));
 	}
 
 	/**
@@ -231,14 +206,14 @@ public final class HeapUtil {
 	 * 
 	 * perform k times delete. o(klogn)
 	 * 
-	 * @param min
+	 * @param minHeap
 	 * @param k
 	 * @return kth smallest element
 	 */
-	public static Integer findSmallest(int min[], int k) {
+	public static Integer findSmallest(int minHeap[], int k) {
 		Integer res = null;
 		for (int i = 0; i < k; i++) {
-			res = remove(min, min.length - i - 1);
+			res = remove(minHeap, minHeap.length - i - 1);
 		}
 		return res;
 	}
@@ -270,44 +245,88 @@ public final class HeapUtil {
 	 * 
 	 * @f:on
 	 * 
-	 * @param min
+	 * @param minHeap
 	 * @param k
 	 * @return kth smallest element from min heap.
 	 */
-	public static Integer findSmallest2(int min[], int k) {
+	public static Integer findSmallest2(int minHeap[], int k) {
 
 		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k, (o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
-		queue.add(new Pair<>(min[0], 0));
+		queue.add(new Pair<>(minHeap[0], 0));
 		for (int i = 1; i < k; i++) {
 			int index = queue.poll().getSecond();
 			int left = getLeft(index);
 			int right = getRight(index);
-			if (left < min.length) {
-				queue.add(new Pair<>(min[left], left));
+			if (left < minHeap.length) {
+				queue.add(new Pair<>(minHeap[left], left));
 			}
-			if (right < min.length) {
-				queue.add(new Pair<>(min[right], right));
+			if (right < minHeap.length) {
+				queue.add(new Pair<>(minHeap[right], right));
 			}
 		}
 		return queue.poll().getFirst();
 	}
 
-	public static Integer findLargest(int max[], int k) {
+	public static Integer findLargest(int maxHeap[], int k) {
 
 		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k, (o1, o2) -> o2.getFirst().compareTo(o1.getFirst()));
-		queue.add(new Pair<>(max[0], 0));
+		queue.add(new Pair<>(maxHeap[0], 0));
 		for (int i = 1; i < k; i++) {
 			int index = queue.poll().getSecond();
 			int left = getLeft(index);
 			int right = getRight(index);
-			if (left < max.length) {
-				queue.add(new Pair<>(max[left], left));
+			if (left < maxHeap.length) {
+				queue.add(new Pair<>(maxHeap[left], left));
 			}
-			if (right < max.length) {
-				queue.add(new Pair<>(max[right], right));
+			if (right < maxHeap.length) {
+				queue.add(new Pair<>(maxHeap[right], right));
 			}
 		}
 		return queue.poll().getFirst();
+	}
+
+	/**
+	 * find max k elements from unsorted array of billion numbers.
+	 * It is similar to finding k maximum elements from infinite unordered stream or very large unordered array.
+	 * 
+	 * @f:off
+	 * approach - 
+	 * 1.create a min heap of size k.
+	 * 2.start adding items one by one till heap is full.
+	 * 3.now just check if new item > root.
+	 * 4.if yes swap it and heapify to adjust else don't add it to min heap.
+	 * 
+	 * so using this approach at any time we will have k maximum number in heap array.
+	 * 
+	 * o(k+(n-k)logk) - where n is the number of items out of which we want to find k maximum elements
+	 * 
+	 * @f:on
+	 * 
+	 * @param k
+	 * @param stream of un-sorted integer.
+	 * 
+	 * @return array with k maximum item
+	 * 
+	 */
+	public static int[] maxKelements(int k,int... items) {
+		PriorityQueue<Integer> queue = new PriorityQueue<>(k);
+		//add first k elements to min-heap
+		for(int i=0;i<k;i++) {
+			queue.add(items[i]);
+		}
+		
+		for(int i=k;i<items.length;i++) {
+			if(queue.peek()<items[i]) {
+				queue.poll();
+				queue.add(items[i]);
+			}
+		}
+		
+		int[] res  = new int[k];
+		for(int i=0;i<k;i++) {
+			res[i]=queue.poll();
+		}
+		return res;
 	}
 
 	private static int getLeft(int index) {
