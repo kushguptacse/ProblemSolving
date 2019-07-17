@@ -11,8 +11,13 @@ public final class HeapUtil {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = new int[] { 1,4,2,3,6,20,8,6,15,11,12,0,19 };
-		arr = maxKelements(2, arr);
+		int[] arr = { 1, 4, 2, 3, 6, 20, 8, 6, 15, 11, 12, 0, 19 };
+		int[][] ar = { { 1, 3 }, { 2, 4, 6 }, { 0, 9, 10, 11 } };
+		int[] a={1,5,2,4,9};
+		int[] b={8,0,6,10,3};
+		printLargestNpairs(a, b);
+		arr = mergeKsortedArray(ar);
+//		arr = maxKelements(2, arr);
 //		int[] arr2 = new int[] { 12, 7, 9 };
 //		printNodes(arr, 100);
 //		arr = mergeMaxHeaps(arr, arr2);
@@ -202,8 +207,6 @@ public final class HeapUtil {
 	/**
 	 * return the kth smallest element from minHeap.
 	 * 
-	 * TODO - apply better approach
-	 * 
 	 * perform k times delete. o(klogn)
 	 * 
 	 * @param minHeap
@@ -296,7 +299,7 @@ public final class HeapUtil {
 	 * 3.now just check if new item > root.
 	 * 4.if yes swap it and heapify to adjust else don't add it to min heap.
 	 * 
-	 * so using this approach at any time we will have k maximum number in heap array.
+	 * so using this approach at any iteration j heap will have k maximum numbers till j items.
 	 * 
 	 * o(k+(n-k)logk) - where n is the number of items out of which we want to find k maximum elements
 	 * 
@@ -308,25 +311,127 @@ public final class HeapUtil {
 	 * @return array with k maximum item
 	 * 
 	 */
-	public static int[] maxKelements(int k,int... items) {
-		PriorityQueue<Integer> queue = new PriorityQueue<>(k);
-		//add first k elements to min-heap
-		for(int i=0;i<k;i++) {
-			queue.add(items[i]);
+	public static int[] maxKelements(int k, int... items) {
+		int[] res = new int[k];
+
+		// add first k elements to res - o(k)
+		for (int i = 0; i < k; i++) {
+			res[i] = items[i];
 		}
-		
-		for(int i=k;i<items.length;i++) {
-			if(queue.peek()<items[i]) {
-				queue.poll();
-				queue.add(items[i]);
+
+		// heapify the res array - o(k)
+		for (int i = res.length / 2 - 1; i >= 0; i--) {
+			heapifyMin(res, res.length, i);
+		}
+
+		// start adding rest of elements if item > root
+		// o((n-k)(logk))
+		for (int i = k; i < items.length; i++) {
+			if (res[0] < items[i]) {
+				res[0] = items[i];
+				heapifyMin(res, res.length, 0);
 			}
 		}
-		
-		int[] res  = new int[k];
-		for(int i=0;i<k;i++) {
-			res[i]=queue.poll();
-		}
+
 		return res;
+	}
+
+	/**
+	 * Receive k sorted arrays (represented by 2d array) and merge them into one sorted array.
+	 * 
+	 * @f:off
+	 * e.g. - 
+	 * Input: k = 3 
+     * arr[][] = { {1, 3},
+     *             {2, 4, 6},
+     *             {0, 9, 10, 11}} ;
+	 * Output: 0 1 2 3 4 6 9 10 11 
+	 * 
+	 * approach - 
+	 * structure - 
+	 * PriorityQueue min heap with size = number of array i.e. k is used. 
+	 * 1.store three values in priorityQueue <originalValue,arrayPosition,nextIndex>
+	 * 2. original value is used to store priority queue min heap. 
+	 * 3. arrayPosition will tell row number and nextIndex will tell next index of array represented by arrayPosition
+	 * 
+	 * Algorithm -
+	 * 1. Store the first element of all array in heap along with array row and next column. <arr[i][0],i,1>
+	 * 2. After that iterate till heap is empty.
+	 * 2.1 Poll first element from heap and add first element to output array.
+	 * 2.2 Insert next element from the array from which the element is extracted using other two variables. 
+	 * If the array doesn’t have any more elements, then do nothing.
+	 * 3. output array will contain sorted data after heap become empty.
+	 * 
+	 * o(nlogk)
+	 * @f:on
+	 * 
+	 * @param arr
+	 * @return merged array.
+	 */
+	public static int[] mergeKsortedArray(int[][] arr) {
+		int size = 0;
+		PriorityQueue<Pair<Integer, Pair<Integer, Integer>>> queue = new PriorityQueue<>(arr.length, (o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
+		for (int i = 0; i < arr.length; i++) {
+			size = size + arr[i].length;
+			queue.add(new Pair<>(arr[i][0], new Pair<>(i, 1)));
+		}
+
+		int[] res = new int[size];
+		int i = 0;
+		while (!queue.isEmpty()) {
+			Pair<Integer, Pair<Integer, Integer>> pair = queue.poll();
+			res[i++] = pair.getFirst();
+			int arrPos = pair.getSecond().getFirst();
+			int nextIndex = pair.getSecond().getSecond();
+			if (nextIndex < arr[arrPos].length) {
+				queue.add(new Pair<>(arr[arrPos][nextIndex], new Pair<>(arrPos, ++nextIndex)));
+			}
+		}
+
+		return res;
+	}
+
+	/**
+	 * Given two array of equal size n. print the max pairs (arr[i],brr[j]).
+	 * 
+	 * @f:off
+	 * e.g. - 
+	 * input -
+	 * a={1,5,2,4,9}
+	 * b={8,0,6,10,3}
+	 * 
+	 * output - 
+	 * <9,10><5,8><4,6><2,3><1,0>
+	 * @f:on
+	 * 
+	 * approach - 
+	 * 1.Max heapify both arrays.
+	 * 2.start removing element one by one from both heap arrays to get pairs.
+	 * o(nlogn)
+	 * 
+	 * @param arr1
+	 * @param arr2
+	 */
+	public static void printLargestNpairs(int[] arr1, int[] arr2) {
+		System.out.println("Largest "+arr1.length+" Pairs are : ");
+		// o(n)
+		for (int i = arr1.length / 2 - 1; i >= 0; i--) {
+			heapify(arr1, arr1.length, i);
+		}
+		// o(n)
+		for (int i = arr2.length / 2 - 1; i >= 0; i--) {
+			heapify(arr2, arr2.length, i);
+		}
+		// o(nlogn)
+		for (int i = arr1.length - 1; i >= 0; i--) {
+			System.out.print("<"+arr1[0] + "," + arr2[0]+">");
+			swap(arr1, i, 0);
+			heapify(arr1, i, 0);
+			swap(arr2, i, 0);
+			heapify(arr2, i, 0);
+		}
+		System.out.println();
+
 	}
 
 	private static int getLeft(int index) {
