@@ -1,7 +1,12 @@
 package com.daa.heap;
 
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
+import com.daa.list.Node;
 import com.daa.model.Pair;
 
 public final class HeapUtil {
@@ -11,10 +16,39 @@ public final class HeapUtil {
 	}
 
 	public static void main(String[] args) {
-		int[] arr = { 1, 4, 2, 3, 6, 20, 8, 6, 15, 11, 12, 0, 19 };
+		int[] arr = { 9, 6, 11, 8, 10, 5, 4, 13, 93, 14 };
+		printArray(arr);
+		List<Node<Integer>> list = new ArrayList<>();
+
+		Node<Integer> node1 = new Node<>(1);
+		node1.setNext(new Node<>(3));
+		node1.getNext().setNext(new Node<>(5));
+		node1.getNext().getNext().setNext(new Node<>(7));
+		list.add(node1);
+
+		Node<Integer> node2 = new Node<>(2);
+		node2.setNext(new Node<>(4));
+		node2.getNext().setNext(new Node<>(6));
+		node2.getNext().getNext().setNext(new Node<>(8));
+		list.add(node2);
+
+		Node<Integer> node3 = new Node<>(0);
+		node3.setNext(new Node<>(9));
+		node3.getNext().setNext(new Node<>(10));
+		list.add(node3);
+
+		System.out.println("merged list is : ");
+		Node<Integer> result = mergeKsortedList(list);
+		while (result != null) {
+			System.out.print(result.getData() + "->");
+			result = result.getNext();
+		}
+		System.out.println();
+		printMax(arr, 3);
+		median(arr);
 		int[][] ar = { { 1, 3 }, { 2, 4, 6 }, { 0, 9, 10, 11 } };
-		int[] a={1,5,2,4,9};
-		int[] b={8,0,6,10,3};
+		int[] a = { 1, 5, 2, 4, 9 };
+		int[] b = { 8, 0, 6, 10, 3 };
 		printLargestNpairs(a, b);
 		arr = mergeKsortedArray(ar);
 //		arr = maxKelements(2, arr);
@@ -31,10 +65,7 @@ public final class HeapUtil {
 //		System.out.println("convert min heap to max heap");
 //		convertMinHeapToMaxHeap(arr);
 		System.out.println("is valid max heap : " + isValidMaxHeap(arr));
-		for (int i : arr) {
-			System.out.print(i + " ");
-		}
-		System.out.println();
+		printArray(arr);
 		int k = 2;
 		System.out.println(k + " th smallest element : " + findSmallest2(arr, k));
 //		System.out.println(k + " th largest element : " + findLargest(arr, k));
@@ -188,7 +219,7 @@ public final class HeapUtil {
 	 * @param arr2
 	 * @return merge array
 	 */
-	public static int[] mergeMaxHeaps(int[] arr1, int[] arr2) {
+	public static int[] mergeTwoMaxHeaps(int[] arr1, int[] arr2) {
 		int[] res = new int[arr1.length + arr2.length];
 		for (int i = 0; i < arr1.length; i++) {
 			res[i] = arr1[i];
@@ -392,6 +423,36 @@ public final class HeapUtil {
 	}
 
 	/**
+	 * @f:off
+	 * same approach as merge k sorted array.
+	 * nlogk
+	 * @f:on
+	 * 
+	 * @param list
+	 * @return merged sorted list
+	 */
+	public static Node<Integer> mergeKsortedList(List<Node<Integer>> list) {
+		Node<Integer> head = null;
+		Node<Integer> curr = null;
+		PriorityQueue<Node<Integer>> queue = new PriorityQueue<>((o1, o2) -> o1.getData().compareTo(o2.getData()));
+		list.forEach(queue::add);
+		while (!queue.isEmpty()) {
+			if (head != null) {
+				curr.setNext(queue.poll());
+				curr = curr.getNext();
+			} else {
+				head = queue.poll();
+				curr = head;
+			}
+			if (curr.getNext() != null) {
+				queue.add(curr.getNext());
+			}
+
+		}
+		return head;
+	}
+
+	/**
 	 * Given two array of equal size n. print the max pairs (arr[i],brr[j]).
 	 * 
 	 * @f:off
@@ -413,7 +474,7 @@ public final class HeapUtil {
 	 * @param arr2
 	 */
 	public static void printLargestNpairs(int[] arr1, int[] arr2) {
-		System.out.println("Largest "+arr1.length+" Pairs are : ");
+		System.out.println("Largest " + arr1.length + " Pairs are : ");
 		// o(n)
 		for (int i = arr1.length / 2 - 1; i >= 0; i--) {
 			heapify(arr1, arr1.length, i);
@@ -424,7 +485,7 @@ public final class HeapUtil {
 		}
 		// o(nlogn)
 		for (int i = arr1.length - 1; i >= 0; i--) {
-			System.out.print("<"+arr1[0] + "," + arr2[0]+">");
+			System.out.print("<" + arr1[0] + "," + arr2[0] + ">");
 			swap(arr1, i, 0);
 			heapify(arr1, i, 0);
 			swap(arr2, i, 0);
@@ -432,6 +493,111 @@ public final class HeapUtil {
 		}
 		System.out.println();
 
+	}
+
+	/**
+	 * Print the median of running data.
+	 * 
+	 * Approach 1 - sort the data and then find middle element.this approach is comparing every element. and require re-shuffling on every insertion.
+	 * 
+	 * @f:off
+	 * 
+	 * Approach 2 - heap can be used to implement such concept.
+	 * 1.take min heap and max heap. always insert first in min heap and check if both heap has difference of no of elements > 1
+	 * 1.2. if yes poll from min heap and add to max heap.
+	 * 2.check if both heap has same elements. 
+	 * 2.1 if yes (min.peek + max.peek)/2 is the answer
+	 * 2.2 else minHeap.peek is the answer.
+	 * 
+	 * Why above Algo work-  Basically we are dividing array elements equally in two heaps
+	 * At any point min heap will either has equal elements or one more element.
+	 * 
+	 * one half will be in one heap and second half will be in second heap. center is either avg or min heap top. 
+	 * 
+	 * o(nlogn)
+	 * 
+	 * @f:on
+	 * 
+	 * @param arr
+	 */
+	public static void median(int[] arr) {
+		PriorityQueue<Integer> heapMin = new PriorityQueue<>((arr.length / 2) + 1);
+		PriorityQueue<Integer> heapMax = new PriorityQueue<>((arr.length / 2) + 1, (o1, o2) -> o2 - o1);
+		// stream of data
+		for (int i = 0; i < arr.length; i++) {
+			System.out.println("Median : " + getMedian(heapMin, heapMax, arr[i]));
+		}
+	}
+
+	/**
+	 * time: logn
+	 */
+	private static int getMedian(PriorityQueue<Integer> minHeap, PriorityQueue<Integer> maxHeap, int data) {
+		// add to minheap first
+		minHeap.add(data);
+		// check if minHeap has more than 1 element extra
+		if (minHeap.size() - maxHeap.size() > 1) {
+			maxHeap.add(minHeap.poll());
+		}
+
+		// if total numbers are even. median is avg
+		if (minHeap.size() == maxHeap.size()) {
+			data = (minHeap.peek() + maxHeap.peek()) / 2;
+		} else {
+			data = minHeap.peek();
+		}
+		return data;
+	}
+
+	/**
+	 * Maximum of all sub arrays of size k
+	 * 
+	 * @f:off
+	 * for e.g. - 
+	 * Input: arr[] = {8, 5, 10, 7, 9, 4, 15, 12, 90, 13}, K = 4
+	 * Output: 10 10 10 15 15 90 90
+	 * Use DeQue of size k to store indexes of the element. 
+	 * this problem is enhancement of sliding window concept. 
+	 * where we want to find max element in every window
+	 * 
+	 * algo - 
+	 * 1.Our aim is to store max element in a window to the beginning of deque.
+	 * 2.To maintain that we will repeatedly remove elements from rear end if new item value > then rear value.
+	 * in this way initial deque of k size is maintained.
+	 * after that for remaining k - n elements -
+	 * 1. print the front element.
+	 * 2. if front index is outside the window range. remove it.
+	 * 3. repeatedly remove rear element till it is less than new item to be added.
+	 * 4. add new item to deque last.
+	 * o(n)
+	 * @f:on
+	 * 
+	 * @param arr
+	 * @param k
+	 */
+	public static void printMax(int[] arr, int k) {
+
+		Deque<Integer> indexes = new LinkedList<>();
+
+		// prepare initial deque data for first window
+		for (int i = 0; i < k; i++) {
+			while (!indexes.isEmpty() && arr[i] >= arr[indexes.peekLast()]) {
+				indexes.removeLast();
+			}
+			indexes.addLast(i);
+		}
+		System.out.println("Max element in subarray of size " + k + " : ");
+		for (int i = k; i < arr.length; i++) {
+			System.out.print(arr[indexes.peekFirst()] + ",");
+			while (!indexes.isEmpty() && i - k >= indexes.peekFirst()) {
+				indexes.removeFirst();
+			}
+			while (!indexes.isEmpty() && arr[i] >= arr[indexes.peekLast()]) {
+				indexes.removeLast();
+			}
+			indexes.addLast(i);
+		}
+		System.out.println(arr[indexes.peekFirst()]);
 	}
 
 	private static int getLeft(int index) {
@@ -465,4 +631,12 @@ public final class HeapUtil {
 		return arr[i] < arr[j] ? i : j;
 	}
 
+	private static void printArray(int[] arr) {
+		System.out.println("Array :");
+		for (int i : arr) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+
+	}
 }

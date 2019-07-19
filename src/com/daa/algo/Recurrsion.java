@@ -326,6 +326,7 @@ public class Recurrsion {
 
 	public int binarySearch(int[] arr, int item) {
 		int end = arr.length - 1;
+		System.out.println("Item is present in index : ");
 		return binarySearch(arr, item, 0, end);
 	}
 
