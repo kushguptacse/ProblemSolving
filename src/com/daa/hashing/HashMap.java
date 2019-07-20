@@ -35,7 +35,6 @@ public class HashMap<K, V> {
 		int index = hashCode(key);
 		if (table[index] == null) {
 			table[index] = new HashItem<>(key, value);
-			size++;
 		} else {
 			HashItem<K, V> temp = table[index];
 			HashItem<K, V> prev = null;
@@ -50,9 +49,9 @@ public class HashMap<K, V> {
 			}
 			if (prev != null) {
 				prev.setNext(new HashItem<>(key, value));
-				size++;
 			}
 		}
+		size++;
 		return null;
 	}
 
@@ -79,40 +78,61 @@ public class HashMap<K, V> {
 	 * @return search value or null
 	 */
 	public V get(K key) {
-		int index = hashCode(key);
-		if (table[index] != null) {
-			return findValue(key, index);
-		}
-
-		return null;
+		HashItem<K, V> temp = findNode(key);
+		return temp == null ? null : temp.getValue();
 	}
 
-	/**
-	 * find the value associated with key passed
-	 * 
-	 * @param key
-	 * @param index
-	 * @return search value or null
-	 */
-	private V findValue(K key, int index) {
+	private HashItem<K, V> findNode(K key) {
+		int index = hashCode(key);
 		HashItem<K, V> temp = table[index];
 		while (temp != null) {
 			if (temp.getKey().equals(key)) {
-				return temp.getValue();
+				return temp;
 			}
 			temp = temp.getNext();
 		}
 		return null;
+
 	}
 
 	/**
-	 * TODO
+	 * remove element from hashMap. return null if not removed or value is null itself for key
+	 * removed.
 	 * 
 	 * @param key
-	 * @return
+	 * @return removed value
 	 */
-	public boolean remove(K key) {
-		return false;
+	public V remove(K key) {
+		int index = hashCode(key);
+		if (table[index] == null) {
+			return null;
+		}
+
+//		if (table[index].getKey().equals(key) && table[index].getNext() == null) {
+//			V val = table[index].getValue();
+//			table[index] = null;
+//			size--;
+//			return val;
+//		}
+
+		HashItem<K, V> prev = null;
+		HashItem<K, V> temp = table[index];
+		while (temp != null) {
+			if (temp.getKey() != null && temp.getKey().equals(key)) {
+				V value = temp.getValue();
+				if (prev == null && temp.getNext() == null) {
+					table[index] = null;
+				} else if (prev != null) {
+					prev.setNext(temp.getNext());
+				}
+				size--;
+				return value;
+			}
+			prev = temp;
+			temp = temp.getNext();
+		}
+		return null;
+
 	}
 
 	/**
