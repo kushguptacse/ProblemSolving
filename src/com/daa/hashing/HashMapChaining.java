@@ -93,7 +93,7 @@ public class HashMapChaining<K, V> {
 		int index = hashCode(key);
 		HashItem<K, V> temp = table[index];
 		while (temp != null) {
-			if (temp.getKey().equals(key)) {
+			if (temp.getKey() !=null && temp.getKey().equals(key)) {
 				return temp;
 			}
 			temp = temp.getNext();
