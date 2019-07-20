@@ -1,6 +1,14 @@
 package com.daa.hashing;
 
-public class HashMap<K, V> {
+/**
+ * HashMap - with chaining collision resolution technique
+ * 
+ * @author G521885
+ *
+ * @param <K>
+ * @param <V>
+ */
+public class HashMapChaining<K, V> {
 
 	private static final int DEFAULT_CAPACITY = 10;
 
@@ -12,12 +20,12 @@ public class HashMap<K, V> {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public HashMap() {
+	public HashMapChaining() {
 		table = (HashItem<K, V>[]) new HashItem[DEFAULT_CAPACITY];
 	}
 
 	@SuppressWarnings("unchecked")
-	public HashMap(int capacity) {
+	public HashMapChaining(int capacity) {
 		table = (HashItem<K, V>[]) new HashItem[capacity];
 	}
 
@@ -31,7 +39,6 @@ public class HashMap<K, V> {
 	 * @return old value associated with key
 	 */
 	public V put(K key, V value) {
-
 		int index = hashCode(key);
 		if (table[index] == null) {
 			table[index] = new HashItem<>(key, value);
@@ -92,37 +99,31 @@ public class HashMap<K, V> {
 			temp = temp.getNext();
 		}
 		return null;
-
 	}
 
 	/**
 	 * remove element from hashMap. return null if not removed or value is null itself for key
 	 * removed.
+	 * same as java behavior
+	 * 
 	 * 
 	 * @param key
 	 * @return removed value
 	 */
 	public V remove(K key) {
 		int index = hashCode(key);
-		if (table[index] == null) {
-			return null;
-		}
-
-//		if (table[index].getKey().equals(key) && table[index].getNext() == null) {
-//			V val = table[index].getValue();
-//			table[index] = null;
-//			size--;
-//			return val;
-//		}
-
 		HashItem<K, V> prev = null;
 		HashItem<K, V> temp = table[index];
 		while (temp != null) {
 			if (temp.getKey() != null && temp.getKey().equals(key)) {
 				V value = temp.getValue();
-				if (prev == null && temp.getNext() == null) {
-					table[index] = null;
-				} else if (prev != null) {
+				if (prev == null) {
+					if (temp.getNext() == null) {
+						table[index] = null;
+					} else {
+						table[index] = temp.getNext();
+					}
+				} else {
 					prev.setNext(temp.getNext());
 				}
 				size--;
@@ -132,7 +133,6 @@ public class HashMap<K, V> {
 			temp = temp.getNext();
 		}
 		return null;
-
 	}
 
 	/**

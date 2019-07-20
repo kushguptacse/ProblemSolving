@@ -1,6 +1,6 @@
 package com.daa.hashing;
 
-//import java.util.HashMap;
+import java.util.HashMap;
 import java.util.stream.IntStream;
 
 public class HashApp {
