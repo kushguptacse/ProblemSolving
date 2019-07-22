@@ -18,6 +18,7 @@ public final class HeapUtil {
 	public static void main(String[] args) {
 		int[] arr = { 9, 6, 11, 8, 10, 5, 4, 13, 93, 14 };
 		printArray(arr);
+		median(arr);
 		List<Node<Integer>> list = new ArrayList<>();
 
 		Node<Integer> node1 = new Node<>(1);
@@ -45,7 +46,7 @@ public final class HeapUtil {
 		}
 		System.out.println();
 		printMax(arr, 3);
-		median(arr);
+		
 		int[][] ar = { { 1, 3 }, { 2, 4, 6 }, { 0, 9, 10, 11 } };
 		int[] a = { 1, 5, 2, 4, 9 };
 		int[] b = { 8, 0, 6, 10, 3 };
@@ -503,16 +504,19 @@ public final class HeapUtil {
 	 * @f:off
 	 * 
 	 * Approach 2 - heap can be used to implement such concept.
-	 * 1.take min heap and max heap. always insert first in min heap and check if both heap has difference of no of elements > 1
-	 * 1.2. if yes poll from min heap and add to max heap.
-	 * 2.check if both heap has same elements. 
-	 * 2.1 if yes (min.peek + max.peek)/2 is the answer
-	 * 2.2 else minHeap.peek is the answer.
+	 * 1.take min heap and max heap. 
+	 * insert first in max heap if Max heap is empty OR item < maxheap.peek.
+	 * 2.find the larger and smaller heap. i.e. heap with more elements.
+	 * 3. if largerHeap.size() - smallerheap.size() > 1 add element from larger to smaller.
+	 * 
+	 * 4.check if both heap has same elements. 
+	 * 4.1 if yes (largerHeap.peek + smallerHeap.peek)/2 is the answer
+	 * 4.2 else largerHeap.peek is the answer.
 	 * 
 	 * Why above Algo work-  Basically we are dividing array elements equally in two heaps
-	 * At any point min heap will either has equal elements or one more element.
+	 * At any point max heap will either has equal elements or one more element.
 	 * 
-	 * one half will be in one heap and second half will be in second heap. center is either avg or min heap top. 
+	 * one half will be in one heap and second half will be in second heap. center is either avg or max heap top. 
 	 * 
 	 * o(nlogn)
 	 * 
@@ -533,18 +537,25 @@ public final class HeapUtil {
 	 * time: logn
 	 */
 	private static int getMedian(PriorityQueue<Integer> minHeap, PriorityQueue<Integer> maxHeap, int data) {
-		// add to minheap first
-		minHeap.add(data);
-		// check if minHeap has more than 1 element extra
-		if (minHeap.size() - maxHeap.size() > 1) {
-			maxHeap.add(minHeap.poll());
+		// add to heap first
+		if (maxHeap.isEmpty() || data < maxHeap.peek()) {
+			maxHeap.add(data);
+		} else {
+			minHeap.add(data);
+		}
+		// rebalance
+		PriorityQueue<Integer> largerHeap = minHeap.size() < maxHeap.size() ? maxHeap : minHeap;
+		PriorityQueue<Integer> smallerHeap = minHeap.size() >= maxHeap.size() ? maxHeap : minHeap;
+		// check if largerHeap has more than 1 element extra
+		if (largerHeap.size() - smallerHeap.size() > 1) {
+			smallerHeap.add(largerHeap.poll());
 		}
 
 		// if total numbers are even. median is avg
-		if (minHeap.size() == maxHeap.size()) {
-			data = (minHeap.peek() + maxHeap.peek()) / 2;
+		if (largerHeap.size() == smallerHeap.size()) {
+			data = (smallerHeap.peek() + largerHeap.peek()) / 2;
 		} else {
-			data = minHeap.peek();
+			data = largerHeap.peek();
 		}
 		return data;
 	}

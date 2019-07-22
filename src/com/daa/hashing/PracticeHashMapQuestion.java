@@ -23,12 +23,41 @@ public class PracticeHashMapQuestion {
 		firstRepeatingCharacter("helr rt");
 		String str1 = "geeksforgeeks";
 		String str2 = "mask";
-		System.out.println("String '" + str1 + "' after removing dirty characters from String '" + str2 + "' is: " + removeDirtyChars(str1, str2));
+		System.out.println("String '" + str1 + "' after removing dirty characters from String '" + str2 + "' : " + removeDirtyChars(str1, str2));
+		printPairs(new int[] { 2, 5, 17, -1 }, 7);
+	}
+
+	/**
+	 * 
+	 * print pairs whose sum is k from 1-D Array
+	 * 
+	 * @f:off
+	 * Input  :  arr[] = {1, 5, 7, -1, 5}, 
+     *           sum = 6
+	 * Output : (1, 5) (7, -1) (1, 5)
+	 * 
+	 * @f:on
+	 * 
+	 * @param arr
+	 * @param k
+	 */
+	public static void printPairs(int[] arr, int k) {
+		Set<Integer> set = new HashSet<>();
+		System.out.print("Pairs whose sum is " + k + ": {");
+		for (int i = 0; i < arr.length; i++) {
+			if (set.contains(k - arr[i])) {
+				System.out.print("{" + (k - arr[i]) + "," + arr[i] + "}");
+			} else {
+				set.add(arr[i]);
+			}
+		}
+		System.out.println("}");
 	}
 
 	/**
 	 * Method removes the specified characters from a given string which are given in another
 	 * string
+	 * 
 	 * @f:off
 	 * 
 	 * 
@@ -41,7 +70,7 @@ public class PracticeHashMapQuestion {
 	 * @param str2
 	 * @return string After removing characters present in second string
 	 */
-	private static String removeDirtyChars(String str1, String str2) {
+	public static String removeDirtyChars(String str1, String str2) {
 		StringBuilder sb = new StringBuilder();
 		int[] set = new int[256];
 		for (int i = 0; i < str2.length(); i++) {
