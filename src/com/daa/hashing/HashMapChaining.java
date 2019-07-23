@@ -1,5 +1,7 @@
 package com.daa.hashing;
 
+import com.daa.math.MathUtil;
+
 /**
  * HashMap - with chaining collision resolution technique
  * 
@@ -10,7 +12,7 @@ package com.daa.hashing;
  */
 public class HashMapChaining<K, V> {
 
-	private static final int DEFAULT_CAPACITY = 10;
+	private static final int DEFAULT_CAPACITY = 11;
 
 	private int size;
 
@@ -75,7 +77,7 @@ public class HashMapChaining<K, V> {
 		if (key.hashCode() == 0) {
 			return table.length - 1;
 		}
-		return key.hashCode() % (table.length - 1);
+		return MathUtil.abs(key.hashCode()) % (table.length - 1);
 	}
 
 	/**
@@ -93,7 +95,7 @@ public class HashMapChaining<K, V> {
 		int index = hashCode(key);
 		HashItem<K, V> temp = table[index];
 		while (temp != null) {
-			if (temp.getKey() !=null && temp.getKey().equals(key)) {
+			if (temp.getKey() != null && temp.getKey().equals(key)) {
 				return temp;
 			}
 			temp = temp.getNext();
@@ -103,8 +105,7 @@ public class HashMapChaining<K, V> {
 
 	/**
 	 * remove element from hashMap. return null if not removed or value is null itself for key
-	 * removed.
-	 * same as java behavior
+	 * removed. same as java behavior
 	 * 
 	 * 
 	 * @param key

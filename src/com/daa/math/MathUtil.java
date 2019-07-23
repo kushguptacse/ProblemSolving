@@ -6,6 +6,10 @@ public class MathUtil {
 
 	}
 
+	public static int abs(int a) {
+		return a < 0 ? -a : a;
+	}
+
 	public static int squareRoot(int num) {
 		int result = 0;
 
@@ -31,13 +35,14 @@ public class MathUtil {
 
 		return result;
 	}
-	
+
 	/**
 	 * convert number to binary
 	 * 
 	 * 5 - 101
 	 * 
 	 * O(N)
+	 * 
 	 * @param n
 	 * @return String of binary
 	 */
@@ -57,10 +62,10 @@ public class MathUtil {
 	 * @param b
 	 * @return maximum of two numbers
 	 */
-	public static int max(Integer a,Integer b) {
-		return a>b?a:b;
+	public static int max(Integer a, Integer b) {
+		return a > b ? a : b;
 	}
-	
+
 	/**
 	 * Time Complexity - O(sqrt(N))
 	 * 
@@ -68,15 +73,15 @@ public class MathUtil {
 	 * @return true if number is prime
 	 */
 	public static boolean checkPrime(int n) {
-		if(n==1) {
+		if (n == 1) {
 			return false;
 		}
-		for(int i=2;i*i<=n;i++) {
-			if(n%i==0) {
+		for (int i = 2; i * i <= n; i++) {
+			if (n % i == 0) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 }

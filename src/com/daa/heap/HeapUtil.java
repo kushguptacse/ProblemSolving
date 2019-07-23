@@ -514,7 +514,7 @@ public final class HeapUtil {
 	 * 4.2 else largerHeap.peek is the answer.
 	 * 
 	 * Why above Algo work-  Basically we are dividing array elements equally in two heaps
-	 * At any point max heap will either has equal elements or one more element.
+	 * At any point larger heap will either has equal elements or one more element.
 	 * 
 	 * one half will be in one heap and second half will be in second heap. center is either avg or max heap top. 
 	 * 

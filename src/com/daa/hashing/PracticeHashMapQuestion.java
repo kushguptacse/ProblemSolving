@@ -24,7 +24,7 @@ public class PracticeHashMapQuestion {
 		String str1 = "geeksforgeeks";
 		String str2 = "mask";
 		System.out.println("String '" + str1 + "' after removing dirty characters from String '" + str2 + "' : " + removeDirtyChars(str1, str2));
-		printPairs(new int[] { 2, 5, 17, -1 }, 7);
+		printPairs(new int[] { 2, 3, 4, -2, 6, 8, 9, 11 }, 6);
 	}
 
 	/**
@@ -47,8 +47,9 @@ public class PracticeHashMapQuestion {
 		for (int i = 0; i < arr.length; i++) {
 			if (set.contains(k - arr[i])) {
 				System.out.print("{" + (k - arr[i]) + "," + arr[i] + "}");
-			} else {
-				set.add(arr[i]);
+			}
+			else {
+			set.add(arr[i]);
 			}
 		}
 		System.out.println("}");
