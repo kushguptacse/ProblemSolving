@@ -11,14 +11,14 @@ public class QueueMain {
 //		queue.print();
 		queue.add(4);
 //		queue.print();
-		System.out.println("element pop :" + queue.poll());
+		System.out.println("element poll :" + queue.poll());
 //		queue.print();
-		System.out.println("element pop :" + queue.poll());
+		System.out.println("element poll :" + queue.poll());
 //		queue.print();
 		System.out.println("element peek :" + queue.peek());
-		System.out.println("element pop :" + queue.poll());
+		System.out.println("element poll :" + queue.poll());
 //		queue.print();
-		System.out.println("element pop :" + queue.poll());
+		System.out.println("element poll :" + queue.poll());
 //		queue.print();
 		System.out.println("element peek :" + queue.peek());
 

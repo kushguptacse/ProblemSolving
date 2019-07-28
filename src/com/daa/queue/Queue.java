@@ -15,42 +15,57 @@ public class Queue<T extends Comparable<T>> {
 	private Node<T> front;
 	private Node<T> rear;
 	private int size;
-	
+
+	/**
+	 * insert data from rear end
+	 * 
+	 * @param data
+	 */
 	public void add(T data) {
 		Node<T> node = new Node<>(data);
-		node.setNext(rear);
-		if(rear==null) {
-			front=node;
+		if (front == null) {
+			front = node;
+			rear = node;
+		} else {
+			node.setNext(rear);
+			rear = node;
 		}
-		rear=node;
 		size++;
 	}
-	
+
+	/**
+	 * remove data from front end.
+	 * 
+	 * @return
+	 */
 	public T poll() {
-		if(rear==null) {
+		if (front == null) {
 			return null;
 		}
-		if(front==rear) {
-			front=null;
-			rear=null;
-			return null;
-		}
+		
 		Node<T> temp = rear;
-		while(temp.getNext()!=front) {
-			temp=temp.getNext();
+		if (front == temp) {
+			front = null;
+			rear = null;
+			return temp.getData();
 		}
+		
+		while (temp.getNext() != front) {
+			temp = temp.getNext();
+		}
+		
+		T val = temp.getNext().getData();
 		temp.setNext(null);
-		T data = front.getData();
-		front=temp;
+		front = temp;
 		size--;
-		return data;
+		return val;
 	}
-	
+
 	public void print() {
 		Node<T> temp = rear;
-		while(temp!=null) {
-			System.out.print(temp.getData()+" ");
-			temp=temp.getNext();
+		while (temp != null) {
+			System.out.print(temp.getData() + " ");
+			temp = temp.getNext();
 		}
 		System.out.println();
 	}
@@ -61,12 +76,9 @@ public class Queue<T extends Comparable<T>> {
 	public int getSize() {
 		return size;
 	}
-	
+
 	public T peek() {
-		if(front==null) {
-			return null;
-		}
-		return front.getData();
+		return front == null ? null : front.getData();
 	}
 
 }
