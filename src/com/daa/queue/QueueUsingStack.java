@@ -56,8 +56,7 @@ public class QueueUsingStack<T extends Comparable<T>> {
 	 */
 	private void copyStack() {
 		if (stack2.isEmpty()) {
-			int s = stack1.size();
-			for (int i = 0; i < s; i++) {
+			while(!stack1.isEmpty()) {
 				stack2.push(stack1.pop());
 			}
 		}
