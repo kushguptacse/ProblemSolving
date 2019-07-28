@@ -1,6 +1,7 @@
 package com.daa.queue;
 
 public class QueueMain {
+
 	public static void main(String[] args) {
 		QueueUsingStack<Integer> queue = new QueueUsingStack<>();
 		queue.add(1);

@@ -42,18 +42,18 @@ public class Queue<T extends Comparable<T>> {
 		if (front == null) {
 			return null;
 		}
-		
+
 		Node<T> temp = rear;
 		if (front == temp) {
 			front = null;
 			rear = null;
 			return temp.getData();
 		}
-		
+
 		while (temp.getNext() != front) {
 			temp = temp.getNext();
 		}
-		
+
 		T val = temp.getNext().getData();
 		temp.setNext(null);
 		front = temp;
