@@ -22,7 +22,7 @@ public class QueueUsingHeap<T extends Comparable<T>> {
 	private int c = Integer.MIN_VALUE;
 
 	/**
-	 * push the data on top of stack - o(logn)
+	 * add the data to front of queue- o(logn)
 	 * 
 	 * @param data
 	 */
@@ -31,7 +31,7 @@ public class QueueUsingHeap<T extends Comparable<T>> {
 	}
 
 	/**
-	 * remove the data on top of stack - o(logn)
+	 * remove the data from rear - o(logn)
 	 * 
 	 * @return data
 	 */
@@ -40,7 +40,7 @@ public class QueueUsingHeap<T extends Comparable<T>> {
 	}
 
 	/**
-	 * get the data from top of stack without deleting it - o(1)
+	 * get the data from front without deleting it - o(1)
 	 * 
 	 * @return data
 	 */

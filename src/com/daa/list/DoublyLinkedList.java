@@ -62,7 +62,7 @@ public class DoublyLinkedList<K, V> {
 	 * Remove given node from list. 
 	 * @f:off
 	 * o(1)
-	 * it is assumed that node exist in list otherwise it will update wrong head and tail.
+	 * it is assumed that node exist in the list otherwise it will update wrong head and tail.
 	 * @f:on
 	 * 
 	 * @param node
