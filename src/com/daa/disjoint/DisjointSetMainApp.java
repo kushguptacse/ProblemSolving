@@ -2,7 +2,7 @@ package com.daa.disjoint;
 
 public class DisjointSetMainApp {
 	public static void main(String[] args) {
-		testGraphCycle2();
+		testGraphCycle();
 		DisjointSet disjointSet = new DisjointSet(5);
 		disjointSet.union(0, 2);
 		disjointSet.union(4, 2);

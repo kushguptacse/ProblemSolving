@@ -48,7 +48,6 @@ public class Edge {
 	 */
 	public Edge() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }

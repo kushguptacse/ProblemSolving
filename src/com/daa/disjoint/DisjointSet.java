@@ -2,6 +2,11 @@ package com.daa.disjoint;
 
 import com.daa.math.MathUtil;
 
+/**
+ * 
+ * @author G521885
+ *
+ */
 public class DisjointSet {
 
 	private final int[] parent;

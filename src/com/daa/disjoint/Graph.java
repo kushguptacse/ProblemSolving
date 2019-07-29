@@ -3,8 +3,8 @@ package com.daa.disjoint;
 import com.daa.math.MathUtil;
 
 /**
- * find and union operation of disjoint set is used to detect cycle in graph. for better
- * find- caching is used. for better union- rank is used.
+ * Find and union operation of disjoint set is used to detect cycle in graph. for better
+ * Find- caching is used. for better union- rank is used.
  * 
  * single array is used. where positive value decide the index of parent. and for root
  * node negative value is used. to decide rate negative value is used as no parent sign
