@@ -33,4 +33,22 @@ public class Edge {
 		this.dest = dest;
 	}
 
+	/**
+	 * @param src
+	 * @param dest
+	 */
+	public Edge(int src, int dest) {
+		super();
+		this.src = src;
+		this.dest = dest;
+	}
+
+	/**
+	 * 
+	 */
+	public Edge() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }
