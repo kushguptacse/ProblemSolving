@@ -23,7 +23,8 @@ public class DisjointSet {
 	}
 
 	/**
-	 * find the parent and also cache the parent for faster search next time. (Path
+	 * 
+	 * Find the parent and also cache the parent for faster search next time. (Path
 	 * Compression)
 	 * 
 	 * @param x

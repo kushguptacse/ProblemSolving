@@ -18,6 +18,7 @@ public class Graph {
 	private int noOfVertices;
 	private int noOfEdges;
 	private Edge[] edges;
+	private int count=0;
 
 	/**
 	 * @param noOfVertices
@@ -103,7 +104,7 @@ public class Graph {
 	/**
 	 * @return the edges
 	 */
-	public Edge[] getEdges() {
-		return edges;
+	public void addEdge(int x,int y) {
+		edges[count++]=new Edge(x,y);
 	}
 }
