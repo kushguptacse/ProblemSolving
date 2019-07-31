@@ -1,6 +1,7 @@
 package com.daa.graph;
 
-import com.daa.list.Node;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Graph adjacency List implementation of graph -
@@ -34,7 +35,7 @@ import com.daa.list.Node;
 public class GraphAdjacencyList {
 
 	private int noOfVertices;
-	private Node<Integer>[] adjListArray;
+	private LinkedList<Integer>[] adjListArray;
 
 	/**
 	 * 
@@ -42,10 +43,14 @@ public class GraphAdjacencyList {
 	@SuppressWarnings("unchecked")
 	public GraphAdjacencyList(int v) {
 		this.noOfVertices = v;
-		adjListArray = (Node<Integer>[]) new Node[noOfVertices];
+		adjListArray = (LinkedList<Integer>[]) new LinkedList[noOfVertices];
+		for (int i = 0; i < adjListArray.length; i++) {
+			adjListArray[i] = new LinkedList<>();
+		}
 	}
 
 	/**
+	 * add edge to adjacency list
 	 * 
 	 * @param i
 	 * @param j
@@ -53,21 +58,46 @@ public class GraphAdjacencyList {
 	public void addEdge(int i, int j) {
 		if (i >= 0 && j >= 0 && i < noOfVertices && j < noOfVertices) {
 			add(i, j);
-			add(j, i);
+			// uncomment below line for undirected graph 
+			 add(j, i);
 		}
 	}
 
 	private void add(int x, int y) {
-		Node<Integer> node = adjListArray[x];
-		Node<Integer> node1 = new Node<>(y);
-		if (node == null) {
-			adjListArray[x] = node1;
-		} else {
-			while (node.getNext() != null) {
-				node = node.getNext();
-			}
-			node.setNext(node1);
+		adjListArray[x].add(y);
+	}
+
+	/**
+	 * Breadth First Search.
+	 * 
+	 * first all the adjacent vertex traversed then we move forward.
+	 * it is just like level-order traversal of binary tree.
+	 * 
+	 * @param v - source node
+	 */
+	public void bfs(int v) {
+
+		if (v < 0 && v >= adjListArray.length) {
+			return;
 		}
+
+		boolean[] visited = new boolean[noOfVertices];
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(v);
+		visited[v]=true;
+		System.out.println("Breadth First Traversal (starting from vertex " + v + ")");
+		while (!queue.isEmpty()) {
+			int i = queue.poll();
+			System.out.print(i + " ");
+			LinkedList<Integer> list = adjListArray[i];
+			list.forEach(o -> {
+				if(!visited[o]) {
+					visited[o] = true;
+					queue.add(o);					
+				}
+			});
+		}
+		System.out.println();
 	}
 
 	/**
@@ -77,11 +107,7 @@ public class GraphAdjacencyList {
 		for (int i = 0; i < adjListArray.length; i++) {
 			System.out.println("Adjacency list of vertex " + i);
 			System.out.print("head");
-			Node<Integer> temp = adjListArray[i];
-			while (temp != null) {
-				System.out.print("->" + temp.getData());
-				temp = temp.getNext();
-			}
+			adjListArray[i].forEach(o -> System.out.print("->" + o));
 			System.out.println();
 		}
 	}
