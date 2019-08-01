@@ -6,13 +6,26 @@ package com.daa.graph;
 public class GraphMainApp {
 	public static void main(String[] args) {
 
+		testTopologySort(new GraphAdjacencyList(6));
 		testDFS(new GraphAdjacencyList(4));
 		System.out.println("-----------------------------------------------");
 		testDFS(new GraphAdjacencyMatrix(4));
-//		testBFSAndDfs(new GraphAdjacencyMatrix(5), new GraphAdjacencyMatrix(4));
-//		testBFSAndDfs(new GraphAdjacencyList(5), new GraphAdjacencyList(4));
-//		testAdjacencyMatrix();
-//		testAdjacencyList();
+		testBFSAndDfs(new GraphAdjacencyMatrix(5), new GraphAdjacencyMatrix(4));
+		testBFSAndDfs(new GraphAdjacencyList(5), new GraphAdjacencyList(4));
+		testAdjacencyMatrix();
+		testAdjacencyList();
+	}
+
+	private static void testTopologySort(GraphAdjacencyList g) {
+		 // Create a graph given in the above diagram 
+		g.addEdge(5, 2); 
+        g.addEdge(5, 0); 
+        g.addEdge(4, 0); 
+        g.addEdge(4, 1); 
+        g.addEdge(2, 3); 
+        g.addEdge(3, 1); 
+  
+        g.topologicalSort(); 		
 	}
 
 	private static void testDFS(Graph g) {

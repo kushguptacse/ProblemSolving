@@ -141,9 +141,40 @@ public class GraphAdjacencyList implements Graph {
 	}
 
 	/**
-	 * perform DFS using recursion. In this way we can use recursion call stack.
-	 * performance wise both are same.
-	 * o(V+E)
+	 * Prepare the topological order of the graph. multiple order possible.
+	 * 
+	 * Rule is - in (u,v) vertex pair. u will appear before v. due to this property it is used
+	 * in build tool like maven. o(u+v)
+	 */
+	public void topologicalSort() {
+		System.out.println("Topological sort :");
+		Deque<Integer> stack = new LinkedList<>();
+		boolean[] visited = new boolean[noOfVertices];
+		for (int i = 0; i < noOfVertices; i++) {
+			if (!visited[i]) {
+				topologicalSortRecursion(i, visited, stack);
+			}
+		}
+		while (!stack.isEmpty()) {
+			System.out.print(stack.pop() + " ");
+		}
+		System.out.println();
+	}
+
+	private void topologicalSortRecursion(int v, boolean[] visited, Deque<Integer> stack) {
+		visited[v] = true;
+		List<Integer> list = adjListArray[v];
+		list.forEach(o -> {
+			if (!visited[o]) {
+				topologicalSortRecursion(o, visited, stack);
+			}
+		});
+		stack.push(v);
+	}
+
+	/**
+	 * perform DFS using recursion. In this way we can use recursion call stack. performance
+	 * wise both are same. o(V+E)
 	 */
 	public void dfs(int v) {
 		if (v < 0 || v >= adjListArray.length) {
@@ -151,7 +182,7 @@ public class GraphAdjacencyList implements Graph {
 		}
 		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
 		boolean[] visited = new boolean[noOfVertices];
-		visited[v]=true;
+		visited[v] = true;
 		dfsRecursionUtil(v, visited);
 		System.out.println();
 	}
@@ -161,7 +192,7 @@ public class GraphAdjacencyList implements Graph {
 		List<Integer> list = adjListArray[v];
 		list.forEach(o -> {
 			if (!visited[o]) {
-				visited[o] = true;				
+				visited[o] = true;
 				dfsRecursionUtil(o, visited);
 			}
 		});
