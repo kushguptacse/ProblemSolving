@@ -1,5 +1,9 @@
 package com.daa.graph;
 
+import java.util.Queue;
+
+import java.util.LinkedList;
+
 /**
  * Graph adjacency matrix implementation of graph -
  * 
@@ -27,7 +31,7 @@ package com.daa.graph;
  * pros: it will always take o(1) time to add,remove and find the edge.
  * 
  */
-public class GraphAdjacencyMatrix {
+public class GraphAdjacencyMatrix implements Graph{
 
 	private final int noOfVertices;
 
@@ -48,13 +52,47 @@ public class GraphAdjacencyMatrix {
 	 * @param i
 	 * @param j
 	 */
+	@Override
 	public void addEdge(int i, int j) {
 		if (i >= 0 && j >= 0 && i < noOfVertices && j < noOfVertices) {
 			matrix[i][j] = true;
+			// un-comment it for un-directed graph.
 			matrix[j][i] = true;
 		}
 	}
 
+	/**
+	 * Breadth First Search.
+	 * 
+	 * first all the adjacent vertex traversed then we move forward.
+	 * it is just like level-order traversal of binary tree.
+	 * 
+	 * @param v - source node
+	 */
+	@Override
+	public void bfs(int v) {
+		if (v < 0 || v >= noOfVertices) {
+			return;
+		}
+		System.out.println("Breadth First Traversal (starting from vertex " + v + ")");
+		boolean[] visited = new boolean[noOfVertices];
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(v);
+		visited[v] = true;
+		while(!queue.isEmpty()) {
+			int j = queue.poll();
+			System.out.print(j+" ");
+			for(int i=0;i<matrix[j].length;i++) {
+				if(matrix[j][i] && !visited[i]) {
+					visited[i]=true;
+					queue.add(i);
+				}
+			}
+		}
+		System.out.println();
+		
+	}
+	
 	/**
 	 * if vertices are invalid return false else will remove the edges from i to j and j to i.
 	 * o(1)
@@ -90,6 +128,7 @@ public class GraphAdjacencyMatrix {
 	/**
 	 * print the data
 	 */
+	@Override
 	public void print() {
 		System.out.println("Adjacency Matrix data -");
 		for (int i = 0; i < noOfVertices; i++) {

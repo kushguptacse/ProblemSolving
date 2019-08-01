@@ -32,7 +32,7 @@ import java.util.Queue;
  * pros: In case of sparse graph (less edges) it will take less space. Saves space O(|V|+|E|). Adding a vertex is easier.
  *
  */
-public class GraphAdjacencyList {
+public class GraphAdjacencyList implements Graph {
 
 	private int noOfVertices;
 	private LinkedList<Integer>[] adjListArray;
@@ -55,11 +55,12 @@ public class GraphAdjacencyList {
 	 * @param i
 	 * @param j
 	 */
+	@Override
 	public void addEdge(int i, int j) {
 		if (i >= 0 && j >= 0 && i < noOfVertices && j < noOfVertices) {
 			add(i, j);
-			// uncomment below line for undirected graph 
-			 add(j, i);
+			// uncomment below line for undirected graph
+//			add(j, i);
 		}
 	}
 
@@ -70,30 +71,30 @@ public class GraphAdjacencyList {
 	/**
 	 * Breadth First Search.
 	 * 
-	 * first all the adjacent vertex traversed then we move forward.
-	 * it is just like level-order traversal of binary tree.
+	 * first all the adjacent vertex traversed then we move forward. it is just like
+	 * level-order traversal of binary tree.
 	 * 
 	 * @param v - source node
 	 */
+	@Override
 	public void bfs(int v) {
 
-		if (v < 0 && v >= adjListArray.length) {
+		if (v < 0 || v >= adjListArray.length) {
 			return;
 		}
-
+		System.out.println("Breadth First Traversal (starting from vertex " + v + ")");
 		boolean[] visited = new boolean[noOfVertices];
 		Queue<Integer> queue = new LinkedList<>();
 		queue.add(v);
-		visited[v]=true;
-		System.out.println("Breadth First Traversal (starting from vertex " + v + ")");
+		visited[v] = true;
 		while (!queue.isEmpty()) {
 			int i = queue.poll();
 			System.out.print(i + " ");
 			LinkedList<Integer> list = adjListArray[i];
 			list.forEach(o -> {
-				if(!visited[o]) {
+				if (!visited[o]) {
 					visited[o] = true;
-					queue.add(o);					
+					queue.add(o);
 				}
 			});
 		}
@@ -103,6 +104,7 @@ public class GraphAdjacencyList {
 	/**
 	 * print the data vertex wise
 	 */
+	@Override
 	public void print() {
 		for (int i = 0; i < adjListArray.length; i++) {
 			System.out.println("Adjacency list of vertex " + i);
