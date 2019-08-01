@@ -3,7 +3,7 @@ package com.daa.queue;
 public class QueueMain {
 
 	public static void main(String[] args) {
-		QueueUsingStack<Integer> queue = new QueueUsingStack<>();
+		DeQueue<Integer> queue = new DeQueue<>();
 		queue.add(1);
 //		queue.print();
 		queue.add(2);
@@ -11,7 +11,7 @@ public class QueueMain {
 		queue.add(3);
 //		queue.print();
 		queue.add(4);
-//		queue.print();
+		queue.print();
 		System.out.println("element poll :" + queue.poll());
 //		queue.print();
 		System.out.println("element poll :" + queue.poll());
