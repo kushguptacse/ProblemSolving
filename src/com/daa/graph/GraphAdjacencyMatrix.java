@@ -139,4 +139,10 @@ public class GraphAdjacencyMatrix implements Graph{
 		}
 	}
 
+	@Override
+	public void dfs(int v) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -7,4 +7,6 @@ public interface Graph {
 	public void bfs(int v);
 
 	public void print();
+	
+	public void dfs(int v);
 }

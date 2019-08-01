@@ -1,6 +1,8 @@
 package com.daa.graph;
 
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -50,7 +52,7 @@ public class GraphAdjacencyList implements Graph {
 	}
 
 	/**
-	 * add edge to adjacency list
+	 * add edge to adjacency list. o(1)
 	 * 
 	 * @param i
 	 * @param j
@@ -73,6 +75,8 @@ public class GraphAdjacencyList implements Graph {
 	 * 
 	 * first all the adjacent vertex traversed then we move forward. it is just like
 	 * level-order traversal of binary tree.
+	 * 
+	 * Queue is used. o(V+E)
 	 * 
 	 * @param v - source node
 	 */
@@ -99,6 +103,42 @@ public class GraphAdjacencyList implements Graph {
 			});
 		}
 		System.out.println();
+	}
+
+	/**
+	 * Depth First Search.
+	 * 
+	 * first we visit a vertex then we go to first neighbor and visit it and then we go again
+	 * to that node first neighbor. traversed it then we move forward. it is just like
+	 * pre-order traversal of binary tree.
+	 * 
+	 * Stack is used. o(V+E)
+	 * 
+	 * @param v - source node
+	 */
+	@Override
+	public void dfs(int v) {
+		if (v < 0 || v >= adjListArray.length) {
+			return;
+		}
+		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
+		boolean[] visited = new boolean[noOfVertices];
+		Deque<Integer> stack = new LinkedList<>();
+		stack.push(v);
+		visited[v] = true;
+		while (!stack.isEmpty()) {
+			int i = stack.pop();
+			System.out.print(i + " ");
+			List<Integer> list = adjListArray[i];
+			list.forEach(o -> {
+				if (!visited[o]) {
+					visited[o] = true;
+					stack.push(o);
+				}
+			});
+		}
+		System.out.println();
+
 	}
 
 	/**
