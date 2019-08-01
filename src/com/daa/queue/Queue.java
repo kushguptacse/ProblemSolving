@@ -23,13 +23,12 @@ public class Queue<T extends Comparable<T>> {
 	 */
 	public void add(T data) {
 		Node<T> node = new Node<>(data);
-		if (front == null) {
+		if (rear == null) {
 			front = node;
-			rear = node;
 		} else {
-			node.setNext(rear);
-			rear = node;
+			rear.setNext(node);
 		}
+		rear = node;
 		size++;
 	}
 
@@ -42,23 +41,13 @@ public class Queue<T extends Comparable<T>> {
 		if (front == null) {
 			return null;
 		}
-
-		Node<T> temp = rear;
-		if (front == temp) {
-			front = null;
+		T temp = front.getData();
+		front = front.getNext();
+		if (front == null) {
 			rear = null;
-			return temp.getData();
 		}
-
-		while (temp.getNext() != front) {
-			temp = temp.getNext();
-		}
-
-		T val = temp.getNext().getData();
-		temp.setNext(null);
-		front = temp;
 		size--;
-		return val;
+		return temp;
 	}
 
 	public void print() {
