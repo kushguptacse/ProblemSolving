@@ -116,8 +116,7 @@ public class GraphAdjacencyList implements Graph {
 	 * 
 	 * @param v - source node
 	 */
-	@Override
-	public void dfs(int v) {
+	public void dfsIterative(int v) {
 		if (v < 0 || v >= adjListArray.length) {
 			return;
 		}
@@ -138,6 +137,33 @@ public class GraphAdjacencyList implements Graph {
 			});
 		}
 		System.out.println();
+
+	}
+
+	/**
+	 * perform DFS using recursion. In this way we can use recursion call stack.
+	 * performance wise both are same.
+	 */
+	public void dfs(int v) {
+		if (v < 0 || v >= adjListArray.length) {
+			return;
+		}
+		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
+		boolean[] visited = new boolean[noOfVertices];
+		visited[v]=true;
+		dfsRecursionUtil(v, visited);
+		System.out.println();
+	}
+
+	private void dfsRecursionUtil(int v, boolean[] visited) {
+		System.out.print(v + " ");
+		List<Integer> list = adjListArray[v];
+		list.forEach(o -> {
+			if (!visited[o]) {
+				visited[o] = true;				
+				dfsRecursionUtil(o, visited);
+			}
+		});
 
 	}
 

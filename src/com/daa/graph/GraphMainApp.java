@@ -8,14 +8,13 @@ public class GraphMainApp {
 
 		testDFS(new GraphAdjacencyList(4));
 		System.out.println("-----------------------------------------------");
-		testBFS(new GraphAdjacencyMatrix(5), new GraphAdjacencyMatrix(4));
-		testBFS(new GraphAdjacencyList(5), new GraphAdjacencyList(4));
-		testAdjacencyMatrix();
-//		testAdjacencyList();
+//		testBFSAndDfs(new GraphAdjacencyMatrix(5), new GraphAdjacencyMatrix(4));
+//		testBFSAndDfs(new GraphAdjacencyList(5), new GraphAdjacencyList(4));
 //		testAdjacencyMatrix();
+//		testAdjacencyList();
 	}
 
-	private static void testDFS(Graph g) {
+	private static void testDFS(GraphAdjacencyList g) {
         g.addEdge(0, 1); 
         g.addEdge(0, 2); 
         g.addEdge(1, 2); 
@@ -23,9 +22,10 @@ public class GraphMainApp {
         g.addEdge(2, 3); 
         g.addEdge(3, 3); 
         g.dfs(2);
+        g.dfsIterative(2);
 	}
 
-	private static void testBFS(Graph g1, Graph g) {
+	private static void testBFSAndDfs(Graph g1, Graph g) {
 
 		g1.addEdge(0, 1);
 		g1.addEdge(0, 2);
