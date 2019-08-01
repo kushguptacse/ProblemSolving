@@ -1,7 +1,7 @@
 package com.daa.graph;
 
 import java.util.Queue;
-
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
@@ -31,7 +31,7 @@ import java.util.LinkedList;
  * pros: it will always take o(1) time to add,remove and find the edge.
  * 
  */
-public class GraphAdjacencyMatrix implements Graph{
+public class GraphAdjacencyMatrix implements Graph {
 
 	private final int noOfVertices;
 
@@ -64,8 +64,8 @@ public class GraphAdjacencyMatrix implements Graph{
 	/**
 	 * Breadth First Search.
 	 * 
-	 * first all the adjacent vertex traversed then we move forward.
-	 * it is just like level-order traversal of binary tree.
+	 * first all the adjacent vertex traversed then we move forward. it is just like
+	 * level-order traversal of binary tree.
 	 * 
 	 * @param v - source node
 	 */
@@ -79,20 +79,55 @@ public class GraphAdjacencyMatrix implements Graph{
 		Queue<Integer> queue = new LinkedList<>();
 		queue.add(v);
 		visited[v] = true;
-		while(!queue.isEmpty()) {
+		while (!queue.isEmpty()) {
 			int j = queue.poll();
-			System.out.print(j+" ");
-			for(int i=0;i<matrix[j].length;i++) {
-				if(matrix[j][i] && !visited[i]) {
-					visited[i]=true;
+			System.out.print(j + " ");
+			for (int i = 0; i < matrix[j].length; i++) {
+				if (matrix[j][i] && !visited[i]) {
+					visited[i] = true;
 					queue.add(i);
 				}
 			}
 		}
 		System.out.println();
-		
+
 	}
 	
+	/**
+	 * Depth First Search.
+	 * 
+	 * first we visit a vertex then we go to first neighbor and visit it and then we go again
+	 * to that node first neighbor. traversed it then we move forward. it is just like
+	 * pre-order traversal of binary tree.
+	 * 
+	 * Stack is used. o(V+E)
+	 * 
+	 * @param v - source node
+	 */
+	@Override
+	public void dfs(int v) {
+		if (v < 0 || v >= noOfVertices) {
+			return;
+		}
+		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
+		boolean[] visited = new boolean[noOfVertices];
+		Deque<Integer> stack = new LinkedList<>();
+		stack.push(v);
+		visited[v] = true;
+		while (!stack.isEmpty()) {
+			int j = stack.pop();
+			System.out.print(j + " ");
+			for (int i = 0; i < matrix[j].length; i++) {
+				if (!visited[i] && matrix[j][i]) {
+					visited[i] = true;
+					stack.push(i);
+				}
+			}
+		}
+		System.out.println();
+
+	}
+
 	/**
 	 * if vertices are invalid return false else will remove the edges from i to j and j to i.
 	 * o(1)
@@ -137,12 +172,6 @@ public class GraphAdjacencyMatrix implements Graph{
 			}
 			System.out.println();
 		}
-	}
-
-	@Override
-	public void dfs(int v) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

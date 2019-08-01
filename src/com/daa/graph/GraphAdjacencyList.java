@@ -143,6 +143,7 @@ public class GraphAdjacencyList implements Graph {
 	/**
 	 * perform DFS using recursion. In this way we can use recursion call stack.
 	 * performance wise both are same.
+	 * o(V+E)
 	 */
 	public void dfs(int v) {
 		if (v < 0 || v >= adjListArray.length) {
