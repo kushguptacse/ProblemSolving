@@ -19,7 +19,7 @@ public class DeQueue<T extends Comparable<T>> {
 	 * 
 	 * @param data
 	 */
-	public void add(T data) {
+	public void addRear(T data) {
 		DoublyNode<T> node = new DoublyNode<>(data);
 		if (front == null) {
 			front = node;
@@ -36,7 +36,7 @@ public class DeQueue<T extends Comparable<T>> {
 	 * 
 	 * @return removed item.
 	 */
-	public T poll() {
+	public T pollFront() {
 		if (front == null) {
 			return null;
 		}
