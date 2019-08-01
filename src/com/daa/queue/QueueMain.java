@@ -3,7 +3,7 @@ package com.daa.queue;
 public class QueueMain {
 
 	public static void main(String[] args) {
-		Queue<Integer> queue = new Queue<>();
+		DeQueue<Integer> queue = new DeQueue<>();
 		queue.add(1);
 //		queue.print();
 		queue.add(2);

@@ -24,8 +24,8 @@ public class DeQueue<T extends Comparable<T>> {
 		if (front == null) {
 			front = node;
 		} else {
-			node.setNext(rear);
-			rear.setPrev(node);
+			rear.setNext(node);
+			node.setPrev(rear);
 		}
 		rear = node;
 		size++;
@@ -41,12 +41,11 @@ public class DeQueue<T extends Comparable<T>> {
 			return null;
 		}
 		T data= front.getData();
-		if (front == rear) {
-			front = null;
+		front = front.getNext();
+		if (front == null) {
 			rear = null;
 		} else {
-			front = front.getPrev();
-			front.setNext(null);
+			front.setPrev(null);
 		}
 		size--;
 		return data;

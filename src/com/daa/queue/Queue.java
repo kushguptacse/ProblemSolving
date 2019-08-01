@@ -18,7 +18,7 @@ public class Queue<T extends Comparable<T>> {
 
 	/**
 	 * insert data from rear end
-	 * 
+	 * o(1)
 	 * @param data
 	 */
 	public void add(T data) {
@@ -34,8 +34,8 @@ public class Queue<T extends Comparable<T>> {
 
 	/**
 	 * remove data from front end.
-	 * 
-	 * @return
+	 * o(1)
+	 * @return removed data
 	 */
 	public T poll() {
 		if (front == null) {
