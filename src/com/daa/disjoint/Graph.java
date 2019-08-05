@@ -32,6 +32,8 @@ public class Graph {
 	}
 
 	/**
+	 * O(ElogV)
+	 * here logv is very slow growing function and is very close to constant
 	 * 
 	 * @param graph
 	 * @return true if cycle exits

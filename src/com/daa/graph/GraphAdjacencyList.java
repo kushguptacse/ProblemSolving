@@ -9,7 +9,7 @@ import java.util.Queue;
  * Graph adjacency List implementation of graph -
  * 
  * @f:off
- * prepare array of List. where array size is v. where v is the number of vertices.
+ * Prepare array of List. where array size is v. where v is the number of vertices.
  * addEdge - i,j. we will use i as index and add j to end of the list to that index.
  * 
  * for e.g. - 
@@ -144,16 +144,29 @@ public class GraphAdjacencyList implements Graph {
 	 * Prepare the topological order of the graph. multiple order possible.
 	 * 
 	 * Rule is - in (u,v) vertex pair. u will appear before v. due to this property it is used
-	 * in build tool like maven. o(u+v)
+	 * in build tool like Maven. o(u+v)
+	 * 
+	 * @f:off
+	 * To achieve it - we need two stack. and one adjList array.
+	 * stack1 - To hold the vertex as per normal DFS logic. for it we can use recursion method stack here.
+	 * stack2 - To keep result vertex.
+	 * 
+	 * we will add vertex to stack2 only if all it's neighbors are visited.
+	 * 
+	 * we will run a loop for all vertices. and if it is not visited call recursive method.
+	 * method - 
+	 * 1. set vertex as visited.
+	 * 2. for every node v of all adjacent nodes.check if v is not visited. if yes, call method again.
+	 * after the loop. just push passed vertex to stack2.
+	 * The node that will first come out of the loop will have all the neigbhours visited first.
+	 * @f:on
 	 */
 	public void topologicalSort() {
 		System.out.println("Topological sort :");
 		Deque<Integer> stack = new LinkedList<>();
 		boolean[] visited = new boolean[noOfVertices];
 		for (int i = 0; i < noOfVertices; i++) {
-			if (!visited[i]) {
-				topologicalSortRecursion(i, visited, stack);
-			}
+			topologicalSortRecursion(i, visited, stack);
 		}
 		while (!stack.isEmpty()) {
 			System.out.print(stack.pop() + " ");
@@ -162,13 +175,12 @@ public class GraphAdjacencyList implements Graph {
 	}
 
 	private void topologicalSortRecursion(int v, boolean[] visited, Deque<Integer> stack) {
+		if (visited[v]) {
+			return;
+		}
 		visited[v] = true;
 		List<Integer> list = adjListArray[v];
-		list.forEach(o -> {
-			if (!visited[o]) {
-				topologicalSortRecursion(o, visited, stack);
-			}
-		});
+		list.forEach(o -> topologicalSortRecursion(o, visited, stack));
 		stack.push(v);
 	}
 
@@ -197,6 +209,61 @@ public class GraphAdjacencyList implements Graph {
 			}
 		});
 
+	}
+
+	/**
+	 * Check if cycle exist in directed graph. O(V + E) DFS
+	 * 
+	 * @return true if cycle exist
+	 */
+	public boolean isCycleInDirectedGraph() {
+		boolean[] visited = new boolean[noOfVertices];
+		boolean[] recStack = new boolean[noOfVertices];
+		for (int i = 0; i < noOfVertices; i++) {
+			if (isCycleInDirectedGraphRec(i, visited, recStack)) {
+				return true;
+			}
+			recStack[i] = false;
+		}
+		return false;
+	}
+
+	/**
+	 * @f:off
+	 * Approach is similar to topological sort. but here our interest is just to check cycle.
+	 * so we will not push item into second stack to get the order.
+	 * we have observed during topological sort that-
+	 *  1. if there is a cycle in graph then recursion method call stack will have that value twice.
+	 *  so basically we need to keep track whether there exist duplicate element in the method call stack.
+	 *  so, for that we keep boolean array just like visited array.
+	 *  once the element is moved to method call stack we set flag true.
+	 *  at any point if flag is already true we just return from function and print true.
+	 *  and if for the particular index the method stack is empty.
+	 *  than we need to reset recursionSTack boolean. as we need to check for new index again.
+	 * @f:on
+	 * @param v
+	 * @param visited
+	 * @param recStack
+	 * @return true if exists.
+	 */
+	private boolean isCycleInDirectedGraphRec(int v, boolean[] visited, boolean[] recStack) {
+		if (visited[v]) {
+			return false;
+		}
+		if (recStack[v]) {
+			return true;
+		}
+		visited[v] = true;
+		recStack[v] = true;
+
+		List<Integer> list = adjListArray[v];
+		for (Integer o : list) {
+			if (isCycleInDirectedGraphRec(o, visited, recStack)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

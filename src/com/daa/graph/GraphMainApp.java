@@ -5,8 +5,8 @@ package com.daa.graph;
  */
 public class GraphMainApp {
 	public static void main(String[] args) {
-
-		testTopologySort(new GraphAdjacencyList(6));
+		isCycleTest(new GraphAdjacencyList(4));
+		testTopologySort(new GraphAdjacencyList(6) );
 		testDFS(new GraphAdjacencyList(4));
 		System.out.println("-----------------------------------------------");
 		testDFS(new GraphAdjacencyMatrix(4));
@@ -16,16 +16,34 @@ public class GraphMainApp {
 		testAdjacencyList();
 	}
 
+	private static void isCycleTest(GraphAdjacencyList graph) {
+		graph.addEdge(0, 1);
+		graph.addEdge(0, 2);
+		graph.addEdge(1, 3);
+//        graph.addEdge(2, 0); 
+		graph.addEdge(3, 2);
+//        graph.addEdge(3, 3); 
+
+		if (graph.isCycleInDirectedGraph())
+			System.out.println("Graph contains cycle");
+		else
+			System.out.println("Graph doesn't contain cycle");
+	}
+
 	private static void testTopologySort(GraphAdjacencyList g) {
-		 // Create a graph given in the above diagram 
-		g.addEdge(5, 2); 
-        g.addEdge(5, 0); 
-        g.addEdge(4, 0); 
-        g.addEdge(4, 1); 
-        g.addEdge(2, 3); 
-        g.addEdge(3, 1); 
-  
-        g.topologicalSort(); 		
+		// Create a graph given in the above diagram
+		g.addEdge(5, 2);
+		g.addEdge(5, 0);
+		g.addEdge(4, 0);
+		g.addEdge(4, 1);
+		g.addEdge(2, 3);
+		g.addEdge(3, 1);
+
+//		g.addEdge(0, 1);
+//		g.addEdge(0, 2);
+//		g.addEdge(1, 3);
+//		g.addEdge(3, 2);
+		g.topologicalSort();
 	}
 
 	private static void testDFS(Graph g) {
