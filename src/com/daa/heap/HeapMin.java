@@ -1,22 +1,22 @@
 package com.daa.heap;
 
 /**
- * max heap implementation
+ * min heap implementation
  * 
  * @author G521885
  *
  */
-public class Heap implements PriorityQueue<Integer> {
+public class HeapMin implements PriorityQueue<Integer> {
 
 	private int size;
 	private final Integer[] heapArray;
 	private static final int DEFAULT_CAPACITY = 10;
 
-	public Heap() {
+	public HeapMin() {
 		heapArray = new Integer[DEFAULT_CAPACITY];
 	}
 
-	public Heap(int initialCapicity) {
+	public HeapMin(int initialCapicity) {
 		heapArray = new Integer[initialCapicity];
 	}
 
@@ -32,7 +32,7 @@ public class Heap implements PriorityQueue<Integer> {
 		// fix up wards
 		int child = size;
 		int parent = (size - 1) / 2;
-		while (child > 0 && heapArray[parent] < heapArray[child]) {
+		while (child > 0 && heapArray[parent] > heapArray[child]) {
 			swap(parent, child);
 			child = parent;
 			parent = (parent - 1) / 2;
@@ -102,16 +102,16 @@ public class Heap implements PriorityQueue<Integer> {
 		int first = 2 * i + 1;
 		int second = 2 * i + 2;
 		if (second < size) {
-			first = findMax(first, second);
+			first = findMin(first, second);
 		}
-		if (second <= size && heapArray[first] > heapArray[i]) {
+		if (second <= size && heapArray[first] < heapArray[i]) {
 			swap(first, i);
 			fixDown(first);
 		}
 	}
 
-	private int findMax(int i, int child) {
-		return heapArray[i] > heapArray[child] ? i : child;
+	private int findMin(int i, int child) {
+		return heapArray[i] < heapArray[child] ? i : child;
 	}
 
 	/*

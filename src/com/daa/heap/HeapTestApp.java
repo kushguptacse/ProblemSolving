@@ -7,9 +7,10 @@ import com.daa.stack.StackUsingHeap;
 
 public class HeapTestApp {
 	public static void main(String[] args) {
-		testQueue();
-		testStack();
-		Heap heapObj = new Heap();
+		
+//		testQueue();
+//		testStack();
+		HeapMin heapObj = new HeapMin();
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.println("Enter the element you want to insert");
 			int data = sc.nextInt();
@@ -24,6 +25,9 @@ public class HeapTestApp {
 				data = sc.nextInt();
 				c++;
 			}
+			System.out.println("--------------***-------------------------");
+			heapObj.updateKey(0, 5);
+			System.out.println(heapObj.toString());
 			System.out.println("--------------***-------------------------");
 			System.out.println("Enter the element you want to delete");
 			data = sc.nextInt();
