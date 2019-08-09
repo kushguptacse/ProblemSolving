@@ -8,8 +8,8 @@ import com.daa.stack.StackUsingHeap;
 public class HeapTestApp {
 	public static void main(String[] args) {
 		
-//		testQueue();
-//		testStack();
+		testQueue();
+		testStack();
 		HeapMin heapObj = new HeapMin();
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.println("Enter the element you want to insert");

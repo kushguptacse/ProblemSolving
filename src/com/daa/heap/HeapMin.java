@@ -59,10 +59,7 @@ public class HeapMin implements PriorityQueue<Integer> {
 
 	@Override
 	public Integer peek() {
-		if (isEmpty()) {
-			return null;
-		}
-		return heapArray[0];
+		return isEmpty() ? null : heapArray[0];
 	}
 
 	/**
