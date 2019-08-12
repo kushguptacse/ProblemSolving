@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 /**
  * Find Shortest path from Source node to all other nodes.
- * result may be in-consitant if node weight are negative.
+ * result may be in-consistent if node weight are negative.
  * 
  * @f:off
  * Approach -
@@ -37,8 +37,10 @@ public class DijkstraAlgo {
 	private final List<GraphAdjacencyNode>[] adjArr;
 
 	public static void main(String[] args) {
-		testDijkstra2();
 		testDijkstra1();
+		testDijkstra2();
+		System.out.println("--------------");
+		testDijkstra3();
 	}
 
 	/**
@@ -83,13 +85,16 @@ public class DijkstraAlgo {
 		PriorityQueue<GraphAdjacencyNode> minHeap = new PriorityQueue<>();
 		int[] dist = new int[adjArr.length];
 		Set<Integer> settled = new HashSet<>();
-		
+
 		// initialize all the distance to max value as per Dijkstra algo
 		IntStream.range(1, dist.length).forEach(i -> dist[i] = Integer.MAX_VALUE);
 		// add source node to minHeap
 		minHeap.add(new GraphAdjacencyNode(source, 0));
-		
-		while (settled.size() < adjArr.length) {
+		// to keep track of previous array. i.e. path. we will store parent as value and index as
+		// child. we keep on traversing till we reach -1
+		int[] prev = new int[dist.length];
+		prev[0] = -1;
+		while (!minHeap.isEmpty()) {
 			// get the node with minimum cost first.
 			GraphAdjacencyNode minNode = minHeap.poll();
 			// adding the node whose distance is finalized
@@ -102,17 +107,29 @@ public class DijkstraAlgo {
 					// If new distance is cheaper in cost
 					if (newSum < dist[adjNode.getIndex()]) {
 						dist[adjNode.getIndex()] = newSum;
+						// add current node to minHeap.
+						minHeap.add(new GraphAdjacencyNode(adjNode.getIndex(), dist[adjNode.getIndex()]));
+						prev[adjNode.getIndex()] = minNode.getIndex();
 					}
-					// add current node to minHeap.
-					minHeap.add(new GraphAdjacencyNode(adjNode.getIndex(), dist[adjNode.getIndex()]));
 				}
 			}
 		}
 		System.out.println("Shortest path from node :");
-		IntStream.range(0, dist.length).forEach(i -> System.out.println(source + " to " + i + " is " + dist[i]));
-		
-		
+		for (int i = 1; i < prev.length; ++i) {
+			System.out.print(source + " -> " + i + " has minimum cost " + dist[i] + " and path is [ ");
+			printRoute(prev, i);
+			System.out.println("]");
+		}
 	}
+
+	private void printRoute(int prev[], int i) {
+		if (i < 0) {
+			return;
+		}
+		printRoute(prev, prev[i]);
+		System.out.print(i + " ");
+	}
+
 	private static void testDijkstra1() {
 		DijkstraAlgo g = new DijkstraAlgo(5);
 		g.addEdge(0, 1, 9);
@@ -140,6 +157,20 @@ public class DijkstraAlgo {
 		g.addEdge(6, 7, 1);
 		g.addEdge(6, 8, 6);
 		g.addEdge(7, 8, 7);
+		g.shortestPath(0);
+	}
+
+	private static void testDijkstra3() {
+		DijkstraAlgo g = new DijkstraAlgo(5);
+		g.addEdge(0, 1, 10);
+		g.addEdge(0, 4, 3);
+		g.addEdge(1, 2, 2);
+		g.addEdge(1, 4, 4);
+		g.addEdge(2, 3, 9);
+		g.addEdge(3, 2, 7);
+		g.addEdge(4, 1, 1);
+		g.addEdge(4, 2, 8);
+		g.addEdge(4, 3, 2);
 		g.shortestPath(0);
 	}
 

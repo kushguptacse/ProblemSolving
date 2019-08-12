@@ -10,7 +10,7 @@ public class HeapTestApp {
 		
 		testQueue();
 		testStack();
-		HeapMin heapObj = new HeapMin();
+		HeapMin<Integer> heapObj = new HeapMin<>();
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.println("Enter the element you want to insert");
 			int data = sc.nextInt();

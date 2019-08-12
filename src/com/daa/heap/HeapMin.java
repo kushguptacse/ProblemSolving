@@ -6,18 +6,20 @@ package com.daa.heap;
  * @author G521885
  *
  */
-public class HeapMin implements PriorityQueue<Integer> {
+public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 
 	private int size;
-	private final Integer[] heapArray;
+	private final Object[] heapArray;
 	private static final int DEFAULT_CAPACITY = 10;
 
+	@SuppressWarnings("unchecked")
 	public HeapMin() {
-		heapArray = new Integer[DEFAULT_CAPACITY];
+		heapArray = new Object[DEFAULT_CAPACITY];
 	}
 
+	@SuppressWarnings("unchecked")
 	public HeapMin(int initialCapicity) {
-		heapArray = new Integer[initialCapicity];
+		heapArray = new Object[initialCapicity];
 	}
 
 	@Override
@@ -26,13 +28,13 @@ public class HeapMin implements PriorityQueue<Integer> {
 	}
 
 	@Override
-	public void add(Integer element) {
+	public void add(T element) {
 		checkRange();
 		heapArray[size] = element;
 		// fix up wards
 		int child = size;
 		int parent = (size - 1) / 2;
-		while (child > 0 && heapArray[parent] > heapArray[child]) {
+		while (child > 0 && ((T)heapArray[parent]).compareTo(((T)heapArray[child])) > 0) {
 			swap(parent, child);
 			child = parent;
 			parent = (parent - 1) / 2;
@@ -42,7 +44,7 @@ public class HeapMin implements PriorityQueue<Integer> {
 	}
 
 	private void swap(int i, int j) {
-		Integer temp = heapArray[i];
+		T temp = ((T)heapArray[i]);
 		heapArray[i] = heapArray[j];
 		heapArray[j] = temp;
 	}
@@ -58,8 +60,8 @@ public class HeapMin implements PriorityQueue<Integer> {
 	}
 
 	@Override
-	public Integer peek() {
-		return isEmpty() ? null : heapArray[0];
+	public T peek() {
+		return isEmpty() ? null : ((T)heapArray[0]);
 	}
 
 	/**
@@ -69,21 +71,21 @@ public class HeapMin implements PriorityQueue<Integer> {
 	 * @param index
 	 * @param value
 	 */
-	public void updateKey(int index, int value) {
+	public void updateKey(int index, T value) {
 		if (index >= size || isEmpty()) {
 			return;
 		}
-		System.out.println("Updated value present at index : " + index + " to " + value);
+		System.out.println("Updating value present at index : " + index + " to " + value);
 		heapArray[index] = value;
 		fixDown(index);
 	}
 
 	@Override
-	public Integer poll() {
+	public T poll() {
 		if (isEmpty()) {
 			return null;
 		}
-		Integer item = heapArray[0];
+		T item = ((T)heapArray[0]);
 		heapArray[0] = heapArray[--size];
 		// fix down wards
 		fixDown(0);
@@ -91,7 +93,7 @@ public class HeapMin implements PriorityQueue<Integer> {
 	}
 
 	/**
-	 * heapify tree
+	 * Heapify tree
 	 * 
 	 * @param i
 	 */
@@ -101,14 +103,14 @@ public class HeapMin implements PriorityQueue<Integer> {
 		if (second < size) {
 			first = findMin(first, second);
 		}
-		if (second <= size && heapArray[first] < heapArray[i]) {
+		if (second <= size && ((T)heapArray[first]).compareTo((T)heapArray[i]) < 0) {
 			swap(first, i);
 			fixDown(first);
 		}
 	}
 
 	private int findMin(int i, int child) {
-		return heapArray[i] < heapArray[child] ? i : child;
+		return ((T)heapArray[i]).compareTo(((T)heapArray[child])) < 0 ? i : child;
 	}
 
 	/*
@@ -138,7 +140,7 @@ public class HeapMin implements PriorityQueue<Integer> {
 	 * @param maxHeap
 	 * @param item to be deleted
 	 */
-	public  void deleteByValue(int item) {
+	public  void deleteByValue(T item) {
 		for(int i=0;i<size;i++) {
 			if(item==heapArray[i]) {
 				swap(--size, i);
@@ -148,11 +150,11 @@ public class HeapMin implements PriorityQueue<Integer> {
 		}
 	} 
 	
-	public Integer deleteByIndex(int index) {
+	public T deleteByIndex(int index) {
 		if(index>=size) {
 			return null;
 		}
-		int res = heapArray[index];
+		T res = ((T)heapArray[index]);
 		swap(--size, index);
 		fixDown(index);
 		return res;
