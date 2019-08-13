@@ -1,46 +1,25 @@
 package com.daa.graph;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.stream.IntStream;
 
-/**
- * Find Shortest path from Source node to all other nodes.
- * result may be in-consistent if node weight are negative.
- * 
- * @f:off
- * Approach -
- * Distance array is used to store the min distance for every node.
- * Set of settled node is taken. which will hold the index of vertex that are settled.
- * PriorityQueue MinHeap is used. so that we can get the minimum node at o(1) time. 
- * the data stored in heap will be the distance of node on given index.
- * 
- * Initialization -
- * 
- * set distance of all nodes to max_Value and source as 0.
- * add source to MinHeap.
- * 
- * Algo - 
- * get top element u from heap and add it to the settled set.
- * for every adjacent node v of popped element u. check if that node is already present in settled set.
- * if not. perform relaxation. i.e. update distance of v if dist[u]+v.wieght<dist[v]
- * after that add that adj node v to heap with updated distance.
- * 
- * @f:on
- *
- */
 public class DijkstraAlgo {
 
 	private final List<GraphAdjacencyNode>[] adjArr;
+	private final boolean directed;
 
 	public static void main(String[] args) {
 		testDijkstra1();
+		System.out.println("-------------");
 		testDijkstra2();
-		System.out.println("--------------");
+		System.out.println("-------------");
 		testDijkstra3();
+		System.out.println("****##########*****");
+		test4();
+		System.out.println("*******************");
+		test5();
 	}
 
 	/**
@@ -50,6 +29,14 @@ public class DijkstraAlgo {
 	public DijkstraAlgo(int noOfVertices) {
 		this.adjArr = new LinkedList[noOfVertices];
 		IntStream.range(0, adjArr.length).forEach(o -> adjArr[o] = new LinkedList<>());
+		directed = false;
+	}
+
+	@SuppressWarnings("unchecked")
+	public DijkstraAlgo(int noOfVertices, boolean isDirected) {
+		this.adjArr = new LinkedList[noOfVertices];
+		IntStream.range(0, adjArr.length).forEach(o -> adjArr[o] = new LinkedList<>());
+		directed = isDirected;
 	}
 
 	/**
@@ -65,17 +52,37 @@ public class DijkstraAlgo {
 		if (source < 0 || source >= adjArr.length) {
 			return;
 		}
-		GraphAdjacencyNode node1 = new GraphAdjacencyNode(source, weight);
 		GraphAdjacencyNode node2 = new GraphAdjacencyNode(dest, weight);
 		adjArr[source].add(node2);
-		adjArr[dest].add(node1);
+		if (!directed) {
+			GraphAdjacencyNode node1 = new GraphAdjacencyNode(source, weight);
+			adjArr[dest].add(node1);
+		}
 	}
 
 	/**
-	 * Print the shortest path from source vertex to all other vertex in graph. 
-	 * @f:off
-	 * o(ElogV),
+	 * Find Shortest path from Source node to all other nodes.
+	 * result may be in-consistent if node weight are negative.
+	 * o(ElogV)-  if we did not print path.
 	 * BFS - Is used to find the shortest path
+	 * 
+	 * @f:off
+	 * Approach -
+	 * Distance array is used to store the min distance for every node.
+	 * array of settled node is taken. which will hold true if the index of vertex is settled.
+	 * PriorityQueue MinHeap is used. so that we can get the minimum node at o(1) time. 
+	 * the data stored in heap will be the distance of node on given index.
+	 * 
+	 * Initialization -
+	 * 
+	 * set distance of all nodes to max_Value and source as 0.
+	 * add source to MinHeap.
+	 * 
+	 * Algo - 
+	 * get top element u from heap and add it to the settled set.
+	 * for every adjacent node v of popped element u. check if that node is already present in settled set.
+	 * if not. perform relaxation. i.e. update distance of v if dist[u]+v.wieght<dist[v]
+	 * after that add that adj node v to heap with updated distance.
 	 * 
 	 * @f:on
 	 * @param source
@@ -84,25 +91,26 @@ public class DijkstraAlgo {
 
 		PriorityQueue<GraphAdjacencyNode> minHeap = new PriorityQueue<>();
 		int[] dist = new int[adjArr.length];
-		Set<Integer> settled = new HashSet<>();
+		boolean[] settled = new boolean[dist.length];
+		int[] prev = new int[dist.length];
 
 		// initialize all the distance to max value as per Dijkstra algo
-		IntStream.range(1, dist.length).forEach(i -> dist[i] = Integer.MAX_VALUE);
+		IntStream.range(0, dist.length).forEach(i -> dist[i] = Integer.MAX_VALUE);
+		dist[source] = 0;
 		// add source node to minHeap
 		minHeap.add(new GraphAdjacencyNode(source, 0));
 		// to keep track of previous array. i.e. path. we will store parent as value and index as
-		// child. we keep on traversing till we reach -1
-		int[] prev = new int[dist.length];
-		prev[0] = -1;
+		// child. we keep on traversing till we reach -1 i.e. source
+		prev[source] = -1;
 		while (!minHeap.isEmpty()) {
 			// get the node with minimum cost first.
 			GraphAdjacencyNode minNode = minHeap.poll();
 			// adding the node whose distance is finalized
-			settled.add(minNode.getIndex());
+			settled[minNode.getIndex()] = true;
 			// perform relaxation
 			for (GraphAdjacencyNode adjNode : adjArr[minNode.getIndex()]) {
 				// if adjacent node not already settled.check if distance needed to be adjust or not.
-				if (!settled.contains(adjNode.getIndex())) {
+				if (!settled[adjNode.getIndex()]) {
 					int newSum = dist[minNode.getIndex()] + adjNode.getWeight();
 					// If new distance is cheaper in cost
 					if (newSum < dist[adjNode.getIndex()]) {
@@ -114,15 +122,15 @@ public class DijkstraAlgo {
 				}
 			}
 		}
-		System.out.println("Shortest path from node :");
-		for (int i = 1; i < prev.length; ++i) {
+		System.out.println("Dijkstra Shortest path from node :");
+		for (int i = 0; i < prev.length; ++i) {
 			System.out.print(source + " -> " + i + " has minimum cost " + dist[i] + " and path is [ ");
 			printRoute(prev, i);
 			System.out.println("]");
 		}
 	}
 
-	private void printRoute(int prev[], int i) {
+	private void printRoute(int[] prev, int i) {
 		if (i < 0) {
 			return;
 		}
@@ -174,4 +182,29 @@ public class DijkstraAlgo {
 		g.shortestPath(0);
 	}
 
+	private static void test4() {
+		DijkstraAlgo g = new DijkstraAlgo(5, true);
+		g.addEdge(0, 1, -1);
+		g.addEdge(0, 2, 4);
+		g.addEdge(1, 2, 3);
+		g.addEdge(1, 3, 2);
+		g.addEdge(1, 4, 2);
+		g.addEdge(3, 2, 5);
+		g.addEdge(3, 1, 1);
+		g.addEdge(4, 3, -3);
+	}
+
+	private static void test5() {
+		DijkstraAlgo g = new DijkstraAlgo(9, true);
+		g.addEdge(0, 1, 1);
+		g.addEdge(1, 2, 1);
+		g.addEdge(2, 4, 1);
+		g.addEdge(4, 3, -3);
+		g.addEdge(3, 2, 1);
+		g.addEdge(1, 5, 4);
+		g.addEdge(1, 6, 4);
+		g.addEdge(5, 6, 5);
+		g.addEdge(6, 7, 4);
+		g.addEdge(5, 7, 3);
+	}
 }
