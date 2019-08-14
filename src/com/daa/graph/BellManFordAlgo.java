@@ -4,7 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class BellManFordAlgoBetter {
+/**
+ * in case of negative weight it will works as compared to Dijkstra. but take o(ve) time.
+ * it can detect negative weight cycle also if present.
+ * 
+ * if we know ther is no cycle and graph is directed (DAG). then in such case DAG shortest
+ * path algo can be used. o(E+V) is time complexity of DAG Shortest Path Algo.
+ * 
+ * @author G521885
+ *
+ */
+public class BellManFordAlgo {
 
 	private final List<GraphWeightedNode> adjList;
 	private final int noOfVertices;
@@ -25,13 +35,13 @@ public class BellManFordAlgoBetter {
 	/**
 	 * @param no Of Vertices in a graph
 	 */
-	public BellManFordAlgoBetter(int v) {
+	public BellManFordAlgo(int v) {
 		this.noOfVertices = v;
 		this.adjList = new LinkedList<>();
 		this.directed = false;
 	}
 
-	public BellManFordAlgoBetter(int v, boolean directed) {
+	public BellManFordAlgo(int v, boolean directed) {
 		this.noOfVertices = v;
 		this.adjList = new LinkedList<>();
 		this.directed = directed;
@@ -95,7 +105,7 @@ public class BellManFordAlgoBetter {
 	}
 
 	private static void test1() {
-		BellManFordAlgoBetter g = new BellManFordAlgoBetter(5);
+		BellManFordAlgo g = new BellManFordAlgo(5);
 		g.addEdge(0, 1, 9);
 		g.addEdge(0, 2, 6);
 		g.addEdge(0, 3, 5);
@@ -106,7 +116,7 @@ public class BellManFordAlgoBetter {
 	}
 
 	private static void test2() {
-		BellManFordAlgoBetter g = new BellManFordAlgoBetter(9);
+		BellManFordAlgo g = new BellManFordAlgo(9);
 		g.addEdge(0, 1, 4);
 		g.addEdge(0, 7, 8);
 		g.addEdge(1, 2, 8);
@@ -125,7 +135,7 @@ public class BellManFordAlgoBetter {
 	}
 
 	private static void test3() {
-		BellManFordAlgoBetter g = new BellManFordAlgoBetter(5);
+		BellManFordAlgo g = new BellManFordAlgo(5);
 		g.addEdge(0, 1, 10);
 		g.addEdge(0, 4, 3);
 		g.addEdge(1, 2, 2);
@@ -139,7 +149,7 @@ public class BellManFordAlgoBetter {
 	}
 
 	private static void test4() {
-		BellManFordAlgoBetter g = new BellManFordAlgoBetter(5, true);
+		BellManFordAlgo g = new BellManFordAlgo(5, true);
 		g.addEdge(0, 1, -1);
 		g.addEdge(0, 2, 4);
 		g.addEdge(1, 2, 3);
@@ -152,7 +162,7 @@ public class BellManFordAlgoBetter {
 	}
 
 	private static void test5() {
-		BellManFordAlgoBetter g = new BellManFordAlgoBetter(9, true);
+		BellManFordAlgo g = new BellManFordAlgo(9, true);
 		g.addEdge(0, 1, 1);
 		g.addEdge(1, 2, 1);
 		g.addEdge(2, 4, 1);

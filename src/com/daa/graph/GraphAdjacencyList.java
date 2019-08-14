@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.IntStream;
 
 /**
  * Graph adjacency List implementation of graph -
@@ -158,7 +159,7 @@ public class GraphAdjacencyList implements Graph {
 	 * 1. set vertex as visited.
 	 * 2. for every node v of all adjacent nodes.check if v is not visited. if yes, call method again.
 	 * after the loop. just push passed vertex to stack2.
-	 * The node that will first come out of the loop will have all the neigbhours visited first.
+	 * The node that will first come out of the loop will have all the neighbors visited first.
 	 * @f:on
 	 */
 	public void topologicalSort() {

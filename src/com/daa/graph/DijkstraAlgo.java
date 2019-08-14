@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.IntStream;
 
+/**
+ * can misbehave if weights are negative. elogv
+ * 
+ * @author G521885
+ *
+ */
 public class DijkstraAlgo {
 
 	private final List<GraphAdjacencyNode>[] adjArr;
