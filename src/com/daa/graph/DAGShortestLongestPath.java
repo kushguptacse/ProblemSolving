@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class DAGShortestPath {
+public class DAGShortestLongestPath {
 
 	private final List<GraphAdjacencyNode>[] adjArr;
 
@@ -15,10 +15,10 @@ public class DAGShortestPath {
 	}
 
 	private static void test2() {
-		DAGShortestPath g = new DAGShortestPath(6);
+		DAGShortestLongestPath g = new DAGShortestLongestPath(6);
 		g.addEdge(0, 1, 5);
 		g.addEdge(0, 2, 3);
-		g.addEdge(1, 3, 6);
+		g.addEdge(1, 3, 6); 
 		g.addEdge(1, 2, 2);
 		g.addEdge(2, 4, 4);
 		g.addEdge(2, 5, 2);
@@ -28,11 +28,12 @@ public class DAGShortestPath {
 		g.addEdge(4, 5, -2);
 
 		int s = 1;
+		g.shortestPath(s);
 		g.longestPath(s);
 	}
 
 	private static void test1() {
-		DAGShortestPath g = new DAGShortestPath(6);
+		DAGShortestLongestPath g = new DAGShortestLongestPath(6);
 		g.addEdge(0, 1, 5);
 		g.addEdge(0, 2, 3);
 		g.addEdge(1, 3, 6);
@@ -48,7 +49,7 @@ public class DAGShortestPath {
 	}
 
 	@SuppressWarnings("unchecked")
-	public DAGShortestPath(int v) {
+	public DAGShortestLongestPath(int v) {
 		adjArr = new LinkedList[v];
 		IntStream.range(0, v).forEach(i -> adjArr[i] = new LinkedList<>());
 	}
@@ -100,7 +101,9 @@ public class DAGShortestPath {
 		int[] dist = new int[adjArr.length];
 		IntStream.range(0, adjArr.length).forEach(i -> dist[i] = Integer.MIN_VALUE);
 		dist[source] = 0;
-		Deque<Integer> stack = getTopologicalOrder(); 
+		Deque<Integer> stack = getTopologicalOrder();
+		int[] prev = new int[dist.length];
+		IntStream.range(0, prev.length).forEach(i -> prev[i] = -1);
 		while (!stack.isEmpty()) {
 			int i = stack.pop();
 			for (GraphAdjacencyNode node : adjArr[i]) {
@@ -108,6 +111,7 @@ public class DAGShortestPath {
 					int sum = dist[i] + node.getWeight();
 					if (sum > dist[node.getIndex()]) {
 						dist[node.getIndex()] = sum;
+						prev[node.getIndex()] = i;
 					}
 				}
 			}
@@ -115,11 +119,20 @@ public class DAGShortestPath {
 
 		System.out.println("Following are longest distances " + "from source " + source);
 		// Print the calculated longest distances
-		for (int i = 0; i < dist.length; i++) {
-			System.out.print(dist[i] + " ");
+		for (int i = 0; i < prev.length; ++i) {
+			System.out.print(source + " -> " + i + " has minimum cost " + dist[i] + " and path is [ ");
+			printRoute(prev, i);
+			System.out.println("]");
 		}
 		System.out.println();
-
+	}
+	
+	private void printRoute(int[] prev, int i) {
+		if (i < 0) {
+			return;
+		}
+		printRoute(prev, prev[i]);
+		System.out.print(i + " ");
 	}
 
 	private Deque<Integer> getTopologicalOrder() {
