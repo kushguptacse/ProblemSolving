@@ -4,7 +4,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.IntStream;
 
 /**
  * Graph adjacency List implementation of graph -
@@ -145,7 +144,7 @@ public class GraphAdjacencyList implements Graph {
 	 * Prepare the topological order of the graph. multiple order possible.
 	 * 
 	 * Rule is - in (u,v) vertex pair. u will appear before v. due to this property it is used
-	 * in build tool like Maven. o(u+v)
+	 * in build tool like Maven. o(E+V)
 	 * 
 	 * @f:off
 	 * To achieve it - we need two stack. and one adjList array.
@@ -195,7 +194,6 @@ public class GraphAdjacencyList implements Graph {
 		}
 		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
 		boolean[] visited = new boolean[noOfVertices];
-//		visited[v] = true;
 		dfsRecursionUtil(v, visited);
 		System.out.println();
 	}
