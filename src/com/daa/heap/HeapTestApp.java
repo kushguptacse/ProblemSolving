@@ -30,7 +30,7 @@ public class HeapTestApp {
 			System.out.println(heapObj.toString());
 			System.out.println("--------------***-------------------------");
 			System.out.println("Enter the element you want to delete");
-			data = sc.nextInt();
+			data = sc.nextInt(); 
 			heapObj.deleteByValue(data);
 			System.out.println(heapObj.toString());
 			System.out.println("Enter the index from which you want to delete");
