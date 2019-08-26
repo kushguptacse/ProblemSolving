@@ -18,7 +18,6 @@ import com.daa.math.MathUtil;
 public class GraphDetectCycle {
 
 	private int noOfVertices;
-	private int noOfEdges;
 	private Edge[] edges;
 	private int count = 0;
 
@@ -29,12 +28,19 @@ public class GraphDetectCycle {
 	public GraphDetectCycle(int noOfVertices, int noOfEdges) {
 		super();
 		this.noOfVertices = noOfVertices;
-		this.noOfEdges = noOfEdges;
 		edges = new Edge[noOfEdges];
 	}
 
 	/**
+	 * @f:off
+	 * To check cycle exists or not we can disjoint sets.
+	 * union by rank and find by path compression technique.
+	 * We will use parent array where index will be the vertex and value has two parts - sign and magnitude.
+	 * positive sign means further parent exists. and negative means no parent for that node.
+	 * magnitude decide the rank. i.e. how many child's that index has. for 1 child value will be -2.
+	 * 
 	 * O(ElogV) here logV is very slow growing function and is very close to constant
+	 * @f:on
 	 * 
 	 * @param graph
 	 * @return true if cycle exits
@@ -46,7 +52,7 @@ public class GraphDetectCycle {
 			parent[i] = -1;
 		}
 
-		for (int i = 0; i < noOfEdges; i++) {
+		for (int i = 0; i < edges.length; i++) {
 			int x = find(parent, edges[i].getSrc());
 			int y = find(parent, edges[i].getDest());
 			if (x == y) {
@@ -67,32 +73,54 @@ public class GraphDetectCycle {
 
 	/**
 	 * Perform union of x and y. 
-	 * also assign rank to decide which node needed to be parent. if
+	 * also update rank to decide which node needed to be parent. if
 	 * rank of y>x. than parent[x]=y. and new rank of y will be original + number of new nodes
 	 * added.
 	 * 
-	 * @param x
-	 * @param y
+	 * @f:off
+	 * Disjoint Set -
+	 * Perform union of x and y.
+	 * 
+	 * To check which out of x or y will parent. 
+	 * We need to first perform find x and find y operation.(which is done before calling this method).
+	 * 
+	 * Check if absoluteValue of (parent[x1]) < absoluteValue of (parent[y1]). 
+	 * i.e. we are checking which of them has higher rank and parent holds the rank if we ignore sign.
+	 * 1. If yes it means y1 should be the parent of x1. and we will update the rank of parent y1 as original value + old parent[x1]. 
+	 * @f:on
+	 * 
+	 * @param parent
+	 * @param x1
+	 * @param y1
 	 */
-	public void union(int[] parent, int x, int y) {
+	public void union(int[] parent, int x1, int y1) {
 
-		if (MathUtil.abs(parent[x]) < MathUtil.abs(parent[y])) {
-			int res = parent[x];
-			parent[x] = y;
-			parent[y] = parent[y] + res;
+		if (MathUtil.abs(parent[x1]) < MathUtil.abs(parent[y1])) {
+			int res = parent[x1];
+			parent[x1] = y1;
+			parent[y1] = parent[y1] + res;
 		} else {
-			int res = parent[y];
-			parent[y] = x;
-			parent[x] = parent[x] + res;
+			int res = parent[y1];
+			parent[y1] = x1;
+			parent[x1] = parent[x1] + res;
 		}
 	}
 
 	/**
-	 * Find the parent and also cache the parent for faster search next time. (Path
-	 * Compression)
+	 * @f:off
+	 * 
+	 * Disjoint Set -
+	 * 
+	 * Path compression is used. parent is cached for next time faster result.
+	 * So for every node we goto root and return it. but before returning it we update the passed node parent to root. 
+	 * By this way next time we don't need to go up to the hierarchy to reach root.
+	 * 
+	 * @f:on
 	 * 
 	 * @param x
-	 * @return parent
+	 * @param parent
+	 * 
+	 * @return parent of the node passed. if no parent then return itself.
 	 */
 	public int find(int[] parent, int x) {
 		int res = x;

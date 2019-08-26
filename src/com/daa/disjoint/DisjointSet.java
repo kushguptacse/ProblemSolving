@@ -23,12 +23,19 @@ public class DisjointSet {
 	}
 
 	/**
+	 * @f:off
 	 * 
-	 * Find the parent and also cache the parent for faster search next time. (Path
-	 * Compression)
+	 * Disjoint Set -
+	 * 
+	 * Path compression is used. parent is cached for next time faster result.
+	 * So for every node we goto root and return it. but before returning it we update the passed node parent to root. 
+	 * By this way next time we don't need to go up to the hierarchy to reach root.
+	 * 
+	 * @f:on
 	 * 
 	 * @param x
-	 * @return parent
+	 * 
+	 * @return parent of the node passed. if no parent then return itself.
 	 */
 	public int find(int x) {
 		int temp = x;
@@ -42,9 +49,17 @@ public class DisjointSet {
 	}
 
 	/**
+	 * @f:off
 	 * perform union of x and y.
-	 * also assign rank to decide which node needed to be parent.
-	 * if rank of y>x. than parent[x]=y. and new rank of y will be original + number of new nodes added.
+	 * Also update rank to decide which node needed to be parent.
+	 * First find the root of x as x1 and y as y1 by using DisjointSet.Find method.
+	 * after that check which of x1 or y1 has more children i.e. more rank. so for that
+	 * if (MathUtil.abs(parent[x1]) < MathUtil.abs(parent[y1])) i.e. magnitude of value for vertex x1 < magnitude of value for vertex y1.
+	 * it means y1 should be the parent of x1. i.e. parent[x1] = y1;
+	 * and we need to update the rank of y1 as it has new child tree added.
+	 * so, parent[y1] = parent[y1] + old value of parent[x1];
+	 * 
+	 * @f:on
 	 * 
 	 * @param x
 	 * @param y
