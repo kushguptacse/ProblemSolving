@@ -57,7 +57,7 @@ public class GraphAdjacencyMatrix implements Graph {
 		if (i >= 0 && j >= 0 && i < noOfVertices && j < noOfVertices) {
 			matrix[i][j] = true;
 			// un-comment it for un-directed graph.
-			matrix[j][i] = true;
+//			matrix[j][i] = true;
 		}
 	}
 
@@ -92,7 +92,7 @@ public class GraphAdjacencyMatrix implements Graph {
 		System.out.println();
 
 	}
-	
+
 	/**
 	 * Depth First Search.
 	 * 
@@ -156,6 +156,70 @@ public class GraphAdjacencyMatrix implements Graph {
 	public boolean isEdge(int i, int j) {
 		if (i >= 0 && j >= 0 && i < noOfVertices && j < noOfVertices) {
 			return matrix[i][j];
+		}
+		return false;
+	}
+
+	/**
+	 * check whether it is possible to reach from vertex i to vertex j. BFS
+	 * 
+	 * @param i
+	 * @param j
+	 * @return true if path exists between i,j
+	 */
+	public boolean isReachableBFS(int i, int j) {
+		if (i < 0 || j < 0 || i >= noOfVertices || j >= noOfVertices) {
+			return false;
+		}
+		Queue<Integer> queue = new LinkedList<>();
+		boolean[] visited = new boolean[noOfVertices];
+		queue.add(i);
+		visited[i] = true;
+		while (!queue.isEmpty()) {
+			int v = queue.poll();
+			for (int k = 0; k < matrix[v].length; k++) {
+				if (matrix[v][k]) {
+					if (k == j) {
+						return true;
+					} else if (!visited[k]) {
+						visited[k] = true;
+						queue.add(k);
+					}
+				}
+			}
+			visited[v]=false;
+		}
+		return false;
+	}
+
+	/**
+	 * check whether it is possible to reach from vertex i to vertex j. DFS
+	 * 
+	 * @param i
+	 * @param j
+	 * @return true if path exists between i,j
+	 */
+	public boolean isReachableDFS(int i, int j) {
+		if (i < 0 || j < 0 || i >= noOfVertices || j >= noOfVertices) {
+			return false;
+		}
+		boolean[] visited = new boolean[noOfVertices];
+		visited[i] = true;
+		return dfsRecursionUtil(i, j, visited);
+	}
+
+	private boolean dfsRecursionUtil(int i, int j, boolean[] visited) {
+		for (int k = 0; k < matrix[i].length; k++) {
+			if (matrix[i][k]) {
+				if (k == j) {
+					return true;
+				} else if (!visited[k]) {
+					visited[k] = true;
+					if (dfsRecursionUtil(k, j, visited)) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}

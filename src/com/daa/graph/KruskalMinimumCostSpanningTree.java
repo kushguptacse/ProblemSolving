@@ -86,11 +86,9 @@ public class KruskalMinimumCostSpanningTree {
 
 		int total = 0;
 		System.out.println("Minimum Cost Spanning Tree According to Kruskal's Algorithm");
-		for (int j = 0; j < result.length; j++) {
-			if (result[j] != null) {
-				System.out.println(result[j].getSource() + " - " + result[j].getDest() + " : " + result[j].getWeight());
-				total = total + result[j].getWeight();
-			}
+		for (int j = 0; j < c; j++) {
+			System.out.println(result[j].getSource() + " - " + result[j].getDest() + " : " + result[j].getWeight());
+			total = total + result[j].getWeight();
 		}
 
 		return total;

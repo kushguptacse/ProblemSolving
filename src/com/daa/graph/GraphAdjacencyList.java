@@ -193,8 +193,7 @@ public class GraphAdjacencyList implements Graph {
 			return;
 		}
 		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
-		boolean[] visited = new boolean[noOfVertices];
-		dfsRecursionUtil(v, visited);
+		dfsRecursionUtil(v,  new boolean[noOfVertices]);
 		System.out.println();
 	}
 

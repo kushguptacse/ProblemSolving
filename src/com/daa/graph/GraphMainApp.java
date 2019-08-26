@@ -5,8 +5,30 @@ package com.daa.graph;
  */
 public class GraphMainApp {
 	public static void main(String[] args) {
+		GraphAdjacencyMatrix g = new GraphAdjacencyMatrix(4);
+		g.addEdge(0, 1);
+		g.addEdge(0, 2);
+		g.addEdge(0, 3);
+		g.addEdge(2, 0);
+		g.addEdge(2, 1);
+		g.addEdge(1, 3);
+
+		int s = 2, d = 3;
+		System.out.println("-----**-" + g.isReachableBFS(s, d));
+
+		g = new GraphAdjacencyMatrix(4);
+		g.addEdge(0, 1);
+		g.addEdge(0, 2);
+		g.addEdge(1, 2);
+		g.addEdge(2, 0);
+		g.addEdge(2, 3);
+		g.addEdge(3, 3);
+
+		System.out.println("--------" + g.isReachableDFS(1, 3));
+		System.out.println("--------" + g.isReachableDFS(3, 1));
+
 		isCycleTest(new GraphAdjacencyList(4));
-		testTopologySort(new GraphAdjacencyList(6) );
+		testTopologySort(new GraphAdjacencyList(6));
 		testDFS(new GraphAdjacencyList(4));
 		System.out.println("-----------------------------------------------");
 		testDFS(new GraphAdjacencyMatrix(4));
@@ -47,6 +69,7 @@ public class GraphMainApp {
 	}
 
 	private static void testDFS(Graph g) {
+
 		g.addEdge(0, 1);
 		g.addEdge(0, 2);
 		g.addEdge(1, 2);
