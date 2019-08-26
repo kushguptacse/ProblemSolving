@@ -31,12 +31,12 @@ public class DisjointSet {
 	 * @return parent
 	 */
 	public int find(int x) {
-		int res = x;
+		int temp = x;
 		while (parent[x] > -1) {
 			x = parent[x];
 		}
-		if (res != x) {
-			parent[res] = x;
+		if (temp != x) {
+			parent[temp] = x;
 		}
 		return x;
 	}

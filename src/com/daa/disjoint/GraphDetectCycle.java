@@ -6,25 +6,27 @@ import com.daa.math.MathUtil;
  * Find and union operation of disjoint set is used to detect cycle in graph. for better
  * Find- caching is used. for better union- rank is used.
  * 
- * single array is used. where positive value decide the index of parent. and for root
- * node negative value is used. to decide rate negative value is used as no parent sign
- * and larger the magnitude heaver the node/rate.
+ * @f:on
+ * Single array is used. 
+ * Where positive value decide the index of parent and for root node negative value is used. 
+ * to decide rank - Negative value is used as no parent sign and larger the magnitude heaver the node/rate.
+ * @f:off
  * 
  * @author G521885
  *
  */
-public class Graph {
+public class GraphDetectCycle {
 
 	private int noOfVertices;
 	private int noOfEdges;
 	private Edge[] edges;
-	private int count=0;
+	private int count = 0;
 
 	/**
 	 * @param noOfVertices
 	 * @param noOfEdges
 	 */
-	public Graph(int noOfVertices, int noOfEdges) {
+	public GraphDetectCycle(int noOfVertices, int noOfEdges) {
 		super();
 		this.noOfVertices = noOfVertices;
 		this.noOfEdges = noOfEdges;
@@ -32,8 +34,7 @@ public class Graph {
 	}
 
 	/**
-	 * O(ElogV)
-	 * here logv is very slow growing function and is very close to constant
+	 * O(ElogV) here logV is very slow growing function and is very close to constant
 	 * 
 	 * @param graph
 	 * @return true if cycle exits
@@ -65,7 +66,8 @@ public class Graph {
 	}
 
 	/**
-	 * perform union of x and y. also assign rank to decide which node needed to be parent. if
+	 * Perform union of x and y. 
+	 * also assign rank to decide which node needed to be parent. if
 	 * rank of y>x. than parent[x]=y. and new rank of y will be original + number of new nodes
 	 * added.
 	 * 
@@ -86,7 +88,7 @@ public class Graph {
 	}
 
 	/**
-	 * find the parent and also cache the parent for faster search next time. (Path
+	 * Find the parent and also cache the parent for faster search next time. (Path
 	 * Compression)
 	 * 
 	 * @param x
@@ -106,7 +108,7 @@ public class Graph {
 	/**
 	 * @return the edges
 	 */
-	public void addEdge(int x,int y) {
-		edges[count++]=new Edge(x,y);
+	public void addEdge(int x, int y) {
+		edges[count++] = new Edge(x, y);
 	}
 }

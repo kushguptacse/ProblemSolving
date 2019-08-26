@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  * @author G521885
  *
  */
-public class MinimumCostSpanningTree {
+public class PrimMinimumCostSpanningTree {
 
 	private List<GraphAdjacencyNode>[] adjArr;
 
@@ -23,7 +23,7 @@ public class MinimumCostSpanningTree {
 	}
 
 	@SuppressWarnings("unchecked")
-	public MinimumCostSpanningTree(int noOfVertices) {
+	public PrimMinimumCostSpanningTree(int noOfVertices) {
 		adjArr = new LinkedList[noOfVertices];
 		IntStream.range(0, adjArr.length).forEach(i -> adjArr[i] = new LinkedList<>());
 	}
@@ -57,14 +57,14 @@ public class MinimumCostSpanningTree {
 	 * 
 	 * To find minimum node we can use MinHeap. to get it in o(1) time. 
 	 * and to keep track of visited node we use visited boolean array.
-	 * and distance array is used to keep track of min distance of edge.
+	 * and distance array is used to keep track of Min distance of edge.
 	 * 
 	 * @f:on
 	 * 
 	 * @return Total Cost
 	 */
 	public int primsAlgorithm() {
-		int source = 0;
+		int source = 0; 
 		PriorityQueue<GraphAdjacencyNode> minHeap = new PriorityQueue<>();
 		boolean[] visited = new boolean[adjArr.length];
 		int[] parent = new int[adjArr.length];
@@ -85,7 +85,7 @@ public class MinimumCostSpanningTree {
 					dist[adjNode.getIndex()] = adjNode.getWeight();
 					parent[adjNode.getIndex()] = node.getIndex();
 					minHeap.add(adjNode);
-				}
+				} 
 			}
 		}
 
@@ -102,7 +102,7 @@ public class MinimumCostSpanningTree {
 	}
 
 	private static void test1() {
-		MinimumCostSpanningTree e = new MinimumCostSpanningTree(9);
+		PrimMinimumCostSpanningTree e = new PrimMinimumCostSpanningTree(9);
 		e.addEdge(0, 1, 4);
 		e.addEdge(0, 7, 8);
 		e.addEdge(1, 2, 8);
@@ -121,7 +121,7 @@ public class MinimumCostSpanningTree {
 	}
 
 	private static void test2() {
-		MinimumCostSpanningTree e = new MinimumCostSpanningTree(7);
+		PrimMinimumCostSpanningTree e = new PrimMinimumCostSpanningTree(7);
 		e.addEdge(1 - 1, 2 - 1, 28);
 		e.addEdge(1 - 1, 6 - 1, 10);
 		e.addEdge(6 - 1, 5 - 1, 25);
@@ -135,7 +135,7 @@ public class MinimumCostSpanningTree {
 	}
 
 	private static void test3() {
-		MinimumCostSpanningTree e = new MinimumCostSpanningTree(7);
+		PrimMinimumCostSpanningTree e = new PrimMinimumCostSpanningTree(7);
 		e.addEdge(0, 1, 1);
 		e.addEdge(0, 2, 5);
 		e.addEdge(1, 2, 4);

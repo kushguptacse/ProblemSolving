@@ -38,7 +38,7 @@ public class DisjointSetMainApp {
 	}
 
 	private static void testGraphCycle2() {
-		Graph graph = new Graph(8, 9);
+		GraphDetectCycle graph = new GraphDetectCycle(8, 9);
 		graph.addEdge(0, 1);
 		graph.addEdge(2, 3);
 		graph.addEdge(4, 5);
@@ -57,7 +57,7 @@ public class DisjointSetMainApp {
 	}
 
 	private static void testGraphCycle() {
-		Graph graph = new Graph(4, 3);
+		GraphDetectCycle graph = new GraphDetectCycle(4, 3);
 
 		// add edge 0-1
 		graph.addEdge(0, 1);
