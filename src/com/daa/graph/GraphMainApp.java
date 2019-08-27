@@ -24,8 +24,8 @@ public class GraphMainApp {
 		g.addEdge(2, 3);
 		g.addEdge(3, 3);
 
-		System.out.println("--------" + g.isReachableDFS(1, 3));
-		System.out.println("--------" + g.isReachableDFS(3, 1));
+		g.countPathDFS(2, 3);
+		g.countPathDFS(3, 1);
 
 		isCycleTest(new GraphAdjacencyList(4));
 		testTopologySort(new GraphAdjacencyList(6));

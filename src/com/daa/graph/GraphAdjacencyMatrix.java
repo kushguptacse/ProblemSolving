@@ -1,6 +1,9 @@
 package com.daa.graph;
 
 import java.util.Queue;
+
+import com.daa.model.Model;
+
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -187,41 +190,40 @@ public class GraphAdjacencyMatrix implements Graph {
 					}
 				}
 			}
-			visited[v]=false;
+			visited[v] = false;
 		}
 		return false;
 	}
 
 	/**
-	 * check whether it is possible to reach from vertex i to vertex j. DFS
+	 * print the number of paths b/w vertex i to vertex j. DFS
 	 * 
 	 * @param i
 	 * @param j
 	 * @return true if path exists between i,j
 	 */
-	public boolean isReachableDFS(int i, int j) {
+	public void countPathDFS(int i, int j) {
 		if (i < 0 || j < 0 || i >= noOfVertices || j >= noOfVertices) {
-			return false;
+			return;
 		}
 		boolean[] visited = new boolean[noOfVertices];
-		visited[i] = true;
-		return dfsRecursionUtil(i, j, visited);
+		Model<Integer> model = new Model<>(0);
+		dfsRecursionUtil(i, j, visited, model);
+		System.out.println("count: " + model.getValue());
 	}
 
-	private boolean dfsRecursionUtil(int i, int j, boolean[] visited) {
-		for (int k = 0; k < matrix[i].length; k++) {
-			if (matrix[i][k]) {
-				if (k == j) {
-					return true;
-				} else if (!visited[k]) {
-					visited[k] = true;
-					if (dfsRecursionUtil(k, j, visited)) {
-						return true;
-					}
+	private void dfsRecursionUtil(int u, int d, boolean[] visited, Model<Integer> model) {
+		visited[u] = true;
+		if (u == d) {
+			model.setValue(model.getValue() + 1);
+		} else {
+			for (int k = 0; k < matrix[u].length; k++) {
+				if (matrix[u][k] && !visited[k]) {
+					dfsRecursionUtil(k, d, visited, model);
 				}
 			}
 		}
-		return false;
+		visited[u] = false;
 	}
 
 	/**
