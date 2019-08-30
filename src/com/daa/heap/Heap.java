@@ -1,7 +1,11 @@
 package com.daa.heap;
 
 /**
- * max heap implementation
+ * max heap implementation.
+ * 
+ * if we have array of size n. we can call buildHeap and it will convert it to in heap- o(n) to add
+ * element in heap it will take -logn time and if we wanted to add n elements one by one
+ * it will take nlogn time
  * 
  * @author G521885
  *

@@ -14,6 +14,8 @@ public class GraphMainApp {
 		g.addEdge(1, 3);
 
 		int s = 2, d = 3;
+		g.countPathDFS(s, d);
+		g.countPathBFS(s, d);
 		System.out.println("-----**-" + g.isReachableBFS(s, d));
 
 		g = new GraphAdjacencyMatrix(4);
@@ -23,8 +25,8 @@ public class GraphMainApp {
 		g.addEdge(2, 0);
 		g.addEdge(2, 3);
 		g.addEdge(3, 3);
-
-		g.countPathDFS(2, 3);
+		g.countPathBFS(1, 3);
+		g.countPathDFS(1, 3);
 		g.countPathDFS(3, 1);
 
 		isCycleTest(new GraphAdjacencyList(4));

@@ -12,12 +12,10 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 	private final Object[] heapArray;
 	private static final int DEFAULT_CAPACITY = 10;
 
-	@SuppressWarnings("unchecked")
 	public HeapMin() {
 		heapArray = new Object[DEFAULT_CAPACITY];
 	}
 
-	@SuppressWarnings("unchecked")
 	public HeapMin(int initialCapicity) {
 		heapArray = new Object[initialCapicity];
 	}

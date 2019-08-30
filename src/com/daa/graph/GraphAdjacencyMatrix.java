@@ -196,11 +196,37 @@ public class GraphAdjacencyMatrix implements Graph {
 	}
 
 	/**
-	 * print the number of paths b/w vertex i to vertex j. DFS
+	 * Print the total path b/w vertex i to vertex j. DFS
 	 * 
 	 * @param i
 	 * @param j
-	 * @return true if path exists between i,j
+	 */
+	public void countPathBFS(int i, int j) {
+		boolean[] visited = new boolean[noOfVertices];
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(i);
+		int c = 0;
+		while (!queue.isEmpty()) {
+			int n = queue.poll();
+			visited[n] = true;
+			if (n == j) {
+				c++;
+			} else {
+				for (int k = 0; k < matrix[n].length; k++) {
+					if (matrix[n][k] && !visited[k]) {
+						queue.add(k);
+					}
+				}
+			}
+		}
+		System.out.println("count BFS :" + c);
+	}
+
+	/**
+	 * print the total path b/w vertex i to vertex j. DFS
+	 * 
+	 * @param i
+	 * @param j
 	 */
 	public void countPathDFS(int i, int j) {
 		if (i < 0 || j < 0 || i >= noOfVertices || j >= noOfVertices) {
@@ -209,7 +235,7 @@ public class GraphAdjacencyMatrix implements Graph {
 		boolean[] visited = new boolean[noOfVertices];
 		Model<Integer> model = new Model<>(0);
 		dfsRecursionUtil(i, j, visited, model);
-		System.out.println("count: " + model.getValue());
+		System.out.println("count DFS :" + model.getValue());
 	}
 
 	private void dfsRecursionUtil(int u, int d, boolean[] visited, Model<Integer> model) {

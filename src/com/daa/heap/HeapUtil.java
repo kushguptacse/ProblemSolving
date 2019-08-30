@@ -73,7 +73,7 @@ public final class HeapUtil {
 	}
 
 	/**
-	 * sort the array according to heap sort algo o(nlogn)
+	 * sort the array according to heap sort - o(nlogn)
 	 * 
 	 * start going from last to first element in array. for each element look downwards and
 	 * then adjust that node by swapping. at last for root compare it with max child.
@@ -92,7 +92,7 @@ public final class HeapUtil {
 	 * @param arr
 	 */
 	public static void heapSort(int[] arr) {
-		// convert array into max heap
+		// convert array into max heap - o(n)
 		for (int i = arr.length / 2 - 1; i >= 0; i--) {
 			heapify(arr, arr.length, i);
 		}
