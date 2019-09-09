@@ -67,6 +67,16 @@ public class MathUtil {
 	}
 
 	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @return minimum of two numbers
+	 */
+	public static int min(Integer a, Integer b) {
+		return a < b ? a : b;
+	}
+
+	/**
 	 * Time Complexity - O(sqrt(N))
 	 * 
 	 * @param n

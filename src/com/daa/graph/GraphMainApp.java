@@ -5,6 +5,23 @@ package com.daa.graph;
  */
 public class GraphMainApp {
 	public static void main(String[] args) {
+		GraphAdjacencyList li = new GraphAdjacencyList(7);
+		li.addEdge(0, 1);
+		li.addEdge(0, 2);
+		li.addEdge(1, 3);
+		li.addEdge(1, 6);
+		li.addEdge(2, 0);
+		li.addEdge(2, 6);
+		li.addEdge(2, 5);
+		li.addEdge(3, 1);
+		li.addEdge(3, 4);
+		li.addEdge(4, 2);
+		li.addEdge(4, 3);
+		li.addEdge(5, 6);
+		li.addEdge(5, 4);
+		li.addEdge(6, 5);
+		li.printInAndOutDegree();
+
 		GraphAdjacencyMatrix g = new GraphAdjacencyMatrix(4);
 		g.addEdge(0, 1);
 		g.addEdge(0, 2);

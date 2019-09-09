@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.IntStream;
 
 /**
  * Graph adjacency List implementation of graph -
@@ -193,7 +194,7 @@ public class GraphAdjacencyList implements Graph {
 			return;
 		}
 		System.out.println("Depth First Traversal (starting from vertex " + v + ")");
-		dfsRecursionUtil(v,  new boolean[noOfVertices]);
+		dfsRecursionUtil(v, new boolean[noOfVertices]);
 		System.out.println();
 	}
 
@@ -206,7 +207,6 @@ public class GraphAdjacencyList implements Graph {
 				dfsRecursionUtil(o, visited);
 			}
 		});
-
 	}
 
 	/**
@@ -262,6 +262,86 @@ public class GraphAdjacencyList implements Graph {
 		}
 
 		return false;
+	}
+
+	/**
+	 * A vertex in an undirected connected graph is an articulation point (or cut vertex) if
+	 * removing it (and edges through it) disconnects the graph.
+	 * we don't want any articulation point in network as failure of such node result in a connection breakdown
+	 * @f:off
+	 * o(E+V)
+	 * DFS
+	 * @f:on
+	 * TODO
+	 */
+	public void printArticulationPoints() {
+		// hold the visited nodes in graph
+		boolean[] visited = new boolean[noOfVertices];
+		// hold true if particular vertex is articulation point
+		boolean[] ap = new boolean[noOfVertices];
+		// holds the parent of the vertex
+		int[] parent = new int[noOfVertices];
+		IntStream.range(0, noOfVertices).forEach(o -> parent[o] = -1);
+		// holds the discovery order. that's the order in which node is visited in DFS.
+		int[] disc = new int[noOfVertices];
+		// it is maintain to hold the back edge.
+		int[] low = new int[noOfVertices];
+
+		for (int j = 0; j < visited.length; j++) {
+			if (!visited[j]) {
+				findAP(j, visited, ap, disc, low, parent);
+			}
+		}
+
+		System.out.println("Articulation Points are : ");
+		// any vertex is an articulation point if low[child]>=disc[parent]
+		for (int i = 0; i < ap.length; i++) {
+			if (ap[i]) {
+				System.out.print(i + " ");
+			}
+		}
+		System.out.println();
+	}
+
+	/**
+	 * Method to find the articulation point for particular vertex j
+	 * TODO
+	 * @param j
+	 * @param visited
+	 * @param ap
+	 * @param disc
+	 * @param low
+	 * @param parent
+	 */
+	private void findAP(int j, boolean[] visited, boolean[] ap, int[] disc, int[] low, int[] parent) {
+
+	}
+
+	/**
+	 * In degree of the vertex is the number of the incoming edges. Out degree of the vertex
+	 * is the number of outgoing edges.
+	 * 
+	 * @f:off
+	 * approach -
+	 * Iterate through the adjList and the number of elements at particular index is out degree.
+	 * and number of times any vertex occurs in all list is in degree
+	 * 
+	 * @f:on
+	 */
+	public void printInAndOutDegree() {
+		int[] in = new int[noOfVertices];
+		int[] out = new int[noOfVertices];
+		for (int i = 0; i < adjListArray.length; i++) {
+			out[i] = adjListArray[i].size();
+			for (int obj : adjListArray[i]) {
+				in[obj] = in[obj] + 1;
+			}
+		}
+		System.out.println("v  in out");
+		for (int i = 0; i < in.length; i++) {
+			System.out.println(i + "  " + in[i] + "  " + out[i]);
+		}
+
 	}
 
 	/**

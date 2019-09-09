@@ -54,8 +54,7 @@ public class FloydWarshall {
 	}
 
 	/**
-	 * print the matrix data.
-	 * o(n2)
+	 * print the matrix data. o(n2)
 	 */
 	private void print() {
 		System.out.println("Shortest path matrix : ");
