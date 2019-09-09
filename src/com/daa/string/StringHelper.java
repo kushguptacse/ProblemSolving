@@ -6,14 +6,16 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.daa.math.MathUtil;
+
 public final class StringHelper {
 	private StringHelper() {
 	}
 
 	/**
-	 * An anagram of a string is another string that contains same characters, only
-	 * the order of characters can be different. str1 - abcd , str2 - cdab above two
-	 * string are anagram of each other.
+	 * An anagram of a string is another string that contains same characters, only the order
+	 * of characters can be different. str1 - abcd , str2 - cdab above two string are anagram
+	 * of each other.
 	 * 
 	 * Time complexity - O(N^2) - if map get and put considered worst performance
 	 * 
@@ -50,9 +52,9 @@ public final class StringHelper {
 	}
 
 	/**
-	 * An anagram of a string is another string that contains same characters, only
-	 * the order of characters can be different. str1 - abcd , str2 - cdab above two
-	 * string are anagram of each other.
+	 * An anagram of a string is another string that contains same characters, only the order
+	 * of characters can be different. str1 - abcd , str2 - cdab above two string are anagram
+	 * of each other.
 	 * 
 	 * Time complexity - O(N)
 	 * 
@@ -89,9 +91,9 @@ public final class StringHelper {
 	/**
 	 * Given a time in -hour AM/PM format, convert it to military (24-hour) time.
 	 * 
-	 * Note: Midnight is 12:00:00AM on a 12-hour clock, and 00:00:00 on a 24-hour
-	 * clock. Noon is 12:00:00PM on a 12-hour clock, and 12:00:00 on a 24-hour
-	 * clock. input - 07:05:45PM output - 19:05:45
+	 * Note: Midnight is 12:00:00AM on a 12-hour clock, and 00:00:00 on a 24-hour clock. Noon
+	 * is 12:00:00PM on a 12-hour clock, and 12:00:00 on a 24-hour clock. input - 07:05:45PM
+	 * output - 19:05:45
 	 * 
 	 * @param s
 	 * @return string in 24 hour format
@@ -147,7 +149,7 @@ public final class StringHelper {
 	 * @param n
 	 * @return number of characters
 	 */
-	public static long repeatedString(String s, long n,char a) {
+	public static long repeatedString(String s, long n, char a) {
 		int strLength = s.length();
 		long aOccurrence = 0;
 		long factor = n / strLength;
@@ -158,6 +160,46 @@ public final class StringHelper {
 			}
 		}
 		return aOccurrence;
+	}
+
+	/**
+	 * Find Longest Common Subsequence between two Strings This solution can be improved by
+	 * using dynamic programming.
+	 * 
+	 * @return length of lCS
+	 */
+	public static int longestCommonSubsequence(String s1, String s2) {
+		return lcsRec(s1.toCharArray(), s2.toCharArray(), 0, 0);
+	}
+
+	/**
+	 * Time complexity - o(2^n).
+	 * A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
+	 * For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
+	 * 
+	 * @f:off
+	 * As every character has possibility of either to get included or not included
+	 * String s1 = abdace
+	 * String s2 = babce
+	 * LCS are - bace,abce,bce,ce,e
+	 * so answer is 4.
+	 * LCS for input Sequences “ABCDGH” and “AEDFHR” is ADH of length 3
+	 * 
+	 * @f:on
+	 * @param ch1
+	 * @param ch2
+	 * @param i
+	 * @param j
+	 * @return length of lCS
+	 */
+	private static int lcsRec(char[] ch1, char[] ch2, int i, int j) {
+		if (ch1.length == i || ch2.length == j) {
+			return 0;  
+		}
+		if (ch1[i] == ch2[j]) {
+			return 1 + lcsRec(ch1, ch2, i + 1, j + 1);
+		}
+		return MathUtil.max(lcsRec(ch1, ch2, i + 1, j), lcsRec(ch1, ch2, i, j + 1));
 	}
 
 	/**
@@ -173,10 +215,10 @@ public final class StringHelper {
 		int num = Integer.parseInt(numberStr);
 		int i = 1;
 		for (; i * i <= num; i++) {
-			
+
 		}
-		int res = i-1;
-		return res*res==num;
+		int res = i - 1;
+		return res * res == num;
 	}
 
 }

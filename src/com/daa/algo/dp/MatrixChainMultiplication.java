@@ -65,9 +65,9 @@ public class MatrixChainMultiplication {
 		int[][] cost = new int[dim.length][dim.length];
 		int[][] brac = new int[dim.length][dim.length];
 		// loop will serve as difference between i and j for calculating cost
-		for (int k = 0; k < dim.length - 1; k++) {
+		for (int k = 1; k < dim.length - 1; k++) {
 			// it will start calculating cost diagonally and increase at factor of k as per Algo
-			for (int i = 1, j = k + i + 1; j < dim.length; j++, i++) {
+			for (int i = 1, j = k + i; j < dim.length; j++, i++) {
 				cost[i][j] = findMin(i, j, cost, dim, brac);
 			}
 		}
