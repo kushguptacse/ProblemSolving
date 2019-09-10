@@ -1,61 +1,12 @@
 package com.daa.algo;
 
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
-import java.util.stream.IntStream;
 
-import com.daa.array.ArrayUtil;
-import com.daa.list.LinkedListUtil;
-import com.daa.list.Node;
+import com.daa.math.MathUtil;
 
 public class Recurrsion {
-	public static void main(String[] args) {
-		Recurrsion recurrsion = new Recurrsion();
-		int n = 6;
-		int[] arr = new int[] { 1, 2, 3, 4, 5 };
-		System.out.println(recurrsion.binarySearch(arr, 1));
-		System.out.println(recurrsion.contains("elf", "waffles"));
-		System.out.println(recurrsion.max(new int[] { 8, 133, 3, 14, 511 }));
-		System.out.println(recurrsion.sum(n));
-		System.out.println((n * (n + 1)) / 2);
-		System.out.println(recurrsion.multiply(3, 4));
-		System.out.println(recurrsion.power(3, 4));
-		System.out.println(recurrsion.gcd(54, 24));
-		System.out.println(recurrsion.lcm(9, 12));
-		System.out.println(recurrsion.reverse("tset rorrim"));
-		System.out.println(recurrsion.sumOfSquares(3));
-		System.out.println(recurrsion.sumOfSeries(2));
-		System.out.println(recurrsion.equalizeArray(new int[] {50,100 }));
-		Deque<Integer> stack = new LinkedList<>();
-		IntStream.of(2,3,1,14,8).forEach(stack::push);
-		System.out.println("original stack "+stack);
-		recurrsion.reverse(stack);
-		System.out.println("reverse stack "+stack);
-		recurrsion.sort(stack);
-		System.out.println("sorted stack "+stack);
-		int[] ar= new int[] {11,12,13};
-		recurrsion.insertionSort(ar);
-		System.out.println("-----------------");
-		Arrays.stream(ar).forEach(o->System.out.print(o+" , "));
-		System.out.println();
-		ar = ArrayUtil.mergeTwoSortedArray(new int[] {2,6,41,118}, new int[] {1,23,50,117});
-		System.out.println("-----------------");
-		Arrays.stream(ar).forEach(o->System.out.print(o+" , "));
-		Node<Integer> node1 = new Node<>(1);
-		node1.setNext(new Node<>(3));
-		node1.getNext().setNext(new Node<>(5));
-		
-		Node<Integer> node2 = new Node<>(4);
-		node2.setNext(new Node<Integer>(8));
-		System.out.print("\n-------Merge two sorted list----------");
-		node1.print();
-		node2.print();
-		Node<Integer> result = LinkedListUtil.mergeSortedLists(node1, node2);
-		result.print();
-	}
 
 	public int max(int[] a) {
 		return max(a, a.length - 1);
@@ -173,15 +124,15 @@ public class Recurrsion {
 	}
 
 	/**
-	 * out of all divisors of a and b. the highest common divisor is GCD or HCF for
-	 * 20 and 60 . gcd is 20
+	 * out of all divisors of a and b. the highest common divisor is GCD or HCF for 20 and 60
+	 * . gcd is 20
 	 * 
-	 * All possible factors of 20 are 1,2,4,5,10 and 20 All possible factors of 60
-	 * are 1,3,4,5,6,10,12,15,20,30,60
+	 * All possible factors of 20 are 1,2,4,5,10 and 20 All possible factors of 60 are
+	 * 1,3,4,5,6,10,12,15,20,30,60
 	 * 
-	 * Approach - here if we subtract smallest from largest repeatedly till we reach
-	 * a==b. that value is HCF. a=54 and b=24 e.g. -> 54-24 = 30 (24,30) 30-24=6
-	 * (6,24) 24-6=18 (6,18) 18-6=12 (6,12) 12-6=6 (6,6)
+	 * Approach - here if we subtract smallest from largest repeatedly till we reach a==b.
+	 * that value is HCF. a=54 and b=24 e.g. -> 54-24 = 30 (24,30) 30-24=6 (6,24) 24-6=18
+	 * (6,18) 18-6=12 (6,12) 12-6=6 (6,6)
 	 * 
 	 * @param a
 	 * @param b
@@ -199,13 +150,13 @@ public class Recurrsion {
 	}
 
 	/**
-	 * find all the prime factors of a and b. LCM is the union of all prime factors
-	 * of the two numbers for e.g. - 9 , 12 3*3 and 3*2*2 union (LCM)- 3*2*2*3=36
+	 * find all the prime factors of a and b. LCM is the union of all prime factors of the two
+	 * numbers for e.g. - 9 , 12 3*3 and 3*2*2 union (LCM)- 3*2*2*3=36
 	 * 
 	 * Approach 1- relationship between LCM and HCF -> lcm = (a*b)/hcf.
 	 * 
-	 * Approach 2- start adding the max to the result till we get result%small ==0
-	 * result is the lCM.
+	 * Approach 2- start adding the max to the result till we get result%small ==0 result is
+	 * the lCM.
 	 * 
 	 * e.g. - a=12,b=9 (12+12)%9 (24+12)%9 so answer is 36
 	 * 
@@ -235,10 +186,10 @@ public class Recurrsion {
 	 * @return reverse of string
 	 */
 	public String reverse(String orig) {
-		if(orig.isEmpty()) {
+		if (orig.isEmpty()) {
 			return "";
 		}
-		return reverse(orig.substring(1))+orig.charAt(0);
+		return reverse(orig.substring(1)) + orig.charAt(0);
 	}
 
 	/**
@@ -269,15 +220,13 @@ public class Recurrsion {
 		reverseArray(ch, start + 1, end - 1);
 	}
 
-	
 	/**
-	 * check whether second string contains all the character of first string at
-	 * least once. e.g. -
+	 * check whether second string contains all the character of first string at least once.
+	 * e.g. -
 	 * 
 	 * @param first
 	 * @param second
-	 * @return true if second string contains all the characters of first string in
-	 *         any order
+	 * @return true if second string contains all the characters of first string in any order
 	 */
 	public boolean contains(String first, String second) {
 		Set<Character> set = new HashSet<>();
@@ -378,9 +327,8 @@ public class Recurrsion {
 	/**
 	 * Equalize array -
 	 * 
-	 * The task is to make all the array elements equal with the given operation. In
-	 * a single operation, any element of the array can be either multiplied by 2 or
-	 * by 3.
+	 * The task is to make all the array elements equal with the given operation. In a single
+	 * operation, any element of the array can be either multiplied by 2 or by 3.
 	 * 
 	 * @return true if array can be equalized
 	 */
@@ -409,19 +357,70 @@ public class Recurrsion {
 		}
 
 	}
-	
+
+	/**
+	 * 0-1 knapsack problem. our aim is to get the maximum profit. You cannot break an item,
+	 * either pick the complete item, or don’t pick it (0-1 property). here greedy method
+	 * fails as we cannot take fractional part.
+	 * 
+	 * o(2^n) time complexity. as we have to consider each item and for every item we have two
+	 * options either to include it or not. for better approach see DP algo for 0/1 knapsack.
+	 * 
+	 * @f:off
+	 * 								 __
+	 * So, for item knapsack(i,wi)= | 
+	 * 								| max(knapsack(i-1,w),knapsack(i-1,w-wi)+pi)   , wi<w
+	 *								| 0											   , i=0 || w=0
+	 *								| knapsack(i-1,w)                   		   , wi>w	
+	 *								|__
+	 * For particular element i, we need to check three conditions - 
+	 * 1.if it's weight exceeding remaining knapsack capacity. if yes, discard it and test for remaining i-1 element.
+	 * 2.if remaining weight is 0 or i=0. return 0.
+	 * 3.if it's weight is under capacity.find whether inclusion of it is increasing the profit or we should ignore it.
+	 * i.e. in step 3 we find maximum of both cases.
+	 * 
+	 * @f:on
+	 * 
+	 * @param profit
+	 * @param weight
+	 * @param capacity
+	 * @return max profit that can be achieved
+	 * 
+	 */
+	public int knapsack(int[] profit, int[] weight, int capacity) {
+		return knapsackRec(profit, weight, capacity, weight.length - 1);
+	}
+
+	/**
+	 * 
+	 * @param profit
+	 * @param weight
+	 * @param capacity
+	 * @param i
+	 * @return max profit
+	 */
+	private int knapsackRec(int[] profit, int[] weight, int capacity, int i) {
+		if (i == 0 || capacity == 0) {
+			return 0;
+		}
+		if (capacity < weight[i]) {
+			return knapsackRec(profit, weight, capacity, i - 1);
+		}
+		return MathUtil.max(knapsackRec(profit, weight, capacity, i - 1), knapsackRec(profit, weight, capacity - weight[i], i - 1) + profit[i]);
+	}
+
 	/**
 	 * Reverse the stack
 	 * 
 	 * @param stack
 	 */
 	public void reverse(Deque<Integer> stack) {
-		if(stack.isEmpty()) {
+		if (stack.isEmpty()) {
 			return;
 		}
 		int item = stack.pop();
 		reverse(stack);
-		insertAtStackBottom(stack,item);
+		insertAtStackBottom(stack, item);
 	}
 
 	/**
@@ -430,16 +429,16 @@ public class Recurrsion {
 	 * @param st
 	 */
 	public void sort(Deque<Integer> st) {
-		if(st.isEmpty()) {
+		if (st.isEmpty()) {
 			return;
 		}
-		int item =st.pop();
+		int item = st.pop();
 		sort(st);
-		insertInSortedOrder(st,item);
+		insertInSortedOrder(st, item);
 	}
-	
+
 	private void insertInSortedOrder(Deque<Integer> st, int item) {
-		if(st.isEmpty()|| st.peek()<item) {
+		if (st.isEmpty() || st.peek() < item) {
 			st.push(item);
 		} else {
 			int a = st.pop();
@@ -449,7 +448,7 @@ public class Recurrsion {
 	}
 
 	private void insertAtStackBottom(Deque<Integer> stack, int item) {
-		if(stack.isEmpty()) {
+		if (stack.isEmpty()) {
 			stack.push(item);
 		} else {
 			int item1 = stack.pop();
@@ -457,7 +456,7 @@ public class Recurrsion {
 			stack.push(item1);
 		}
 	}
-	
+
 	public void insertionSort(int[] arr) {
 //		for(int i=1;i<arr.length;i++) {
 //			for(int j=0;j<i;j++) {
@@ -466,29 +465,27 @@ public class Recurrsion {
 //				}
 //			}
 //		}
-		
-		insertionSort(arr,1,0);
-		
+		insertionSort(arr, 1, 0);
+
 	}
 
-	private void insertionSort(int[] arr, int i,int j) {
-		if(i==arr.length) {
+	private void insertionSort(int[] arr, int i, int j) {
+		if (i == arr.length) {
 			return;
 		}
-		if(j<i) {
-			if(arr[i]<arr[j]) {
-				swap(arr,i,j);
+		if (j < i) {
+			if (arr[i] < arr[j]) {
+				swap(arr, i, j);
 			}
-			insertionSort(arr,i,j+1);
+			insertionSort(arr, i, j + 1);
 		}
-		insertionSort(arr, i+1, 0);
+		insertionSort(arr, i + 1, 0);
 	}
 
 	private void swap(int[] arr, int i, int j) {
 		int temp = arr[i];
-		arr[i]=arr[j];
-		arr[j]=temp;
+		arr[i] = arr[j];
+		arr[j] = temp;
 	}
-	
 
 }
