@@ -17,15 +17,14 @@ import com.daa.math.MathUtil;
  * 								 __
  * So, for item v(i,wi)= 		| 
  * 								| max(v(i-1,w),v(i-1,w-wi)+pi)   		, wi<w
- *								| 0									    , i=0 || w=0
- *								| v(i-1,w)                   		    , wi>w	
+ *								| v(i-1,w)                   		    , wi>=w	
  *								|__
- * For particular element i, we need to check three conditions - 
- * 1.if it's weight exceeding remaining knapsack capacity. if yes, discard it and test for remaining i-1 element.
- * 2.if remaining weight is 0 or i=0. return 0.
- * 3.if it's weight is under capacity.find whether inclusion of it is increasing the profit or we should ignore it.
- * i.e. in step 3 we find maximum of both cases.
+ * For particular element i, we need to check below conditions - 
+ * 1.if it's weight exceeding remaining knapsack capacity. if yes, set v(i,w) = v(i-1,w)
+ * 2. else find whether inclusion of it is increasing the profit or not.
+ * i.e. we find maximum of both cases (v[i - 1][w], v[i - 1][w - weight[i - 1]] + profit[i - 1]) and set it to v(i,wi).
  * 
+ * Abdul bari for knapsack and geeksForGeeks for print knapsack
  * @f:on
  * 
  */

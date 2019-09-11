@@ -18,6 +18,9 @@ public class RecurrsionMainApp {
 		int w = 50;
 		System.out.println("maximum possible profit is: " + recurrsion.knapsack(val, wt, w));
 		System.out.println("maximum possible profit is: " + recurrsion.knapsack(new int[] { 1, 2, 5, 6 }, new int[] { 2, 3, 4, 5 }, 8));
+		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 2, 3 }, 4));
+		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 2, 5, 3, 6 }, 10));
+		System.out.println("total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 5, 10 }, 10));
 	}
 
 	public static void test() {

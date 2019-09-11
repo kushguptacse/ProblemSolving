@@ -424,6 +424,48 @@ public class Recurrsion {
 	}
 
 	/**
+	 * Problem statement-
+	 * 
+	 * We are given coin array. e.g. [1,2,3] and we want to get change of 4$. so, In how many
+	 * ways we can do change. given - we can use same coin multiple times. The order of coins
+	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
+	 * answer will be 4.
+	 * 
+	 * Time Complexity - Every can has two possibility- to be included or not included in
+	 * result set.so, for m coins - 2^m.
+	 * 
+	 * SEE DP section for better approach.
+	 * 
+	 * @param coins
+	 * @param n     - sum to reach
+	 * @return total
+	 */
+	public int coinChange(int[] coins, int n) {
+		return coinChangeRec(coins, coins.length, n);
+	}
+
+	/**
+	 * 
+	 * @param coins
+	 * @param m
+	 * @param n     - sum to reach
+	 * @return total possible ways to give change
+	 */
+	private int coinChangeRec(int[] coins, int m, int n) {
+		// one solution exist if we want 0 rs change. i.e. not include any coin in set
+		if (n == 0) {
+			return 1;
+		}
+		// if index is less than 0 or n become negative return 0.
+		if (m <= 0 || n < 0) {
+			return 0;
+		}
+		// we partition the coin at index m into two set. first set contains the coin and second
+		// does not
+		return coinChangeRec(coins, m, n - coins[m - 1]) + coinChangeRec(coins, m - 1, n);
+	}
+
+	/**
 	 * sort the stack
 	 * 
 	 * @param st
