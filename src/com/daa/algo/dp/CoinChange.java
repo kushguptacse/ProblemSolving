@@ -10,6 +10,9 @@ public class CoinChange {
 		System.out.println("Total possible ways to do coin change is: " + obj.count(new int[] { 1, 2, 3 }, 4));
 		System.out.println("Total possible ways to do coin change is: " + obj.count(new int[] { 2, 5, 3, 6 }, 10));
 		System.out.println("total possible ways to do coin change is: " + obj.count(new int[] { 1, 5, 10 }, 10));
+		System.out.println("Total ways to do coin change is: " + obj.countSpaceOptimized(new int[] { 1, 2, 3 }, 4));
+		System.out.println("Total ways to do coin change is: " + obj.countSpaceOptimized(new int[] { 2, 5, 3, 6 }, 10));
+		System.out.println("total ways to do coin change is: " + obj.countSpaceOptimized(new int[] { 1, 5, 10 }, 10));
 	}
 
 	/**
@@ -54,6 +57,28 @@ public class CoinChange {
 		}
 
 		return table[coins.length][sum];
+	}
+
+	/**
+	 * since we are just copying table prev value if for current coin it's value is less then
+	 * index. we can optimized space by using 1d array. set table[0]=1, then take coin one by
+	 * one and then starting from that coin till table length update the table array.
+	 * 
+	 * @param coins
+	 * @param sum
+	 * @return total number of ways to reach sum
+	 */
+	public int countSpaceOptimized(int[] coins, int sum) {
+		int[] table = new int[sum + 1];
+		table[0] = 1;
+		for (int i = 0; i < coins.length; i++) {
+			// here we have ignored index less than coin value.
+			for (int j = coins[i]; j <= sum; j++) {
+				// update coin index by just adding prev value with the new value
+				table[j] = table[j] + table[j - coins[i]];
+			}
+		}
+		return table[sum];
 	}
 
 }
