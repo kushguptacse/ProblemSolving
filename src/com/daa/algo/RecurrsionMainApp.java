@@ -13,6 +13,7 @@ public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
 		Recurrsion recurrsion = new Recurrsion();
+		checkCutRod();
 		checkSubSetSum();
 		System.out.println("minimum coins needed: " + recurrsion.minCoinChange(new int[] { 1, 2, 3 }, 4));
 		int[] coins = { 9, 6, 5, 1 };
@@ -27,6 +28,15 @@ public class RecurrsionMainApp {
 		System.out.println("total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 5, 10 }, 10));
 	}
 
+	private static void checkCutRod() {
+		Recurrsion obj = new Recurrsion();
+		int[] arr = new int[] { 1, 5, 8, 9, 10, 17, 17, 20 };
+		System.out.println("Maximum Obtainable Value is> " + obj.cutRod(arr, arr.length));
+		arr = new int[] { 2, 5, 7, 3 };
+		System.out.println("Maximum Obtainable Value is- " + obj.cutRod(arr, 5));
+		System.out.println("Maximum Obtainable Value is: " + obj.cutRod(new int[] { 3, 5, 8, 9, 10, 17, 17, 20 }, 8));
+	}
+
 	private static void checkSubSetSum() {
 		Recurrsion obj = new Recurrsion();
 		int[] set = { 3, 34, 4, 12, 5, 2 };
@@ -39,6 +49,7 @@ public class RecurrsionMainApp {
 		System.out.println("Found a subset> " + obj.subsetSumExists(set, 5));
 		System.out.println("Found a subset " + obj.subsetSumExists(set, 2));
 		System.out.println("Found a subset " + obj.subsetSumExists(set, 1));
+
 	}
 
 	public static void test() {

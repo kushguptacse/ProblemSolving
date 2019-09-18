@@ -6,13 +6,14 @@ package com.daa.algo.dp;
  * 
  * Input: set[] = {3, 34, 4, 12, 5, 2}, sum = 9 Output: True //There is a subset (4, 5)
  * with sum 9.
- *
+ * 
+ * Ravindra, geeks
  */
 public class SubsetSum {
 
 	public static void main(String[] args) {
 		SubsetSum obj = new SubsetSum();
-		int set[] = { 3, 34, 4, 12, 5, 2 };
+		int[] set = { 3, 34, 4, 12, 5, 2 };
 		System.out.println("Found a subset: " + obj.printSubsetSumExists(set, 11));
 		set = new int[] { 1, 7, 5, 2 };
 		System.out.println("Found a subset: " + obj.printSubsetSumExists(set, 4));

@@ -60,6 +60,12 @@ public class LongestCommonSubSequence {
 			}
 		}
 
+		printPath(s1, s2, lcs);
+		return lcs[s1.length()][s2.length()];
+
+	}
+
+	private void printPath(String s1, String s2, int[][] lcs) {
 		System.out.print("longest common subsequence is : ");
 		int i = s1.length();
 		int j = s2.length();
@@ -76,7 +82,5 @@ public class LongestCommonSubSequence {
 			}
 		}
 		System.out.println(res);
-		return lcs[s1.length()][s2.length()];
-
 	}
 }

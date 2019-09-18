@@ -28,6 +28,7 @@ public class CoinChange {
 	 * 
 	 * By using DP we can reduce number of function calls. o(n*m)
 	 * 
+	 * 
 	 * @param coins
 	 * @param sum   to be reached
 	 * @return total ways of giving change
@@ -51,12 +52,38 @@ public class CoinChange {
 					// else set table[i][j]=table[i-1][j]+table[i][j-coins[i-1]
 					// i.e. we need to add current coin into previous value. here current count index is 1 and
 					// to get column it is current column - coin present at that index in coin array.
+					// TODO - IMPORTANT POINT - Whenever we can re-use array values. in that case if element
+					// is taken into
+					// set we does not increment i as we can again try it.
 					table[i][j] = table[i][j - coins[i - 1]] + table[i - 1][j];
 				}
 			}
 		}
 
+		printOneSolution(coins, table, sum);
+
 		return table[coins.length][sum];
+	}
+
+	/**
+	 * Print one possible solution to get change of sum
+	 * 
+	 * @param coins
+	 * @param table
+	 * @param sum
+	 */
+	private void printOneSolution(int[] coins, int[][] table, int sum) {
+		int i = coins.length;
+		System.out.print("coins considered for 1st change: [ ");
+		while (i > 0 && sum > 0) {
+			if (table[i][sum] != table[i - 1][sum]) {
+				System.out.print(coins[i - 1] + " ");
+				sum = sum - coins[i - 1];
+			} else {
+				i--;
+			}
+		}
+		System.out.println("]");
 	}
 
 	/**

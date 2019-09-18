@@ -410,6 +410,52 @@ public class Recurrsion {
 	}
 
 	/**
+	 * Determine the maximum value obtainable by cutting up the rod and selling the pieces.
+	 * 
+	 * For example, if length of the rod is 8 and the values of different pieces are given as
+	 * following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths
+	 * 2 and 6)
+	 * @f:off
+	 * length   | 1   2   3   4   5   6   7   8  
+	 *	--------------------------------------------
+	 * price    | 1   5   8   9  10  17  17  20
+	 * 
+	 * eg 2 - l=5m
+	 * prices are :
+	 * 1m = $2
+	 * 2m = $5
+	 * 3m = $7
+	 * 4m = $3
+	 * solution - {2,3} or {2,2,1}. here both will give same profit $12
+	 * @f:on
+	 * 
+	 * @param arr - where index is the rod length and profit as value to that length
+	 * @param l - length of the rod whom we want to make cuts
+	 * @return maximum profit that can be achieved
+	 */
+	public int cutRod(int[] arr, int l) {
+		return cutRodRec(arr, l, arr.length);
+	}
+
+	/**
+	 * similar to knapsack. DP has better performance.
+	 * 
+	 * @param arr
+	 * @param l
+	 * @param i
+	 * @return maximum profit that can be achieved
+	 */
+	private int cutRodRec(int[] arr, int l, int i) {
+		if (l == 0 || i <= 0) {
+			return 0;
+		}
+		if (i > l) {
+			return cutRodRec(arr, l, i - 1);
+		}
+		return MathUtil.max(cutRodRec(arr, l, i - 1), cutRodRec(arr, l - i, i) + arr[i - 1]);
+	}
+
+	/**
 	 * Reverse the stack
 	 * 
 	 * @param stack
@@ -421,49 +467,6 @@ public class Recurrsion {
 		int item = stack.pop();
 		reverse(stack);
 		insertAtStackBottom(stack, item);
-	}
-
-	/**
-	 * Problem statement-
-	 * 
-	 * We are given coin array. e.g. [1,2,3] and we want to get change of 4$. so, In how many
-	 * ways we can do change. given - we can use same coin multiple times. The order of coins
-	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
-	 * answer will be 4.
-	 * 
-	 * Time Complexity - Every coin has two possibility- to be included or not included in
-	 * result set.so, for m coins - 2^m.
-	 * 
-	 * SEE DP section for better approach.
-	 * 
-	 * @param coins
-	 * @param n     - sum to reach
-	 * @return total
-	 */
-	public int coinChange(int[] coins, int n) {
-		return coinChangeRec(coins, coins.length, n);
-	}
-
-	/**
-	 * Problem statement-
-	 * 
-	 * We are given coin array. e.g. [1,2,3] and we want to get change of 5$.
-	 * 
-	 * Given - we can use same coin multiple times. what is the minimum number of coins
-	 * required to make change. The order of coins doesn’t matter. so, here result will be -
-	 * [3,2] and answer will be 2.
-	 * 
-	 * Time Complexity - Every coin has two possibility- to be included or not included in
-	 * result set.so, for m coins - 2^m.
-	 * 
-	 * SEE DP section for better approach.
-	 * 
-	 * @param coins
-	 * @param n     - sum to reach
-	 * @return total
-	 */
-	public int minCoinChange(int[] coins, int n) {
-		return minCoinChangeRec(coins, coins.length, n);
 	}
 
 	/**
@@ -508,6 +511,28 @@ public class Recurrsion {
 	}
 
 	/**
+	 * Problem statement-
+	 * 
+	 * We are given coin array. e.g. [1,2,3] and we want to get change of 5$.
+	 * 
+	 * Given - we can use same coin multiple times. what is the minimum number of coins
+	 * required to make change. The order of coins doesn’t matter. so, here result will be -
+	 * [3,2] and answer will be 2.
+	 * 
+	 * Time Complexity - Every coin has two possibility- to be included or not included in
+	 * result set.so, for m coins - 2^m.
+	 * 
+	 * SEE DP section for better approach.
+	 * 
+	 * @param coins
+	 * @param n     - sum to reach
+	 * @return total
+	 */
+	public int minCoinChange(int[] coins, int n) {
+		return minCoinChangeRec(coins, coins.length, n);
+	}
+
+	/**
 	 * 
 	 * Approach - we need to take every coin in each step and see whether inclusion is less
 	 * than required sum.
@@ -531,6 +556,27 @@ public class Recurrsion {
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * Problem statement-
+	 * 
+	 * We are given coin array. e.g. [1,2,3] and we want to get change of 4$. so, In how many
+	 * ways we can do change. given - we can use same coin multiple times. The order of coins
+	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
+	 * answer will be 4.
+	 * 
+	 * Time Complexity - Every coin has two possibility- to be included or not included in
+	 * result set.so, for m coins - 2^m.
+	 * 
+	 * SEE DP section for better approach.
+	 * 
+	 * @param coins
+	 * @param n     - sum to reach
+	 * @return total
+	 */
+	public int coinChange(int[] coins, int n) {
+		return coinChangeRec(coins, coins.length, n);
 	}
 
 	/**

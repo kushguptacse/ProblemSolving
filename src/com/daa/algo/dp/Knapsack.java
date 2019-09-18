@@ -65,25 +65,22 @@ public class Knapsack {
 		}
 
 		// print knapsack item
+		printPath(weight, capacity, v);
+		return v[weight.length][capacity];
+	}
+
+	private void printPath(int[] weight, int capacity, int[][] v) {
 		System.out.print("Item to be included in knapsack: ");
 		int i = weight.length;
-		int cost = v[weight.length][capacity];
-		int w = capacity;
-		// start from last profit and iterate till profit reach 0 or weight reached 0.
-		while (cost > 0 && i > 0) {
-			// check if remaining profit is different then row above it.
-			// if yes print current weight and decrease profit and weight.
-			if (cost != v[i - 1][w]) {
+		// start from last weight and capacity and iterate till 0.
+		while (i > 0 && capacity > 0) {
+			if (v[i][capacity] != v[i - 1][capacity]) {
 				System.out.print(weight[i - 1] + " ");
-				cost = cost - profit[i - 1];
-				w = w - weight[i - 1];
+				capacity = capacity - weight[i - 1];
 			}
-			// since now i is pointing to above row and we have updated w. which will be the new
-			// column to which we want to check profit condition
 			i--;
 		}
 		System.out.println();
-		return v[weight.length][capacity];
 	}
 
 }

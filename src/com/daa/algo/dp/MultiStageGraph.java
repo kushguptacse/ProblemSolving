@@ -49,6 +49,12 @@ public class MultiStageGraph {
 			}
 		}
 
+		printPath(noOfVertex, path);
+		// distance 0 will have the final answer
+		return dist[0];
+	}
+
+	private void printPath(int noOfVertex, int[] path) {
 		int i = 0;
 		System.out.println("Path from source to Destination: ");
 		System.out.print(0 + "->");
@@ -58,8 +64,6 @@ public class MultiStageGraph {
 		}
 
 		System.out.println();
-		// distance 0 will have the final answer
-		return dist[0];
 	}
 
 }
