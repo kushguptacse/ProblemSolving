@@ -64,8 +64,8 @@ public class Knapsack {
 			}
 		}
 
-		System.out.print("Item to be included in knapsack: ");
 		// print knapsack item
+		System.out.print("Item to be included in knapsack: ");
 		int i = weight.length;
 		int cost = v[weight.length][capacity];
 		int w = capacity;

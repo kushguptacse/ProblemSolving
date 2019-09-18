@@ -13,14 +13,32 @@ public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
 		Recurrsion recurrsion = new Recurrsion();
-		int val[] = new int[] { 60, 100, 120 };
-		int wt[] = new int[] { 10, 20, 30 };
+		checkSubSetSum();
+		System.out.println("minimum coins needed: " + recurrsion.minCoinChange(new int[] { 1, 2, 3 }, 4));
+		int[] coins = { 9, 6, 5, 1 };
+		System.out.println("minimum coins needed: " + recurrsion.minCoinChange(coins, 8));
+		int[] val = new int[] { 60, 100, 120 };
+		int[] wt = new int[] { 10, 20, 30 };
 		int w = 50;
 		System.out.println("maximum possible profit is: " + recurrsion.knapsack(val, wt, w));
 		System.out.println("maximum possible profit is: " + recurrsion.knapsack(new int[] { 1, 2, 5, 6 }, new int[] { 2, 3, 4, 5 }, 8));
 		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 2, 3 }, 4));
 		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 2, 5, 3, 6 }, 10));
 		System.out.println("total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 5, 10 }, 10));
+	}
+
+	private static void checkSubSetSum() {
+		Recurrsion obj = new Recurrsion();
+		int[] set = { 3, 34, 4, 12, 5, 2 };
+		System.out.println("Found a subset: " + obj.subsetSumExists(set, 11));
+		set = new int[] { 1, 7, 5, 2 };
+		System.out.println("Found a subset: " + obj.subsetSumExists(set, 4));
+		System.out.println("Found a subset- " + obj.subsetSumExists(set, 8));
+		set = new int[] { 1, 3, 4, 6 };
+		System.out.println("Found a subset- " + obj.subsetSumExists(set, 12));
+		System.out.println("Found a subset> " + obj.subsetSumExists(set, 5));
+		System.out.println("Found a subset " + obj.subsetSumExists(set, 2));
+		System.out.println("Found a subset " + obj.subsetSumExists(set, 1));
 	}
 
 	public static void test() {

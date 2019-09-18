@@ -431,7 +431,7 @@ public class Recurrsion {
 	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
 	 * answer will be 4.
 	 * 
-	 * Time Complexity - Every can has two possibility- to be included or not included in
+	 * Time Complexity - Every coin has two possibility- to be included or not included in
 	 * result set.so, for m coins - 2^m.
 	 * 
 	 * SEE DP section for better approach.
@@ -442,6 +442,95 @@ public class Recurrsion {
 	 */
 	public int coinChange(int[] coins, int n) {
 		return coinChangeRec(coins, coins.length, n);
+	}
+
+	/**
+	 * Problem statement-
+	 * 
+	 * We are given coin array. e.g. [1,2,3] and we want to get change of 5$.
+	 * 
+	 * Given - we can use same coin multiple times. what is the minimum number of coins
+	 * required to make change. The order of coins doesn’t matter. so, here result will be -
+	 * [3,2] and answer will be 2.
+	 * 
+	 * Time Complexity - Every coin has two possibility- to be included or not included in
+	 * result set.so, for m coins - 2^m.
+	 * 
+	 * SEE DP section for better approach.
+	 * 
+	 * @param coins
+	 * @param n     - sum to reach
+	 * @return total
+	 */
+	public int minCoinChange(int[] coins, int n) {
+		return minCoinChangeRec(coins, coins.length, n);
+	}
+
+	/**
+	 * given a subset and Sum S we need to tell whether there exists a subset of the set which
+	 * can have sum S
+	 * 
+	 * similar to coin change
+	 * 
+	 * @param set
+	 * @param sum
+	 * @return
+	 */
+	public boolean subsetSumExists(int[] set, int s) {
+		return subsetSumExistsRec(set, set.length, s);
+	}
+
+	/**
+	 * here i starts with the last element index and if i<=0 return false. s is the sum to
+	 * reach.
+	 * 
+	 * on every step if we consider the element to be included in set we subtract that element
+	 * from s. when s reaches 0 return true as we have reach our sum. but if sum<0 it means
+	 * not possible.
+	 * 
+	 * For better approach see DP
+	 * 
+	 * @param set
+	 * @param i
+	 * @param s
+	 * @return true if sum is possible
+	 */
+	private boolean subsetSumExistsRec(int[] set, int i, int s) {
+		if (s == 0) {
+			return true;
+		}
+		if (i <= 0 || s < 0) {
+			return false;
+		}
+		// here in both cases we need to consider next element and update the sum if we are
+		// including that element
+		return subsetSumExistsRec(set, i - 1, s) || subsetSumExistsRec(set, i - 1, s - set[i - 1]);
+	}
+
+	/**
+	 * 
+	 * Approach - we need to take every coin in each step and see whether inclusion is less
+	 * than required sum.
+	 * 
+	 * @param coins
+	 * @param m     - current coin to be considered
+	 * @param n     - amount we want to do change
+	 * @return minimum coins require to reach sum n.
+	 */
+	private int minCoinChangeRec(int[] coins, int m, int n) {
+		if (n == 0) {
+			return 0;
+		}
+		int res = Integer.MAX_VALUE;
+		for (int i = 0; i < m; i++) {
+			if (coins[i] <= n) {
+				int subres = minCoinChangeRec(coins, m, n - coins[i]);
+				if (subres != Integer.MAX_VALUE && subres + 1 < res) {
+					res = subres + 1;
+				}
+			}
+		}
+		return res;
 	}
 
 	/**

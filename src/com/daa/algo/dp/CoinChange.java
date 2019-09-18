@@ -64,13 +64,19 @@ public class CoinChange {
 	 * index. we can optimized space by using 1d array. set table[0]=1, then take coin one by
 	 * one and then starting from that coin till table length update the table array.
 	 * 
+	 * geeksforgeeks for code
+	 * 
 	 * @param coins
 	 * @param sum
 	 * @return total number of ways to reach sum
 	 */
 	public int countSpaceOptimized(int[] coins, int sum) {
+		// table[i] will be storing the number of solutions for
+		// value i. We need sum+1 rows as the table is constructed
+		// in bottom up manner using the base case (n = 0)
 		int[] table = new int[sum + 1];
 		table[0] = 1;
+		// take coin from array one by one
 		for (int i = 0; i < coins.length; i++) {
 			// here we have ignored index less than coin value.
 			for (int j = coins[i]; j <= sum; j++) {
