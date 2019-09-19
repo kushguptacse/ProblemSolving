@@ -72,10 +72,10 @@ public class CuttingRod {
 	 */
 	private void printPath(int[][] table, int[] arr, int l) {
 		int i = arr.length;
-		System.out.print("rod length : [");
+		System.out.print("rod length : [ ");
 		while (i > 0 && l > 0) {
 			if (table[i][l] != table[i - 1][l]) {
-				System.out.print(i + "m:$" + arr[i - 1] + " ");
+				System.out.print(i +" ");
 				l = l - i;
 			} else {
 				i--;
