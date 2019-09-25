@@ -6,7 +6,7 @@ public class TrieNode {
 
 	private final TrieNode[] characters = new TrieNode[DEFAULT_SIZE];
 
-	private boolean leaf;
+	private boolean end;
 
 	/**
 	 * @return the characters
@@ -16,19 +16,17 @@ public class TrieNode {
 	}
 
 	/**
-	 * @return the leaf
+	 * @return true if it is the end of the word
 	 */
-	public boolean isLeaf() {
-		return leaf;
+	public boolean isEnd() {
+		return end;
 	}
 
 	/**
-	 * @param leaf the leaf to set
+	 * @param end the end to set
 	 */
-	public void setLeaf(boolean leaf) {
-		this.leaf = leaf;
+	public void setEnd(boolean leaf) {
+		this.end = leaf;
 	}
-
-
 
 }

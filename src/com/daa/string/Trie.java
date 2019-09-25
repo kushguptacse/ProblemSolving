@@ -25,6 +25,19 @@ public class Trie {
 	/**
 	 * Insert key into Trie data structure
 	 * 
+	 * every node will have 26 character array. so on inserting a string we insert it
+	 * character by character and first character will go in first array and index of that
+	 * character will be character - 'a'.
+	 * 
+	 * for example - insert - apple
+	 * 
+	 * so first array initially contain 26 position with null value. index of 'a' will be 0.
+	 * so we create new object and add it to array 0 index. for next character 'p' we put it
+	 * into second array present in index of 'a'. and index in second array will be p-'a'. in
+	 * this way we proceed to third array pointed by p-'a' index and insert there. finally
+	 * when we reach at the last character 'e' - we will set the isLeaf flag as true so that
+	 * we know it is the end of string
+	 * 
 	 * o(m) - height of the tree
 	 * 
 	 * @param key
@@ -45,7 +58,7 @@ public class Trie {
 			}
 			temp = temp.getCharacters()[level];
 		}
-		temp.setLeaf(true);
+		temp.setEnd(true);
 	}
 
 	/**
@@ -68,7 +81,13 @@ public class Trie {
 			}
 			temp = temp.getCharacters()[level];
 		}
-		return temp.isLeaf();
+		// if we does not want to check for exact match. i.e. we are also okay if search string is
+		// just a substring present in the trie then just return true
+		/**
+		 * For e.g. - if arr ={apple,app} and search string is ap which is not in arr but is valid
+		 * substring then return true
+		 */
+		return temp.isEnd();
 	}
 
 	/**
@@ -119,7 +138,7 @@ public class Trie {
 		if (node == null) {
 			return;
 		}
-		if (node.isLeaf()) {
+		if (node.isEnd()) {
 			result.add(prefix);
 		}
 		for (int i = 0; i < node.getCharacters().length; i++) {
@@ -143,11 +162,11 @@ public class Trie {
 		if (root == null) {
 			return "";
 		}
-		
+
 		String result = "";
 		TrieNode temp = root;
 		int level = 0;
-		while (temp!=null && !temp.isLeaf()) {
+		while (temp != null && !temp.isEnd()) {
 			int count = 0;
 			for (int i = 0; i < temp.getCharacters().length; i++) {
 				if (temp.getCharacters()[i] != null) {
