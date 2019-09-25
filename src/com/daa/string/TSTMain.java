@@ -5,8 +5,9 @@ import java.util.Arrays;
 public class TSTMain {
 
 	public static void main(String[] args) {
-//		insertAndSearch(new TernarySearchTrie());
-		print(new TernarySearchTrie());
+
+		insertAndSearch(new TernarySearchTrie());
+//		print(new TernarySearchTrie());
 	}
 
 	private static void print(TernarySearchTrie obj) {
@@ -21,6 +22,8 @@ public class TSTMain {
 		obj.insert("cats");
 		obj.insert("up");
 		obj.insert("bug");
+		obj.insert("bugzila");
+		System.out.println(obj.lengthOfLargestWorld());
 		System.out.println(obj.contains("cats"));
 		System.out.println(obj.contains("bu"));
 		System.out.println(obj.contains("cat"));

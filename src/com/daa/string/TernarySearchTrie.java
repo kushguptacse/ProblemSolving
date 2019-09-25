@@ -1,5 +1,13 @@
 package com.daa.string;
 
+import com.daa.math.MathUtil;
+
+/**
+ * udemy and DAA book
+ * 
+ * @author G521885
+ *
+ */
 public class TernarySearchTrie {
 	private TSTNode root;
 
@@ -82,6 +90,22 @@ public class TernarySearchTrie {
 		str = str.substring(0, str.length() - 1);
 
 		printutil(node.getRight(), str);
+	}
+
+	/**
+	 * it is equivalent to height of a tree
+	 * 
+	 * @return longest word length in TST
+	 */
+	public int lengthOfLargestWorld() {
+		return lengthOfLargestWorldUtil(root);
+	}
+
+	private int lengthOfLargestWorldUtil(TSTNode head) {
+		if (head == null) {
+			return 0;
+		}
+		return MathUtil.max(lengthOfLargestWorldUtil(head.getLeft()), lengthOfLargestWorldUtil(head.getMiddle()) + 1, lengthOfLargestWorldUtil(head.getRight()));
 	}
 
 }

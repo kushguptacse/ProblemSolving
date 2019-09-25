@@ -16,7 +16,7 @@ public class TrieMain {
 		String arr[] = { "geeksforgeeks", "geeks", "geek", "geezer" };
 		Arrays.stream(arr).forEach(trie::insert);
 		System.out.println("The longest common prefix is: " + trie.longestCommonPrefix());
-		arr = new String[] { "apple", "ape", "april"};
+		arr = new String[] { "apple", "ape", "april" };
 		Trie trie1 = new Trie();
 		Arrays.stream(arr).forEach(trie1::insert);
 		System.out.println("The longest common prefix is: " + trie1.longestCommonPrefix());

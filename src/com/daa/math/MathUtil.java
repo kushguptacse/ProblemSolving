@@ -94,4 +94,16 @@ public class MathUtil {
 		return true;
 	}
 
+	/**
+	 * return max of the three integer
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
+	 */
+	public static int max(int a, int b, int c) {
+		return (a >= b && a >= c) ? a : (b >= a && b >= c) ? b : c;
+	}
+
 }
