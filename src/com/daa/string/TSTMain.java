@@ -7,7 +7,7 @@ public class TSTMain {
 	public static void main(String[] args) {
 
 		insertAndSearch(new TernarySearchTrie());
-//		print(new TernarySearchTrie());
+		print(new TernarySearchTrie());
 	}
 
 	private static void print(TernarySearchTrie obj) {

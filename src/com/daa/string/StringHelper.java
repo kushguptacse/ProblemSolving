@@ -78,11 +78,11 @@ public final class StringHelper {
 	 * check whether a given string str is substring of source.
 	 * @f:off
 	 * worst case - o(n*m)
-	 * Best case - o(n-m+1)
+	 * Best case - o(n+m)
 	 * Rabin Karp Algorithm - 
 	 * it uses hashcode of a string and instead of matching character one by one. 
 	 * we just match hashcode and once hashcode matched we check the content.
-	 * it saves time of un-necssary comparison all the time.
+	 * it saves time of un-necessary comparison all the time.
 	 * but in worst case it might be possible that we might get hashcode same on every check.
 	 * o(n*m) in worst case.
 	 * to calculate hashcode again we just subtract hashcode of first character
