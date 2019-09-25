@@ -8,8 +8,8 @@ public class CoinChange {
 	public static void main(String[] args) {
 		CoinChange obj = new CoinChange();
 		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 7, 2, 3, 6 }, 13));
-//		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 9, 6, 5, 1 }, 11));
-//		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 25, 10, 5 }, 30));
+		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 9, 6, 5, 1 }, 4));
+		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 25, 10, 5 }, 35));
 //		System.out.println("Total possible ways to do coin change is: " + obj.count(new int[] { 25, 10, 5 }, 30));
 //		System.out.println("Total possible ways to do coin change is: " + obj.count(new int[] { 1, 2, 3 }, 4));
 //		System.out.println("Minimum coin required to do change is " + obj.minimumCoinChange(new int[] { 1, 2, 3 }, 5));
@@ -83,13 +83,11 @@ public class CoinChange {
 	 * Output: Minimum 2 coins required. We can use one coin of 25 cents and one of 5 cents
 	 * 
 	 * @param coins
-	 * @param sum
-	 * @return minimum coins required to get the desired sum
+	 * @param amount
+	 * @return minimum coins required to get the desired amount
 	 */
 	public int minimumCoinChange(int[] coins, int amount) {
-		// table[i] will be storing
-		// the minimum number of coins
-		// required for i value. So
+		// table[i] will be storing the minimum number of coins required for i value. So
 		// table[amount] will have result
 		int table[] = new int[amount + 1];
 

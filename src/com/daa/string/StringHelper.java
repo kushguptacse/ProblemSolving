@@ -13,6 +13,126 @@ public final class StringHelper {
 	}
 
 	/**
+	 * Check whether two strings contain same characters in same order.
+	 * 
+	 * Given two strings s1 and s2, the task is to find whether the two string contain the
+	 * same characters that occur in the same order.
+	 * 
+	 * For example: string “Geeks” and string “Geks” contain the same characters in same
+	 * order.
+	 * 
+	 * Input: s1 = “Arnab”, s2 = “Andrew” => Output: No
+	 * 
+	 * @param s1
+	 * @param s2
+	 * @return true if both string contains same characters in same order
+	 */
+	public static boolean contains(String s1, String s2) {
+		String res1 = s1.charAt(0) + "";
+		String res2 = s2.charAt(0) + "";
+		for (int i = 0; i < s1.length() - 1; i++) {
+			if (s1.charAt(i) != s1.charAt(i + 1)) {
+				res1 = res1 + s1.charAt(i + 1);
+			}
+		}
+
+		for (int i = 0; i < s2.length()-1; i++) {
+			if (s2.charAt(i) != s2.charAt(i + 1)) {
+				res2 = res2 + s2.charAt(i + 1);
+			}
+		}
+		return res1.equals(res2);
+	}
+
+	/**
+	 * 
+	 * o(n*m)
+	 * 
+	 * check whether a given string str is substring of source.
+	 * 
+	 * @param source
+	 * @param str
+	 * @return true if str is substring of source
+	 */
+	public static boolean subString(String source, String str) {
+		int i = 0;
+		int j = 0;
+		int k = i;
+		while (i < source.length()) {
+			if (source.charAt(i) != str.charAt(j)) {
+				j = 0;
+				i = ++k;
+			} else {
+				i++;
+				j++;
+			}
+			if (j == str.length()) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	/**
+	 * check whether a given string str is substring of source.
+	 * @f:off
+	 * worst case - o(n*m)
+	 * Best case - o(n-m+1)
+	 * Rabin Karp Algorithm - 
+	 * it uses hashcode of a string and instead of matching character one by one. 
+	 * we just match hashcode and once hashcode matched we check the content.
+	 * it saves time of un-necssary comparison all the time.
+	 * but in worst case it might be possible that we might get hashcode same on every check.
+	 * o(n*m) in worst case.
+	 * to calculate hashcode again we just subtract hashcode of first character
+	 * and add hashcode of next character in previous value.
+	 * 
+	 * For better performance make hash code function better to avoid un-necessary comparison.
+	 * 
+	 * @f:on
+	 * 
+	 * @param source
+	 * @param str
+	 * @return true if str is substring of source
+	 */
+	public static boolean subStringRabinKarpBetter(String source, String str) {
+		int hash = 0;
+		int hashStr = 0;
+		for (int i = 0; i < str.length(); i++) {
+			hash = hash + hashFunction(source.charAt(i));
+			hashStr = hashStr + hashFunction(str.charAt(i));
+		}
+		for (int i = 0; i <= source.length() - str.length(); i++) {
+			if (hash == hashStr) {
+				int j = 0;
+				for (j = 0; j < str.length(); j++) {
+					if (source.charAt(j + i) != str.charAt(j)) {
+						break;
+					}
+				}
+				if (j == str.length()) {
+					System.out.println("Pattern Found at index : " + i);
+				}
+
+			} else if (i + str.length() < source.length()) {
+				hash = hash - hashFunction(source.charAt(i)) + hashFunction(source.charAt(i + str.length()));
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * we multiplied char value with prime number.
+	 * 
+	 * @param s
+	 * @return hash value
+	 */
+	private static int hashFunction(char s) {
+		return s * 13;
+	}
+
+	/**
 	 * An anagram of a string is another string that contains same characters, only the order
 	 * of characters can be different. str1 - abcd , str2 - cdab above two string are anagram
 	 * of each other.
@@ -194,7 +314,7 @@ public final class StringHelper {
 	 */
 	private static int lcsRec(char[] ch1, char[] ch2, int i, int j) {
 		if (ch1.length == i || ch2.length == j) {
-			return 0;  
+			return 0;
 		}
 		if (ch1[i] == ch2[j]) {
 			return 1 + lcsRec(ch1, ch2, i + 1, j + 1);
