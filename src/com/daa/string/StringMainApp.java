@@ -2,6 +2,11 @@ package com.daa.string;
 
 public class StringMainApp {
 	public static void main(String[] args) {
+		System.out.println(StringHelper.longestCommonSubString("neversaynever"));
+		System.out.println(StringHelper.longestCommonPrefix("hello Ji","J"));
+		System.out.println(StringHelper.reverse("smellycat"));
+		System.out.println("Suffix are -----------");
+		StringHelper.getSuffixes("apple").forEach(System.out::println);
 		String s1 = "Geeks";
 		String s2 = "Geks";
 		System.out.println("same character in same order: " + StringHelper.contains(s1, s2));

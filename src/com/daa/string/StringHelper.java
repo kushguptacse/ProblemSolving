@@ -1,6 +1,9 @@
 package com.daa.string;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -10,6 +13,102 @@ import com.daa.math.MathUtil;
 
 public final class StringHelper {
 	private StringHelper() {
+	}
+
+	/**
+	 * UDEMY
+	 * @f:off
+	 * input - "neversaynever"
+	 * output - "never"
+	 * 
+	 * Steps - 
+	 * 1. Find the list of all possible suffix of string passed.
+	 * 2. sort the list of suffix.
+	 * 3. After that find longestCommonPrefix of ith element and i+1th element.
+	 * save the longer value to max.
+	 * keep repeating it till we complete the list. 
+	 * @f:on
+	 * 
+	 * o(n^2)
+	 * 
+	 * @param text1
+	 * @return length of the longest common/repeated subString
+	 */
+	public static int longestCommonSubString(String text1) {
+		List<String> list = getSuffixes(text1);
+		String max = "";
+		Collections.sort(list);
+		for (int i = 0; i < list.size() - 1; i++) {
+			String test = longestCommonPrefix(list.get(i), list.get(i + 1));
+			if (test.length() > max.length()) {
+				max = test;
+			}
+
+		}
+		System.out.println("longest Common SubString - " + max);
+		return max.length();
+	}
+
+	/**
+	 * Find the longest common prefix of two strings. here we can also use trie but for two
+	 * string this approach is easier. but when we need to find from n strings trie will be
+	 * easier.
+	 * 
+	 * e.g. - "helloJi","hell" -> longest prefix is - "hell"
+	 * 
+	 * o(n)
+	 * 
+	 * @param text1
+	 * @param text2
+	 * @return longest common prefix of two strings
+	 */
+	public static String longestCommonPrefix(String text1, String text2) {
+		String result = "";
+		int length = text2.length();
+		if (text1.length() < text2.length()) {
+			length = text1.length();
+		}
+		for (int i = 0; i < length; i++) {
+			if (text1.charAt(i) == text2.charAt(i)) {
+				result = result + text1.charAt(i);
+			} else {
+				return result;
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * input - hello
+	 *
+	 * output - o,lo,llo,ello,hello
+	 * 
+	 * @param text
+	 * @return list of suffixes
+	 */
+	public static List<String> getSuffixes(String text) {
+		List<String> list = new ArrayList<>();
+		String s = "";
+		for (int i = text.length() - 1; i >= 0; i--) {
+			s = text.charAt(i) + s;
+			list.add(s);
+		}
+		return list;
+	}
+
+	/**
+	 * String builder can also be used
+	 * 
+	 * @param source
+	 * @return reversed string
+	 */
+	public static String reverse(String source) {
+		String res = "";
+		for (int i = 0; i < source.length(); i++) {
+			res = source.charAt(i) + res;
+		}
+		return res;
 	}
 
 	/**
@@ -36,7 +135,7 @@ public final class StringHelper {
 			}
 		}
 
-		for (int i = 0; i < s2.length()-1; i++) {
+		for (int i = 0; i < s2.length() - 1; i++) {
 			if (s2.charAt(i) != s2.charAt(i + 1)) {
 				res2 = res2 + s2.charAt(i + 1);
 			}

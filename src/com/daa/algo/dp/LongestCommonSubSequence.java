@@ -8,8 +8,14 @@ import com.daa.math.MathUtil;
  * appears in the same relative order, but not necessarily contiguous. For example, “abc”,
  * “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”. 
  * 
+ * subsequence - order increasing but not necessary to be continuous, The string "anna" is a
+ * subsequence of the string "banana"
+ * 
+ * substring - continuous, The string "ana" is a substring of the string "banana"
+ * 
  * @f:off
  * abdul bari.
+ * 
  * it is used in DNA matching algorithm.
  * if we apply naive approach of trying every combination recursively without storing result
  * it will take o(2^n).but by using DP we can reduce it to o(n*m). where n and m are size of two substrings.
