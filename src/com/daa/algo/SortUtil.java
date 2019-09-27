@@ -168,7 +168,7 @@ public final class SortUtil {
 	}
 
 	/**
-	 * Ravindra,geeks
+	 * udemy,geeks
 	 * @f:off
 	 * 
 	 * In-place,Not Stable,Not adaptive,Divide and conquer
@@ -192,8 +192,8 @@ public final class SortUtil {
 
 	private static void quickSortUtil(int[] arr, int low, int high) {
 		if (low < high) {
-			int p = partition(arr, low, high);
-			quickSortUtil(arr, low, p - 1);
+			int p = partition(arr, low, high);// pivot position is fixed now
+			quickSortUtil(arr, low, p - 1);// call for elements left of pivot
 			quickSortUtil(arr, p + 1, high);
 		}
 	}
@@ -236,16 +236,37 @@ public final class SortUtil {
 	 * @return new pivot
 	 */
 	private static int partition(int[] arr, int low, int high) {
-		int pivot = low;
+		// here low is used as pivot i.e. first element.
+		// in worst case it will be o(n^2). i.e. if data is already sorted
+		// we can improve it by using middle element as pivot and then before starting
+		// anything just swap it with low. so, that low will remain pivot
+
+		// un-comment below to make middle element as pivot. below step just change
+		// pivot and move it to start so, that algo remains same.
+
+		int pivot = (low + high) / 2;
+		swapIntArray(arr, pivot, low);
+
 		int i = high + 1;
 		for (int j = high; j > low; j--) {
-			if (arr[j] > arr[pivot]) {
+			if (arr[j] > arr[low]) {
 				i--;
 				swapIntArray(arr, i, j);
 			}
 		}
-		swapIntArray(arr, pivot, i - 1);
+		swapIntArray(arr, low, i - 1);
 		return i - 1;
+
+		// Or pivot is end element.
+//		int i = low - 1;
+//		for (int j = low; j < high; j++) {
+//			if (arr[j] < arr[high]) {
+//				i++;
+//				swapIntArray(arr, j, i);
+//			}
+//		}
+//		swapIntArray(arr, high, i + 1);
+//		return i + 1;
 	}
 
 	/**
