@@ -199,6 +199,8 @@ public final class SortUtil {
 	}
 
 	/**
+	 * partition
+	 * 
 	 * @f:off
 	 * 1. select low index element as pivot and i = high+1.
 	 * 2. go from j=high to low-1
@@ -225,8 +227,6 @@ public final class SortUtil {
 	 * j
 	 * 
 	 * so,now swap p = i-1. and return i-1 i.e. index 2. so, that we will have two partition {13,14} {17,16} left
-	 * 
-	 * 
 	 * 
 	 * @f:on
 	 * 
