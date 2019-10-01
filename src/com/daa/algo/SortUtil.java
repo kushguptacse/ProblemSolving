@@ -2,8 +2,10 @@ package com.daa.algo;
 
 import java.util.Arrays;
 
+import com.daa.math.MathUtil;
+
 /**
- * Stable algo - Stable sorting algorithms maintain the relative order of
+ * Stable algorithm - Stable sorting algorithms maintain the relative order of
  * records with equal keys (i.e. values). That is, a sorting algorithm is stable
  * if whenever there are two records R and S with the same key and with R
  * appearing before S in the original list, R will appear before S in the sorted
@@ -19,8 +21,16 @@ import java.util.Arrays;
  * already sorted. and hence work faster on such cases where such type of chunk
  * exists
  * 
- * @author G521885
- *
+ * @f:off
+ * HYBRID ALGORITHM - it is combination of two or more sorting algorithm to take advantage of both algo.
+ * e.g. TIMSORT - insertion sort + merge sort. 
+ * As Insertion sort is faster then both merge or quick sort if elements are small e.g. <10. 
+ * for large data set it uses merge sort.
+ * 
+ * e.g. INTROSORT - Quicksort +Heapsort. 
+ * as bad pivot selection can lead to o(n^2) in quick sort worst case. it uses hybrid of both 
+ * @f:on
+ * 
  */
 public final class SortUtil {
 
@@ -31,32 +41,37 @@ public final class SortUtil {
 	public static void main(String[] args) {
 		int[] ar = new int[] { 15, 17, 13, 16, 14 };
 		System.out.println("Quick sort -> ");
+		countingSort(ar);
 		quickSort(ar);
 		System.out.println(Arrays.toString(ar));
 		ar = new int[] { 15, 12, 13, 11, 20, 15, 22, 14 };
 		System.out.println("Quick sort -> ");
+		countingSort(ar);
 		quickSort(ar);
 		System.out.println(Arrays.toString(ar));
 
 		ar = new int[] { 6, 5, 9, 0, 8, 2, 4, 7 };
 		System.out.println("Quick sort - ");
+		countingSort(ar);
 		quickSort(ar);
 		System.out.println(Arrays.toString(ar));
 
 		ar = new int[] { 10, 7, 8, 9, 1, 5 };
 		System.out.println("Quick sort = ");
+		countingSort(ar);
 		quickSort(ar);
 		System.out.println(Arrays.toString(ar));
 
 		ar = new int[] { 5, 0, 4, 3, 2, 11 };
 		System.out.println("Quick sort : ");
+		countingSort(ar);
 		quickSort(ar);
 		System.out.println(Arrays.toString(ar));
 
 		System.out.println("Insertion sort");
 		insertionSort(new Integer[] { 34, -3, 0, 2, 14, 8, -1, 24 });
-		System.out.println(Arrays.toString(ar));
-		System.out.println("Merge sort");
+		countingSort(new int[] { 34, -3, 0, 2, 14, 8, -1, 24 });
+		countingSort(ar);
 		mergeSort(ar);
 		System.out.println(Arrays.toString(ar));
 	}
@@ -155,6 +170,44 @@ public final class SortUtil {
 	}
 
 	/**
+	 * Non-comparison base algorithm. stable ,not in-place.
+	 * this is best suited when we know that element inside array is not having large values. it can handle negative values.
+	 * 
+	 * But what happen if we have data from 1 to n^2. We will need o(n^2) space. Which is not good.for that radix sort is useful.
+	 * 
+	 * o(n) 
+	 * 
+	 * @f:off
+	 * In it we just create another array of size max-min+1.
+	 * and we use original array element as index of the temp array.(i.e. arr[i]-min will be index) and start incrementing the count of that element
+	 * after loop finishes.
+	 * we iterate Temp array and start printing index+min to k times. where k is the value present at that index.
+	 * @f:on
+	 * 
+	 * Time Complexity: O(n+k) where n is the number of elements in input array and k is the range of input.
+	 * Auxiliary Space: O(n+k)
+	 * 
+	 * @param arr
+	 */
+	public static void countingSort(int[] arr) {
+		int min = MathUtil.findMin(arr);
+		int max = MathUtil.findMax(arr);
+		int[] temp = new int[max - min + 1];
+		for (int i = 0; i < arr.length; i++) {
+			temp[arr[i] - min] = temp[arr[i] - min] + 1;
+		}
+
+		System.out.print("Counting sort Data : [");
+		for (int i = 0; i < temp.length; i++) {
+			while (temp[i] > 0) {
+				System.out.print(i + min + " ");
+				temp[i] = temp[i] - 1;
+			}
+		}
+		System.out.println("]");
+	}
+
+	/**
 	 * Swap a[i] with a[j]
 	 * 
 	 * @param a
@@ -173,7 +226,8 @@ public final class SortUtil {
 	 * 
 	 * In-place,Not Stable,Not adaptive,Divide and conquer
 	 * 
-	 * Perform quick sort algo to sort the data. for primitive it is preferred and for objects merge sort is preferred
+	 * Perform quick sort algo to sort the data. for primitive it is preferred and for objects merge sort is preferred.
+	 * as merge sort takes extra o(n) memory it is not preffered for array. but for linked list merge sort doesnot need extra space
 	 * 
 	 * Steps-
 	 * For every step we will take one element as pivot(here the first one) and will try to put it in right position. 
@@ -288,18 +342,50 @@ public final class SortUtil {
 	 * @param arr
 	 */
 	public static void mergeSort(int[] arr) {
+		System.out.println("Merge sort");
 		mergeSort(arr, 0, arr.length - 1);
 	}
 
+	/**
+	 * UDEMY,GEEKS
+	 * 
+	 * @f:off
+	 * Approach - 
+	 * 1.Divide the array into two sub array recursively.
+	 * 2.sort these sub arrays with merge sort again.
+	 * 3.when only single item left in sub array. we consider it to be sorted.
+	 * 4.Merge the sub array to get final sorted array.
+	 * 
+	 * @f:on
+	 * 
+	 * Here we are dividing array into smallest unit and after that we start combining them.
+
+	 * @param arr
+	 * @param i
+	 * @param j
+	 */
 	private static void mergeSort(int[] arr, int i, int j) {
 		if (i < j) {
 			int mid = (i + j) / 2;
-			mergeSort(arr, i, mid);
-			mergeSort(arr, mid + 1, j);
-			merge(arr, i, j, mid);
+			mergeSort(arr, i, mid); // divide left sub array
+			mergeSort(arr, mid + 1, j); // divide right sub array
+			merge(arr, i, j, mid); // merge the two array.
 		}
 	}
 
+	/**
+	 * 
+	 * merge the two sorted array into single sorted array
+	 * 
+	 * o(n+m)
+	 * 
+	 * it takes o(n+m) extra space.
+	 * 
+	 * @param arr
+	 * @param l
+	 * @param r
+	 * @param mid
+	 */
 	private static void merge(int[] arr, int l, int r, int mid) {
 		int[] temp = new int[r - l + 1];
 		int i = l;
