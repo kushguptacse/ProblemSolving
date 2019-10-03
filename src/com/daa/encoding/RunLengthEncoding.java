@@ -12,6 +12,8 @@ package com.daa.encoding;
  * of character we have and the less number of repetition we have. then in such
  * case we might send more then actual length string data over network
  *
+ *
+ * NOTE - for LZW see udemy for flow.
  */
 public class RunLengthEncoding {
 
