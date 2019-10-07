@@ -3,7 +3,7 @@ package com.daa.tree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.daa.algo.Recurrsion;
+import com.daa.algo.Recursion;
 import com.daa.model.Model;
 
 /**
@@ -47,7 +47,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	 * @return number of possible binary search trees for given n distinct keys
 	 */
 	public int numberOfBSTposible(int n) {
-		Recurrsion r = new Recurrsion();
+		Recursion r = new Recursion();
 		int num = r.fact(2 * n);
 		int den = r.fact(n);
 		int res = den * den * (n + 1);

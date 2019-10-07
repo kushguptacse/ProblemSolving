@@ -6,7 +6,28 @@ import java.util.Set;
 
 import com.daa.math.MathUtil;
 
-public class Recurrsion {
+/**
+ * Ravindra
+ * 
+ * tail Recursion - method is called at the last. it is just like for loop. head
+ * Recursion - method is called in the beginning
+ *
+ */
+public class Recursion {
+
+	public void headRecursion(int n) {
+		if (n == 0)
+			return;
+		headRecursion(n - 1);
+		System.out.println(n);
+	}
+
+	public void tailRecursion(int n) {
+		if (n == 0)
+			return;
+		System.out.println(n);
+		tailRecursion(n - 1);
+	}
 
 	public int max(int[] a) {
 		return max(a, a.length - 1);
@@ -62,6 +83,8 @@ public class Recurrsion {
 	}
 
 	/**
+	 * udemy
+	 * 
 	 * move n disc from tower x to tower y
 	 * 
 	 * @param n
@@ -73,9 +96,15 @@ public class Recurrsion {
 	public int towerOfHanoi(int n, String x, String y, String z) {
 		int step = 0;
 		if (n > 0) {
+			// move n-1 discs from x to z. so that after that we can directly move last disc
+			// from x to y.
 			step = towerOfHanoi(n - 1, x, z, y);
+			// i.e. we are moving disc number 1 from x to y finally.
 			System.out.println("move disc number " + n + " from tower " + x + " to " + y);
+			// increment step to include above 1 move.
 			step++;
+			// after above move we have all n-1 disc in z. and x is empty and destination is
+			// y. so we need to move now n-1 discs from y to z keeping x as auxiliary
 			step = step + towerOfHanoi(n - 1, z, y, x);
 		}
 		return step;
@@ -124,15 +153,15 @@ public class Recurrsion {
 	}
 
 	/**
-	 * out of all divisors of a and b. the highest common divisor is GCD or HCF for 20 and 60
-	 * . gcd is 20
+	 * out of all divisors of a and b. the highest common divisor is GCD or HCF for
+	 * 20 and 60 . gcd is 20
 	 * 
-	 * All possible factors of 20 are 1,2,4,5,10 and 20 All possible factors of 60 are
-	 * 1,3,4,5,6,10,12,15,20,30,60
+	 * All possible factors of 20 are 1,2,4,5,10 and 20 All possible factors of 60
+	 * are 1,3,4,5,6,10,12,15,20,30,60
 	 * 
-	 * Approach - here if we subtract smallest from largest repeatedly till we reach a==b.
-	 * that value is HCF. a=54 and b=24 e.g. -> 54-24 = 30 (24,30) 30-24=6 (6,24) 24-6=18
-	 * (6,18) 18-6=12 (6,12) 12-6=6 (6,6)
+	 * Approach - here if we subtract smallest from largest repeatedly till we reach
+	 * a==b. that value is HCF. a=54 and b=24 e.g. -> 54-24 = 30 (24,30) 30-24=6
+	 * (6,24) 24-6=18 (6,18) 18-6=12 (6,12) 12-6=6 (6,6)
 	 * 
 	 * @param a
 	 * @param b
@@ -150,13 +179,36 @@ public class Recurrsion {
 	}
 
 	/**
-	 * find all the prime factors of a and b. LCM is the union of all prime factors of the two
-	 * numbers for e.g. - 9 , 12 3*3 and 3*2*2 union (LCM)- 3*2*2*3=36
+	 * @f:off
+	 * Euclidean algorithms -
+	 * 
+	 * If we subtract smaller number from larger (we reduce larger number), GCD doesn’t change. 
+	 * So if we keep subtracting repeatedly the larger of two, we end up with GCD. 
+	 * Now instead of subtraction, if we divide
+	 * smaller number, the algorithm stops when we find remainder 0.
+
+	 * O(Log min(a, b))
+	 * @f:on
+	 * 
+	 * @param a
+	 * @param b
+	 * @return GCD OR HCF
+	 */
+	public int gcdBest(int a, int b) {
+		if (b == 0) {
+			return a;
+		}
+		return gcd(b, a % b);
+	}
+
+	/**
+	 * find all the prime factors of a and b. LCM is the union of all prime factors
+	 * of the two numbers for e.g. - 9 , 12 3*3 and 3*2*2 union (LCM)- 3*2*2*3=36
 	 * 
 	 * Approach 1- relationship between LCM and HCF -> lcm = (a*b)/hcf.
 	 * 
-	 * Approach 2- start adding the max to the result till we get result%small ==0 result is
-	 * the lCM.
+	 * Approach 2- start adding the max to the result till we get result%small ==0
+	 * result is the lCM.
 	 * 
 	 * e.g. - a=12,b=9 (12+12)%9 (24+12)%9 so answer is 36
 	 * 
@@ -221,12 +273,13 @@ public class Recurrsion {
 	}
 
 	/**
-	 * check whether second string contains all the character of first string at least once.
-	 * e.g. -
+	 * check whether second string contains all the character of first string at
+	 * least once. e.g. -
 	 * 
 	 * @param first
 	 * @param second
-	 * @return true if second string contains all the characters of first string in any order
+	 * @return true if second string contains all the characters of first string in
+	 *         any order
 	 */
 	public boolean contains(String first, String second) {
 		Set<Character> set = new HashSet<>();
@@ -260,26 +313,54 @@ public class Recurrsion {
 	 * @return index else -1
 	 */
 	public int linearSearch(int[] arr, int item) {
-		return search(item, arr, 0);
+		return linearSearch(arr, item, 0);
 	}
 
-	private int search(int item, int[] arr, int i) {
-		if (arr.length == i) {
+	/**
+	 * No pre-sorted array needed
+	 * 
+	 * o(n)
+	 * 
+	 * @param arr
+	 * @param item
+	 * @param i
+	 * @return index of the item found else -1
+	 */
+	private int linearSearch(int[] arr, int item, int i) {
+		if (i == arr.length) {
 			return -1;
 		}
-		if (item == arr[i]) {
+		if (arr[i] == item) {
 			return i;
 		}
-		return search(item, arr, i + 1);
+		return linearSearch(arr, item, i + 1);
 	}
 
+	/**
+	 * it requires array to be already sorted to work correctly.
+	 * 
+	 * here we check from index start - mid if element to searched < mid else check
+	 * from mid+1,end.
+	 * 
+	 * o(logn)
+	 * 
+	 * @param arr
+	 * @param item
+	 * @return index of item else -1
+	 */
 	public int binarySearch(int[] arr, int item) {
-		int end = arr.length - 1;
-		System.out.println("Item is present in index : ");
-		return binarySearch(arr, item, 0, end);
+		return binarySearchUtil(arr, item, 0, arr.length - 1);
 	}
 
-	private int binarySearch(int[] arr, int item, int start, int end) {
+	/**
+	 * 
+	 * @param arr
+	 * @param item
+	 * @param start
+	 * @param end
+	 * @return index of element else -1
+	 */
+	private int binarySearchUtil(int[] arr, int item, int start, int end) {
 		if (start > end) {
 			return -1;
 		}
@@ -287,11 +368,10 @@ public class Recurrsion {
 		if (arr[mid] == item) {
 			return mid;
 		}
-		if (item < arr[mid]) {
-			return binarySearch(arr, item, start, mid - 1);
-		} else {
-			return binarySearch(arr, item, mid + 1, end);
+		if (arr[mid] > item) {
+			return binarySearchUtil(arr, item, start, mid - 1);
 		}
+		return binarySearchUtil(arr, item, mid + 1, end);
 	}
 
 	/**
@@ -327,8 +407,9 @@ public class Recurrsion {
 	/**
 	 * Equalize array -
 	 * 
-	 * The task is to make all the array elements equal with the given operation. In a single
-	 * operation, any element of the array can be either multiplied by 2 or by 3.
+	 * The task is to make all the array elements equal with the given operation. In
+	 * a single operation, any element of the array can be either multiplied by 2 or
+	 * by 3.
 	 * 
 	 * @return true if array can be equalized
 	 */
@@ -406,7 +487,8 @@ public class Recurrsion {
 		if (capacity < weight[i]) {
 			return knapsackRec(profit, weight, capacity, i - 1);
 		}
-		return MathUtil.max(knapsackRec(profit, weight, capacity, i - 1), knapsackRec(profit, weight, capacity - weight[i], i - 1) + profit[i]);
+		return MathUtil.max(knapsackRec(profit, weight, capacity, i - 1),
+				knapsackRec(profit, weight, capacity - weight[i], i - 1) + profit[i]);
 	}
 
 	/**
@@ -470,8 +552,8 @@ public class Recurrsion {
 	}
 
 	/**
-	 * given a subset and Sum S we need to tell whether there exists a subset of the set which
-	 * can have sum S
+	 * given a subset and Sum S we need to tell whether there exists a subset of the
+	 * set which can have sum S
 	 * 
 	 * similar to coin change
 	 * 
@@ -484,12 +566,12 @@ public class Recurrsion {
 	}
 
 	/**
-	 * here i starts with the last element index and if i<=0 return false. s is the sum to
-	 * reach.
+	 * here i starts with the last element index and if i<=0 return false. s is the
+	 * sum to reach.
 	 * 
-	 * on every step if we consider the element to be included in set we subtract that element
-	 * from s. when s reaches 0 return true as we have reach our sum. but if sum<0 it means
-	 * not possible.
+	 * on every step if we consider the element to be included in set we subtract
+	 * that element from s. when s reaches 0 return true as we have reach our sum.
+	 * but if sum<0 it means not possible.
 	 * 
 	 * For better approach see DP
 	 * 
@@ -505,7 +587,8 @@ public class Recurrsion {
 		if (i <= 0 || s < 0) {
 			return false;
 		}
-		// here in both cases we need to consider next element and update the sum if we are
+		// here in both cases we need to consider next element and update the sum if we
+		// are
 		// including that element
 		return subsetSumExistsRec(set, i - 1, s) || subsetSumExistsRec(set, i - 1, s - set[i - 1]);
 	}
@@ -515,12 +598,12 @@ public class Recurrsion {
 	 * 
 	 * We are given coin array. e.g. [1,2,3] and we want to get change of 5$.
 	 * 
-	 * Given - we can use same coin multiple times. what is the minimum number of coins
-	 * required to make change. The order of coins doesn’t matter. so, here result will be -
-	 * [3,2] and answer will be 2.
+	 * Given - we can use same coin multiple times. what is the minimum number of
+	 * coins required to make change. The order of coins doesn’t matter. so, here
+	 * result will be - [3,2] and answer will be 2.
 	 * 
-	 * Time Complexity - Every coin has two possibility- to be included or not included in
-	 * result set.so, for m coins - 2^m.
+	 * Time Complexity - Every coin has two possibility- to be included or not
+	 * included in result set.so, for m coins - 2^m.
 	 * 
 	 * SEE DP section for better approach.
 	 * 
@@ -534,8 +617,8 @@ public class Recurrsion {
 
 	/**
 	 * 
-	 * Approach - we need to take every coin in each step and see whether inclusion is less
-	 * than required sum.
+	 * Approach - we need to take every coin in each step and see whether inclusion
+	 * is less than required sum.
 	 * 
 	 * @param coins
 	 * @param m     - current coin to be considered
@@ -561,13 +644,13 @@ public class Recurrsion {
 	/**
 	 * Problem statement-
 	 * 
-	 * We are given coin array. e.g. [1,2,3] and we want to get change of 4$. so, In how many
-	 * ways we can do change. given - we can use same coin multiple times. The order of coins
-	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
-	 * answer will be 4.
+	 * We are given coin array. e.g. [1,2,3] and we want to get change of 4$. so, In
+	 * how many ways we can do change. given - we can use same coin multiple times.
+	 * The order of coins doesn’t matter. so, here result will contain - {
+	 * [1,1,1,1],[1,1,2],[1,3],[2,2] } and answer will be 4.
 	 * 
-	 * Time Complexity - Every coin has two possibility- to be included or not included in
-	 * result set.so, for m coins - 2^m.
+	 * Time Complexity - Every coin has two possibility- to be included or not
+	 * included in result set.so, for m coins - 2^m.
 	 * 
 	 * SEE DP section for better approach.
 	 * 
@@ -595,7 +678,8 @@ public class Recurrsion {
 		if (m <= 0 || n < 0) {
 			return 0;
 		}
-		// we partition the coin at index m into two set. first set contains the coin and second
+		// we partition the coin at index m into two set. first set contains the coin
+		// and second
 		// does not
 		return coinChangeRec(coins, m, n - coins[m - 1]) + coinChangeRec(coins, m - 1, n);
 	}

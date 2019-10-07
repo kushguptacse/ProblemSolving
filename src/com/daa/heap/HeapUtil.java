@@ -46,7 +46,7 @@ public final class HeapUtil {
 		}
 		System.out.println();
 		printMax(arr, 3);
-		
+
 		int[][] ar = { { 1, 3 }, { 2, 4, 6 }, { 0, 9, 10, 11 } };
 		int[] a = { 1, 5, 2, 4, 9 };
 		int[] b = { 8, 0, 6, 10, 3 };
@@ -68,24 +68,25 @@ public final class HeapUtil {
 		System.out.println("is valid max heap : " + isValidMaxHeap(arr));
 		printArray(arr);
 		int k = 2;
-		System.out.println(k + " th smallest element : " + findSmallest2(arr, k));
+		System.out.println(k + " th smallest element : " + findKSmallest2(arr, k));
 //		System.out.println(k + " th largest element : " + findLargest(arr, k));
 	}
 
 	/**
 	 * sort the array according to heap sort - o(nlogn)
 	 * 
-	 * start going from last to first element in array. for each element look downwards and
-	 * then adjust that node by swapping. at last for root compare it with max child.
+	 * start going from last to first element in array. for each element look
+	 * downwards and then adjust that node by swapping. at last for root compare it
+	 * with max child.
 	 * 
 	 * it is just like removal. Just we compare from rightmost to start and for each
-	 * considered node we compare it till bottom most node like removal. In this way heap is
-	 * created of original array.
+	 * considered node we compare it till bottom most node like removal. In this way
+	 * heap is created of original array.
 	 * 
-	 * so array can be rebuild to heap in o(n) time. then removal will take o(nlogn) time.
-	 * this approach saves memory in a way we don't need to create extra array. as we are not
-	 * creating heap by using normal heap insertion. instead we are shuffling existing array.
-	 * then removing is same as heap.poll
+	 * so array can be rebuild to heap in o(n) time. then removal will take o(nlogn)
+	 * time. this approach saves memory in a way we don't need to create extra
+	 * array. as we are not creating heap by using normal heap insertion. instead we
+	 * are shuffling existing array. then removing is same as heap.poll
 	 * 
 	 * it will take o(nlogn) time
 	 * 
@@ -127,8 +128,8 @@ public final class HeapUtil {
 	}
 
 	/**
-	 * for all nodes except leaves check whether there exist any node whose child are greater.
-	 * if yes return false. and return true in case loop finishes o(n)
+	 * for all nodes except leaves check whether there exist any node whose child
+	 * are greater. if yes return false. and return true in case loop finishes o(n)
 	 * 
 	 * @param heapArr
 	 * @return true if valid max heap
@@ -167,8 +168,8 @@ public final class HeapUtil {
 	/**
 	 * find the maximum element from min heap.
 	 * 
-	 * max element will always be present in the leaves . so, start from n/2 to n and find the
-	 * max o(n)
+	 * max element will always be present in the leaves . so, start from n/2 to n
+	 * and find the max o(n)
 	 * 
 	 * @param min
 	 * @return
@@ -245,7 +246,7 @@ public final class HeapUtil {
 	 * @param k
 	 * @return kth smallest element
 	 */
-	public static Integer findSmallest(int minHeap[], int k) {
+	public static Integer findKSmallest(int minHeap[], int k) {
 		Integer res = null;
 		for (int i = 0; i < k; i++) {
 			res = remove(minHeap, minHeap.length - i - 1);
@@ -272,7 +273,7 @@ public final class HeapUtil {
 	 * 2.add first element of passed min heap array along with index into P.
 	 * 3.repeat below step 1 to k-1 times
 	 * 3.1. remove the top element from P.
-	 * 3.2. add both childs of removed item to P if they exists.
+	 * 3.2. add both child of removed item to P if they exists.
 	 * 4.loop terminates.top element of P is the kth smallest of original min heap passed.
 	 *
 	 * time complexity -
@@ -284,9 +285,10 @@ public final class HeapUtil {
 	 * @param k
 	 * @return kth smallest element from min heap.
 	 */
-	public static Integer findSmallest2(int minHeap[], int k) {
+	public static Integer findKSmallest2(int minHeap[], int k) {
 
-		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k, (o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
+		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k,
+				(o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
 		queue.add(new Pair<>(minHeap[0], 0));
 		for (int i = 1; i < k; i++) {
 			int index = queue.poll().getSecond();
@@ -302,9 +304,10 @@ public final class HeapUtil {
 		return queue.poll().getFirst();
 	}
 
-	public static Integer findLargest(int maxHeap[], int k) {
+	public static Integer findKLargest(int maxHeap[], int k) {
 
-		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k, (o1, o2) -> o2.getFirst().compareTo(o1.getFirst()));
+		PriorityQueue<Pair<Integer, Integer>> queue = new PriorityQueue<>(k,
+				(o1, o2) -> o2.getFirst().compareTo(o1.getFirst()));
 		queue.add(new Pair<>(maxHeap[0], 0));
 		for (int i = 1; i < k; i++) {
 			int index = queue.poll().getSecond();
@@ -343,7 +346,7 @@ public final class HeapUtil {
 	 * @return array with k maximum item
 	 * 
 	 */
-	public static int[] maxKelements(int k, int... items) {
+	public static int[] findKmaxElements(int k, int... items) {
 		int[] res = new int[k];
 
 		// add first k elements to res - o(k)
@@ -402,7 +405,8 @@ public final class HeapUtil {
 	 */
 	public static int[] mergeKsortedArray(int[][] arr) {
 		int size = 0;
-		PriorityQueue<Pair<Integer, Pair<Integer, Integer>>> queue = new PriorityQueue<>(arr.length, (o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
+		PriorityQueue<Pair<Integer, Pair<Integer, Integer>>> queue = new PriorityQueue<>(arr.length,
+				(o1, o2) -> o1.getFirst().compareTo(o2.getFirst()));
 		for (int i = 0; i < arr.length; i++) {
 			size = size + arr[i].length;
 			queue.add(new Pair<>(arr[i][0], new Pair<>(i, 1)));
@@ -499,7 +503,8 @@ public final class HeapUtil {
 	/**
 	 * Print the median of running data.
 	 * 
-	 * Approach 1 - sort the data and then find middle element.this approach is comparing every element. and require re-shuffling on every insertion.
+	 * Approach 1 - sort the data and then find middle element.this approach is comparing every element. 
+	 * and require re-shuffling on every insertion.
 	 * 
 	 * @f:off
 	 * 

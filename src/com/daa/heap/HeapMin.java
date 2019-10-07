@@ -1,7 +1,7 @@
 package com.daa.heap;
 
 /**
- * min heap implementation
+ * min heap implementation. abdul bari,copy-1
  * 
  * @author G521885
  *
@@ -25,6 +25,9 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 		return size;
 	}
 
+	/**
+	 * logn
+	 */
 	@Override
 	public void add(T element) {
 		checkRange();
@@ -32,7 +35,7 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 		// fix up wards
 		int child = size;
 		int parent = (size - 1) / 2;
-		while (child > 0 && ((T)heapArray[parent]).compareTo(((T)heapArray[child])) > 0) {
+		while (child > 0 && ((T) heapArray[parent]).compareTo(((T) heapArray[child])) > 0) {
 			swap(parent, child);
 			child = parent;
 			parent = (parent - 1) / 2;
@@ -42,7 +45,7 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 	}
 
 	private void swap(int i, int j) {
-		T temp = ((T)heapArray[i]);
+		T temp = ((T) heapArray[i]);
 		heapArray[i] = heapArray[j];
 		heapArray[j] = temp;
 	}
@@ -57,14 +60,17 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 		}
 	}
 
+	/**
+	 * o(1)
+	 */
 	@Override
 	public T peek() {
-		return isEmpty() ? null : ((T)heapArray[0]);
+		return isEmpty() ? null : ((T) heapArray[0]);
 	}
 
 	/**
-	 * update the value present in given index with the value passed. After updating value
-	 * heapify is done. to maintain the heap properties. o(logn)
+	 * update the value present in given index with the value passed. After updating
+	 * value heapify is done. to maintain the heap properties. o(logn)
 	 * 
 	 * @param index
 	 * @param value
@@ -78,12 +84,15 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 		fixDown(index);
 	}
 
+	/**
+	 * o(logn)
+	 */
 	@Override
 	public T poll() {
 		if (isEmpty()) {
 			return null;
 		}
-		T item = ((T)heapArray[0]);
+		T item = ((T) heapArray[0]);
 		heapArray[0] = heapArray[--size];
 		// fix down wards
 		fixDown(0);
@@ -91,7 +100,9 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 	}
 
 	/**
-	 * Heapify tree
+	 * Heapify tree - logn
+	 * 
+	 * logn
 	 * 
 	 * @param i
 	 */
@@ -101,14 +112,21 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 		if (second < size) {
 			first = findMin(first, second);
 		}
-		if (second <= size && ((T)heapArray[first]).compareTo((T)heapArray[i]) < 0) {
+		if (second <= size && ((T) heapArray[first]).compareTo((T) heapArray[i]) < 0) {
 			swap(first, i);
 			fixDown(first);
 		}
 	}
 
+	/**
+	 * o(1)
+	 * 
+	 * @param i
+	 * @param child
+	 * @return min element
+	 */
 	private int findMin(int i, int child) {
-		return ((T)heapArray[i]).compareTo(((T)heapArray[child])) < 0 ? i : child;
+		return ((T) heapArray[i]).compareTo(((T) heapArray[child])) < 0 ? i : child;
 	}
 
 	/*
@@ -123,7 +141,6 @@ public class HeapMin<T extends Comparable<T>> implements PriorityQueue<T> {
 			sb.append(heapArray[i] + ",");
 		}
 		return sb.toString();
-//		return "Heap [heapArray=" + Arrays.toString(heapArray) + "]"
 	}
 
 	/**

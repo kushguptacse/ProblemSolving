@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import com.daa.algo.Recurrsion;
+import com.daa.algo.Recursion;
 import com.daa.math.MathUtil;
 
 /**
@@ -73,7 +73,7 @@ public class BinaryTree<T> implements Tree<T> {
 	 * @return number of possible unlabeled trees for given n node
 	 */
 	public int numberOfUnLabeledTreePosible(int n) {
-		Recurrsion r = new Recurrsion();
+		Recursion r = new Recursion();
 		int num = r.fact(2 * n);
 		int den = r.fact(n);
 		int res = den * den * (n + 1);
@@ -147,7 +147,7 @@ public class BinaryTree<T> implements Tree<T> {
 	 * @return number of possible labeled binary trees for given n node
 	 */
 	public int numberOfLabeledTreePosible(int n) {
-		Recurrsion r = new Recurrsion();
+		Recursion r = new Recursion();
 		int num = r.fact(2 * n);
 		int den = r.fact(n);
 		int res = den * (n + 1);

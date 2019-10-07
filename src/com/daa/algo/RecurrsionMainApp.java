@@ -12,24 +12,81 @@ import com.daa.list.Node;
 public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
-		Recurrsion recurrsion = new Recurrsion();
-		checkCutRod();
-		checkSubSetSum();
-		System.out.println("minimum coins needed: " + recurrsion.minCoinChange(new int[] { 1, 2, 3 }, 4));
+		new Recursion().towerOfHanoi(3, "x", "y", "z");
+		practice();
+		new RecurrsionMainApp().testGCD();
+//		checkCutRod();
+//		checkSubSetSum();
+//		dpTest();
+		new RecurrsionMainApp().testSearch();
+	}
+
+	public void testGCD() {
+		Recursion obj = new Recursion();
+		int a = 10;
+		int b = 15;
+		int g = obj.gcdBest(a, b);
+		System.out.println("GCD(" + a + " , " + b + ") = " + g);
+
+		a = 35;
+		b = 10;
+		g = obj.gcdBest(a, b);
+		System.out.println("GCD(" + a + " , " + b + ") = " + g);
+
+		a = 31;
+		b = 2;
+		g = obj.gcdBest(a, b);
+		System.out.println("GCD(" + a + " , " + b + ") = " + g);
+		System.out.println("GCD- " + obj.gcd(7, 9));
+		System.out.println("GCD- " + obj.gcd(30, 100));
+		System.out.println("GCD: " + obj.gcdBest(7, 9));
+		System.out.println("GCD: " + obj.gcdBest(30, 100));
+
+	}
+
+	public void testSearch() {
+		Recursion obj = new Recursion();
+		int arr[] = { 2, 3, 4, 10, 40 };
+		System.out.println("LS Element is present at index: " + obj.linearSearch(arr, 10));
+		System.out.println("BS Element is present at index: " + obj.binarySearch(arr, 10));
+		System.out.println("LS Element is present at index= " + obj.linearSearch(arr, 40));
+		System.out.println("BS Element is present at index= " + obj.binarySearch(arr, 40));
+		System.out.println("LS Element is present at index : " + obj.linearSearch(arr, 4));
+		System.out.println("BS Element is present at index : " + obj.binarySearch(arr, 4));
+		System.out.println("LS Element is present at index> " + obj.linearSearch(arr, 2));
+		System.out.println("BS Element is present at index> " + obj.binarySearch(arr, 2));
+		System.out.println("LS Element is present at index- " + obj.linearSearch(arr, 23));
+		System.out.println("BS Element is present at index- " + obj.binarySearch(arr, 34));
+	}
+
+	private static void practice() {
+		Recursion recursion = new Recursion();
+		recursion.headRecursion(4);
+		System.out.println("----------------------------------------");
+		recursion.tailRecursion(4);
+	}
+
+	private static void dpTest() {
+		Recursion recursion = new Recursion();
+		System.out.println("minimum coins needed: " + recursion.minCoinChange(new int[] { 1, 2, 3 }, 4));
 		int[] coins = { 9, 6, 5, 1 };
-		System.out.println("minimum coins needed: " + recurrsion.minCoinChange(coins, 8));
+		System.out.println("minimum coins needed: " + recursion.minCoinChange(coins, 8));
 		int[] val = new int[] { 60, 100, 120 };
 		int[] wt = new int[] { 10, 20, 30 };
 		int w = 50;
-		System.out.println("maximum possible profit is: " + recurrsion.knapsack(val, wt, w));
-		System.out.println("maximum possible profit is: " + recurrsion.knapsack(new int[] { 1, 2, 5, 6 }, new int[] { 2, 3, 4, 5 }, 8));
-		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 2, 3 }, 4));
-		System.out.println("Total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 2, 5, 3, 6 }, 10));
-		System.out.println("total possible ways to do coin change is: " + recurrsion.coinChange(new int[] { 1, 5, 10 }, 10));
+		System.out.println("maximum possible profit is: " + recursion.knapsack(val, wt, w));
+		System.out.println("maximum possible profit is: "
+				+ recursion.knapsack(new int[] { 1, 2, 5, 6 }, new int[] { 2, 3, 4, 5 }, 8));
+		System.out
+				.println("Total possible ways to do coin change is: " + recursion.coinChange(new int[] { 1, 2, 3 }, 4));
+		System.out.println(
+				"Total possible ways to do coin change is: " + recursion.coinChange(new int[] { 2, 5, 3, 6 }, 10));
+		System.out.println(
+				"total possible ways to do coin change is: " + recursion.coinChange(new int[] { 1, 5, 10 }, 10));
 	}
 
 	private static void checkCutRod() {
-		Recurrsion obj = new Recurrsion();
+		Recursion obj = new Recursion();
 		int[] arr = new int[] { 1, 5, 8, 9, 10, 17, 17, 20 };
 		System.out.println("Maximum Obtainable Value is> " + obj.cutRod(arr, arr.length));
 		arr = new int[] { 2, 5, 7, 3 };
@@ -38,7 +95,7 @@ public class RecurrsionMainApp {
 	}
 
 	private static void checkSubSetSum() {
-		Recurrsion obj = new Recurrsion();
+		Recursion obj = new Recursion();
 		int[] set = { 3, 34, 4, 12, 5, 2 };
 		System.out.println("Found a subset: " + obj.subsetSumExists(set, 11));
 		set = new int[] { 1, 7, 5, 2 };
@@ -53,7 +110,7 @@ public class RecurrsionMainApp {
 	}
 
 	public static void test() {
-		Recurrsion recurrsion = new Recurrsion();
+		Recursion recurrsion = new Recursion();
 		int n = 6;
 		int[] arr = new int[] { 1, 2, 3, 4, 5 };
 		System.out.println(recurrsion.binarySearch(arr, 1));

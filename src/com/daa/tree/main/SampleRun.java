@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import com.daa.algo.Recurrsion;
+import com.daa.algo.Recursion;
 
 public class SampleRun {
 	public static void main(String[] args) {
-		Recurrsion re=new Recurrsion();
+		Recursion re=new Recursion();
 		System.out.println(re.max(new int[] {22,4,1,5,3,0}));
 //		re.fun(4);
 	}
