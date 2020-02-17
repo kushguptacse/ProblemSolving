@@ -15,6 +15,37 @@ public class Array2D {
 		printData(matrixProduct(firstMatrix, secondMatrix, 3, 2));
 	}
 
+	/***
+	 * Given a m * n matrix grid which is sorted in non-increasing order both
+	 * row-wise and column-wise.
+	 * 
+	 * Return the number of negative numbers in grid.
+	 * 
+	 * Input: grid = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]] 
+	 * 
+	 * Output: 8
+	 * 
+	 * @param grid
+	 * @return count
+	 */
+	public int countNegatives(int[][] grid) {
+        int c=0;
+        for(int i=0;i<grid.length;i++){    
+            int start=0;
+            int end=grid[i].length-1;
+            while(start<=end){
+                int mid = (start+end)/2;
+                if(grid[i][mid]<0){
+                    c=c+end-mid+1;
+                    end=mid-1;
+                } else {
+                    start=mid+1;
+                }
+            }
+        }
+        return c;
+    }
+	
 	/**
 	 * print 2D array data.
 	 * 
