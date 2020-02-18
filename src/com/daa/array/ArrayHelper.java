@@ -1,9 +1,14 @@
 package com.daa.array;
 
+import java.util.Arrays;
+
 public class ArrayHelper {
 
 	public static void main(String[] args) {
 		System.out.println(ArrayHelper.binarySearch(new int[] { 1, 2, 5, 6 }, 3));
+		int[] arr = new int[] { 0, 1, 2, 5, 0, 6, 0 };
+		searchAndShift(arr, 0);
+		System.out.println(Arrays.toString(arr));
 	}
 
 	/**
@@ -37,11 +42,9 @@ public class ArrayHelper {
 	/**
 	 * Given a sorted array and a target value, return the index if the target is
 	 * found. If not, return the index where it would be if it were inserted in
-	 * order.
-	 * You may assume no duplicates in the array.
+	 * order. You may assume no duplicates in the array.
 	 * 
-	 * Input: [1,3,5,6], 2
-	 * Output: 1
+	 * Input: [1,3,5,6], 2 Output: 1
 	 * 
 	 * @param nums
 	 * @param target
@@ -62,5 +65,30 @@ public class ArrayHelper {
 			}
 		}
 		return start;
+	}
+
+	/**
+	 * Given an array nums, write a function to move all 0's to the end of it while
+	 * maintaining the relative order of the non-zero elements.
+	 * 
+	 * Example:
+	 * 
+	 * Input: [0,0,1,2,5,0,6,0]
+	 * 
+	 * Output: [1,2,5,6,0,0,0,0]
+	 * 
+	 * @param arr
+	 * @param val
+	 */
+	public static void searchAndShift(int[] arr, int val) {
+		int c = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == val) {
+				c++;
+			} else if (c > 0) {
+				arr[i - c] = arr[i];
+				arr[i] = val;
+			}
+		}
 	}
 }
