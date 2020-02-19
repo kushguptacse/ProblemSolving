@@ -136,4 +136,39 @@ public class MathUtil {
 		return min;
 	}
 
+	/**
+	 * Reverse a given integer. For example if the input of the algorithm is 1234
+	 * then the output should be 4321.
+	 * 
+	 * @param num
+	 * @return reverse number
+	 */
+	public static int reverse(int num) {
+		int res = 0;
+		while (num > 0) {
+			res = res * 10 + (num % 10);
+			num = num / 10;
+		}
+		return res;
+	}
+
+	/**
+	 * Determine whether an integer is a palindrome. An integer is a palindrome when
+	 * it reads the same backward as forward.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: 121
+	 * 
+	 * Output: true
+	 * 
+	 * @param num
+	 * @return true if palindrome
+	 */
+	public static boolean checkPalindrome(int num) {
+		int num1 = num;
+		int res = reverse(num);		
+		return num1 == res;
+	}
+
 }

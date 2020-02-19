@@ -3,7 +3,11 @@ package com.daa.array;
 public class Array2D {
 
 	public static void main(String[] args) {
-		printData(matrixProduct(new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } }, new int[][] { { 2, 3, 4 }, { 5, 6, 7 }, { 8, 9, 1 } }, 3, 3));
+		int res = countNegatives(
+				new int[][] { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } });
+		System.out.println("Number of negative number are:" + res);
+		printData(matrixProduct(new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } },
+				new int[][] { { 2, 3, 4 }, { 5, 6, 7 }, { 8, 9, 1 } }, 3, 3));
 		System.out.println("---");
 		printData(matrixProduct(new int[][] { { 1, 2 }, { 3, 4 } }, new int[][] { { 1, 1 }, { 1, 1 } }, 2, 2));
 		int mat1[][] = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
@@ -21,31 +25,37 @@ public class Array2D {
 	 * 
 	 * Return the number of negative numbers in grid.
 	 * 
-	 * Input: grid = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]] 
+	 * Input: grid = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]] Output: 8
 	 * 
-	 * Output: 8
+	 * @f:off
+	 * 1.Use binary search approach for every individual array (row wise). 
+	 * 2.if mid number is negative ignore all right and try from start to mid-1.
+	 * 3.if mid is positive check from mid+1 to end
+	 * 4.after loop terminates start will reach to the point where last negative number is.
+	 * 5.to use column decreasing property we update end to start value. so that we compare from 0 to start for second row
+	 * @f:on
 	 * 
 	 * @param grid
 	 * @return count
 	 */
-	public int countNegatives(int[][] grid) {
-        int c=0;
-        for(int i=0;i<grid.length;i++){    
-            int start=0;
-            int end=grid[i].length-1;
-            while(start<=end){
-                int mid = (start+end)/2;
-                if(grid[i][mid]<0){
-                    c=c+end-mid+1;
-                    end=mid-1;
-                } else {
-                    start=mid+1;
-                }
-            }
-        }
-        return c;
-    }
-	
+	public static int countNegatives(int[][] grid) {
+		int c = 0;
+		for (int i = 0, end = grid[i].length - 1; i < grid.length; i++) {
+			int start = 0;
+			while (start <= end) {
+				int mid = (start + end) / 2;
+				if (grid[i][mid] < 0) {
+					end = mid - 1;
+				} else {
+					start = mid + 1;
+				}
+			}
+			c = c + grid[i].length - start;
+			end = start - 1;
+		}
+		return c;
+	}
+
 	/**
 	 * print 2D array data.
 	 * 

@@ -50,9 +50,9 @@ public final class StringHelper {
 	}
 
 	/**
-	 * Find the longest common prefix of two strings. here we can also use trie but for two
-	 * string this approach is easier. but when we need to find from n strings trie will be
-	 * easier.
+	 * Find the longest common prefix of two strings. here we can also use trie but
+	 * for two string this approach is easier. but when we need to find from n
+	 * strings trie will be easier.
 	 * 
 	 * e.g. - "helloJi","hell" -> longest prefix is - "hell"
 	 * 
@@ -114,11 +114,11 @@ public final class StringHelper {
 	/**
 	 * Check whether two strings contain same characters in same order.
 	 * 
-	 * Given two strings s1 and s2, the task is to find whether the two string contain the
-	 * same characters that occur in the same order.
+	 * Given two strings s1 and s2, the task is to find whether the two string
+	 * contain the same characters that occur in the same order.
 	 * 
-	 * For example: string “Geeks” and string “Geks” contain the same characters in same
-	 * order.
+	 * For example: string “Geeks” and string “Geks” contain the same characters in
+	 * same order.
 	 * 
 	 * Input: s1 = “Arnab”, s2 = “Andrew” => Output: No
 	 * 
@@ -232,9 +232,9 @@ public final class StringHelper {
 	}
 
 	/**
-	 * An anagram of a string is another string that contains same characters, only the order
-	 * of characters can be different. str1 - abcd , str2 - cdab above two string are anagram
-	 * of each other.
+	 * An anagram of a string is another string that contains same characters, only
+	 * the order of characters can be different. str1 - abcd , str2 - cdab above two
+	 * string are anagram of each other.
 	 * 
 	 * Time complexity - O(N^2) - if map get and put considered worst performance
 	 * 
@@ -271,9 +271,9 @@ public final class StringHelper {
 	}
 
 	/**
-	 * An anagram of a string is another string that contains same characters, only the order
-	 * of characters can be different. str1 - abcd , str2 - cdab above two string are anagram
-	 * of each other.
+	 * An anagram of a string is another string that contains same characters, only
+	 * the order of characters can be different. str1 - abcd , str2 - cdab above two
+	 * string are anagram of each other.
 	 * 
 	 * Time complexity - O(N)
 	 * 
@@ -310,9 +310,9 @@ public final class StringHelper {
 	/**
 	 * Given a time in -hour AM/PM format, convert it to military (24-hour) time.
 	 * 
-	 * Note: Midnight is 12:00:00AM on a 12-hour clock, and 00:00:00 on a 24-hour clock. Noon
-	 * is 12:00:00PM on a 12-hour clock, and 12:00:00 on a 24-hour clock. input - 07:05:45PM
-	 * output - 19:05:45
+	 * Note: Midnight is 12:00:00AM on a 12-hour clock, and 00:00:00 on a 24-hour
+	 * clock. Noon is 12:00:00PM on a 12-hour clock, and 12:00:00 on a 24-hour
+	 * clock. input - 07:05:45PM output - 19:05:45
 	 * 
 	 * @param s
 	 * @return string in 24 hour format
@@ -382,8 +382,8 @@ public final class StringHelper {
 	}
 
 	/**
-	 * Find Longest Common Subsequence between two Strings This solution can be improved by
-	 * using dynamic programming.
+	 * Find Longest Common Subsequence between two Strings This solution can be
+	 * improved by using dynamic programming.
 	 * 
 	 * @return length of lCS
 	 */
@@ -438,6 +438,25 @@ public final class StringHelper {
 		}
 		int res = i - 1;
 		return res * res == num;
+	}
+
+	/**
+	 * "A palindrome is a string that reads the same forward and backward"
+	 * 
+	 * For example: radar or madam
+	 * 
+	 * o(n/2)
+	 * 
+	 * @param string
+	 * @return true if palindrome
+	 */
+	public static boolean checkPalindrome(String string) {
+		for (int i = 0; i < string.length() / 2; i++) {
+			if (string.charAt(i) != string.charAt(string.length() - 1 - i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

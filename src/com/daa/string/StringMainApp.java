@@ -2,6 +2,14 @@ package com.daa.string;
 
 public class StringMainApp {
 	public static void main(String[] args) {
+		String str="radabdar";
+		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));
+		str="radar";
+		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));
+		str="madama";
+		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));
+		str="raar";
+		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));
 		System.out.println(StringHelper.longestCommonSubString("neversaynever"));
 		System.out.println(StringHelper.longestCommonPrefix("hello Ji","J"));
 		System.out.println(StringHelper.reverse("smellycat"));
@@ -27,6 +35,5 @@ public class StringMainApp {
 		System.out.println("length of longest common subsequence : " + res);
 		System.out.println("Length of lcs is : " + StringHelper.longestCommonSubsequence("abdace", "babce"));
 		System.out.println("Length of lcs is : " + StringHelper.longestCommonSubsequence("ABCDGH", "AEDFHR"));
-
 	}
 }
