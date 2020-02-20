@@ -12,6 +12,7 @@ import com.daa.list.Node;
 public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
+		System.out.println(Recursion.numberOfSteps(14));
 		new Recursion().towerOfHanoi(3, "x", "y", "z");
 		practice();
 		new RecurrsionMainApp().testGCD();

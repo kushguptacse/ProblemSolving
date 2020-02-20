@@ -91,4 +91,62 @@ public class ArrayHelper {
 			}
 		}
 	}
+	
+	/**
+	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements
+	 * appear twice and others appear once.
+	 * 
+	 * print all the duplicates in this array. 
+	 * 
+	 * o(n)
+	 * 
+	 * @param nums
+	 */
+	public static void findDuplicates(int[] nums) {
+		for (int i = 0; i < nums.length; i++) {
+			int n=Math.abs(nums[i]);
+			if (nums[n-1] < 0) {
+				System.out.print(n+" ");
+			} else {
+				nums[n-1] = -nums[n-1];
+			}
+		}
+	}
+	
+	/**
+	 * leetcode
+	 * 
+	 * Given a list of non negative integers, arrange them such that they form the
+	 * largest number.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: [3,30,34,5,9] 
+	 * 
+	 * Output: "9534330"
+	 * 
+	 * @param nums
+	 * @return largest number
+	 */
+	public String largestNumber(int[] nums) {
+        String[] str = new String[nums.length];
+        for(int i=0;i<nums.length;i++){
+            str[i]=String.valueOf(nums[i]);
+        }
+        Arrays.sort(str,(o1,o2)->{
+	            String s1=o1+o2;
+                String s2=o2+o1;
+                return s2.compareTo(s1);
+	        });
+       
+        if("0".equals(str[0])){
+            return str[0];
+        }
+        StringBuilder sb=new StringBuilder(nums.length);
+        for(String s:str){
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+
 }
