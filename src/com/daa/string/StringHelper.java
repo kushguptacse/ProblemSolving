@@ -174,6 +174,8 @@ public final class StringHelper {
 	}
 
 	/**
+	 * Abdul bari
+	 * 
 	 * check whether a given string str is substring of source.
 	 * @f:off
 	 * worst case - o(n*m)
@@ -196,14 +198,18 @@ public final class StringHelper {
 	 * @return true if str is substring of source
 	 */
 	public static boolean subStringRabinKarpBetter(String source, String str) {
-		int hash = 0;
-		int hashStr = 0;
+		int hSource = 0;
+		int hStr = 0;
+		//calculate hashcode of both source and string for first comparison
 		for (int i = 0; i < str.length(); i++) {
-			hash = hash + hashFunction(source.charAt(i));
-			hashStr = hashStr + hashFunction(str.charAt(i));
+			hSource = hSource + hashFunction(source.charAt(i));
+			hStr = hStr + hashFunction(str.charAt(i));
 		}
+		// we compare hash first and if matched return true.
+		// calculate hash again except for last value of i as we are generating hash in
+		// advanced.
 		for (int i = 0; i <= source.length() - str.length(); i++) {
-			if (hash == hashStr) {
+			if (hStr == hSource) {
 				int j = 0;
 				for (j = 0; j < str.length(); j++) {
 					if (source.charAt(j + i) != str.charAt(j)) {
@@ -211,11 +217,12 @@ public final class StringHelper {
 					}
 				}
 				if (j == str.length()) {
-					System.out.println("Pattern Found at index : " + i);
+					return true;
 				}
-
-			} else if (i + str.length() < source.length()) {
-				hash = hash - hashFunction(source.charAt(i)) + hashFunction(source.charAt(i + str.length()));
+			}
+			//to avoid calculation after last index
+			if (i < source.length() - str.length()) {
+				hSource = hSource - hashFunction(source.charAt(i)) + hashFunction(source.charAt(i + str.length()));
 			}
 		}
 		return false;
