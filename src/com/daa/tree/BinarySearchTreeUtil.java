@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
-import com.daa.algo.SortUtil;
+import com.daa.algo.sorting.SortUtil;
 import com.daa.list.LinkedListUtil;
 import com.daa.list.Node;
 import com.daa.math.MathUtil;
