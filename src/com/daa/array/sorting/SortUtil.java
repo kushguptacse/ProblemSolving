@@ -1,4 +1,4 @@
-package com.daa.algo.sorting;
+package com.daa.array.sorting;
 
 import java.util.Arrays;
 
@@ -129,8 +129,7 @@ public final class SortUtil {
 			}
 			swap(array, i, minIndex);
 //			System.out.print("After Pass "+(i+1)+" : ");
-//			Arrays.stream(t).forEach(System.out::print);
-//			System.out.println();
+//			System.out.println(Arrays.toString(array));
 		}
 	}
 
@@ -164,11 +163,10 @@ public final class SortUtil {
 				}
 			}
 			System.out.print("After Pass " + (i) + " : ");
-			Arrays.stream(array).forEach(s -> System.out.print(s + ","));
-			System.out.println();
+			System.out.println(Arrays.toString(array));
 		}
 	}
-
+	
 	/**
 	 * Non-comparison base algorithm. stable ,not in-place.
 	 * this is best suited when we know that element inside array is not having large values. it can handle negative values.
