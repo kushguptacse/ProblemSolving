@@ -27,7 +27,7 @@ import com.daa.math.MathUtil;
  * As Insertion sort is faster then both merge or quick sort if elements are small e.g. <10. 
  * for large data set it uses merge sort.
  * 
- * e.g. INTROSORT - Quicksort +Heapsort. 
+ * e.g. INTROSORT - Quicksort + Heapsort. 
  * as bad pivot selection can lead to o(n^2) in quick sort worst case. it uses hybrid of both 
  * @f:on
  * 

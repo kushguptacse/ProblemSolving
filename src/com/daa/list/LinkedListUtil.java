@@ -1,5 +1,7 @@
 package com.daa.list;
 
+import java.util.stream.IntStream;
+
 public final class LinkedListUtil {
 	private LinkedListUtil() {
 
@@ -14,6 +16,45 @@ public final class LinkedListUtil {
 		list.add('A');
 		list.print();
 		System.out.println(list.checkPalindrome());
+		LinkedList<Integer> list1 = new LinkedList<>();
+		IntStream.of(1, 2, 4, 7).forEach(list1::add);
+		insertInSortedList(list1.getHead(), 5).print();
+	}
+
+	/**
+	 * On a given sorted list. insert data in sorted manner.
+	 * 
+	 * O(n)
+	 * 
+	 * @f:off
+	 * e.g. - 
+	 * Input - 
+	 * 1->2->4->7 , 3
+	 * Output -
+	 * 1->2->3->4->7
+	 * @f:on
+	 * 
+	 * @param head
+	 * @return head node
+	 */
+	public static Node<Integer> insertInSortedList(Node<Integer> head, int item) {
+		if (head == null) {
+			return head;
+		}
+		Node<Integer> newNode = new Node<>(item);
+		Node<Integer> prev = head;
+		if (item < prev.getData()) {
+			newNode.setNext(head);
+			head = newNode;
+		} else {
+			while (prev.getNext() != null && prev.getNext().getData() < item) {
+				prev = prev.getNext();
+			}
+			newNode.setNext(prev.getNext());
+			prev.setNext(newNode);
+		}
+		return head;
+
 	}
 
 	/**
@@ -37,12 +78,12 @@ public final class LinkedListUtil {
 			return node2;
 		}
 	}
-	
+
 	public static int size(Node<Integer> head) {
-		int i=0;
-		while(head!=null) {
+		int i = 0;
+		while (head != null) {
 			i++;
-			head=head.getNext();
+			head = head.getNext();
 		}
 		return i;
 	}
