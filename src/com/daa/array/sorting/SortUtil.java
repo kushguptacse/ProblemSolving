@@ -90,15 +90,17 @@ public final class SortUtil {
 	 * @param array
 	 */
 	public static <T extends Comparable<T>> void bubbleSort(T[] array) {
-		for (int i = 0; i < array.length - 1; i++) {
-			boolean swap = false;
-			for (int j = 0; j < array.length - i - 1; j++) {
-				if (array[j].compareTo(array[j + 1]) > 0) {
-					swap(array, j, j + 1);
-					swap = true;
+		for (int i = 0; i < array.length-1; i++) {
+			// if after entire below loop no swap happen then it means array is already sorted 
+			boolean swap=false;
+			for (int j = 0; j < array.length - i -1; j++) {
+				if (array[j].compareTo(array[j+1]) > 0) {
+					swap(array, j, j+1);
+					swap=true;
 				}
 			}
-			if (!swap) {
+			//break as array is now sorted.
+			if(!swap) {
 				break;
 			}
 		}
@@ -123,13 +125,11 @@ public final class SortUtil {
 		for (int i = 0; i < array.length; i++) {
 			int minIndex = i;
 			for (int j = i + 1; j < array.length; j++) {
-				if (array[minIndex].compareTo(array[j]) > 0) {
+				if (array[j].compareTo(array[minIndex]) < 0) {
 					minIndex = j;
 				}
 			}
 			swap(array, i, minIndex);
-//			System.out.print("After Pass "+(i+1)+" : ");
-//			System.out.println(Arrays.toString(array));
 		}
 	}
 
@@ -166,7 +166,7 @@ public final class SortUtil {
 			System.out.println(Arrays.toString(array));
 		}
 	}
-	
+
 	/**
 	 * Non-comparison base algorithm. stable ,not in-place.
 	 * this is best suited when we know that element inside array is not having large values. it can handle negative values.
@@ -365,7 +365,7 @@ public final class SortUtil {
 			int mid = (i + j) / 2;
 			mergeSort(arr, i, mid); // divide left sub array
 			mergeSort(arr, mid + 1, j); // divide right sub array
-			merge(arr, i, j, mid); // merge the two array.
+			merge(arr, i, j, mid); // merge the two sorted array.
 		}
 	}
 
