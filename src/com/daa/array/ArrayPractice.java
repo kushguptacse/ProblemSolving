@@ -1,6 +1,16 @@
 package com.daa.array;
 
+import java.util.Arrays;
+
 public class ArrayPractice {
+	
+	public static void main(String[] args) {
+		int[] nums1 = new int[] {1,0,0,0,0,0};
+		int[] nums2 = new int[] {3,4};
+		merge(nums1, 1, nums2, 2);
+		System.out.println(Arrays.toString(nums1));
+	}
+	
 	/**
 	 * @f:off
 	 * Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as
@@ -27,7 +37,7 @@ public class ArrayPractice {
 	 * @param n
 	 */
 	public static void merge(int[] nums1, int m, int[] nums2, int n) {
-		int i = nums1.length - 1;
+		int i = m + n - 1;
 		n--;
 		m--;
 		while (m >= 0 && n >= 0) {

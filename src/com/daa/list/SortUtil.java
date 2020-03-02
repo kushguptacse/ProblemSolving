@@ -14,6 +14,7 @@ public class SortUtil {
 		list.add(24);
 		list.print();
 		insertionSort(list.getHead());
+		selectionSort(list.getHead());
 		list.print();
 	}
 
@@ -45,9 +46,9 @@ public class SortUtil {
 		Node<Integer> curr = head;
 		Node<Integer> prev = dummy;
 		while (curr != null) {
-			// Store nextNode for next iteration 
+			// Store nextNode for next iteration
 			Node<Integer> nextNode = curr.getNext();
-			
+
 			// to save checking from start- below condition is used
 			if (prev.getData() > curr.getData()) {
 				prev = dummy;
@@ -64,4 +65,58 @@ public class SortUtil {
 		return dummy.getNext();
 	}
 
+	/**
+	 * Apply selection sort to sort the list.
+	 * 
+	 * @f:off
+	 * 1. In it we find min in Linked list and swap it with 0 index and then start
+	 * searching min again from 1 to n and now swap min with 1 and so on. 
+	 * 2. For swapping we will swap content of the data not the node itself. 
+	 * 3. It is an in-place algorithm.
+	 * @f:on
+	 * 
+	 * o(n^2)
+	 * 
+	 * @param head
+	 * @return head Node
+	 */
+	public static Node<Integer> selectionSort(Node<Integer> head) {
+
+		Node<Integer> temp = head;
+		while (temp != null) {
+			Node<Integer> minNode = temp;
+			Node<Integer> dummy = temp.getNext();
+			while (dummy != null) {
+				if (dummy.getData() < minNode.getData()) {
+					minNode=dummy;
+				}
+				dummy=dummy.getNext();
+			}
+			int data = minNode.getData();
+			minNode.setData(temp.getData());
+			temp.setData(data);
+			temp = temp.getNext();
+		}
+
+		return head;
+	}
+
+	/**
+	 * 
+	 * 1. Compare 0 element with 1 and arrange them. Then it take 1 element with 2
+	 * and arrange. So after 1st iteration largest element moved to the end of
+	 * array. From next iteration onwards we will start from 0 and ignore last
+	 * element as it is already in the correct position. 
+	 * 
+	 * 2. Stable, In-place
+	 * 
+	 * 
+	 * @param head
+	 * @return head
+	 */
+	public static Node<Integer> bubbleSort(Node<Integer> head) {
+		//TODO
+		return null;
+	}
+	
 }
