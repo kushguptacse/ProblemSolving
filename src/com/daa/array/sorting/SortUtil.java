@@ -225,7 +225,7 @@ public final class SortUtil {
 	 * In-place,Not Stable,Not adaptive,Divide and conquer
 	 * 
 	 * Perform quick sort algo to sort the data. for primitive it is preferred and for objects merge sort is preferred.
-	 * as merge sort takes extra o(n) memory it is not preffered for array. 
+	 * as merge sort takes extra o(n) memory it is not preferred for array. 
 	 * but for linked list merge sort does not need extra space
 	 * 
 	 * Steps-
@@ -351,6 +351,8 @@ public final class SortUtil {
 	 * 2.sort these sub arrays with merge sort again.
 	 * 3.when only single item left in sub array. we consider it to be sorted.
 	 * 4.Merge the sub array to get final sorted array.
+	 * 
+	 * Best and worst case  - o(nlogn)
 	 * 
 	 * @f:on
 	 * 

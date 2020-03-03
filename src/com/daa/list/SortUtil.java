@@ -12,9 +12,11 @@ public class SortUtil {
 		list.add(8);
 		list.add(-1);
 		list.add(24);
+		list.add(5);
 		list.print();
-		insertionSort(list.getHead());
-		selectionSort(list.getHead());
+		bubbleSort(list.getHead());
+//		insertionSort(list.getHead());
+//		selectionSort(list.getHead());
 		list.print();
 	}
 
@@ -110,13 +112,27 @@ public class SortUtil {
 	 * 
 	 * 2. Stable, In-place
 	 * 
+	 * o(n^2)
 	 * 
 	 * @param head
 	 * @return head
 	 */
 	public static Node<Integer> bubbleSort(Node<Integer> head) {
-		//TODO
-		return null;
+		Node<Integer> end = null;
+		while (end != head) {
+			Node<Integer> next = head;
+			while (next.getNext() != null && next.getNext() != end) {
+				if (next.getData() > next.getNext().getData()) {
+					int t = next.getData();
+					next.setData(next.getNext().getData());
+					next.getNext().setData(t);
+				}
+				next = next.getNext();
+			}
+			end = next;
+		}
+
+		return head;
 	}
 	
 }
