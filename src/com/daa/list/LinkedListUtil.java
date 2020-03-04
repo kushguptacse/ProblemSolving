@@ -58,7 +58,7 @@ public final class LinkedListUtil {
 	}
 
 	/**
-	 * 
+	 * merge two sorted list
 	 * @param node1
 	 * @param node2
 	 * @return merge sorted list

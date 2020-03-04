@@ -72,6 +72,7 @@ public final class SortUtil {
 		insertionSort(new Integer[] { 34, -3, 0, 2, 14, 8, -1, 24 });
 		countingSort(new int[] { 34, -3, 0, 2, 14, 8, -1, 24 });
 		countingSort(ar);
+		ar=new int[] { 34, -3, 0, 2, 14, 8, -1, 24 };
 		mergeSort(ar);
 		System.out.println(Arrays.toString(ar));
 	}
@@ -338,7 +339,8 @@ public final class SortUtil {
 	 * @param arr
 	 */
 	public static void mergeSort(int[] arr) {
-		System.out.println("Merge sort");
+		System.out.print("Merge sort - ");
+		System.out.println(Arrays.toString(arr)); 
 		mergeSort(arr, 0, arr.length - 1);
 	}
 
@@ -388,22 +390,20 @@ public final class SortUtil {
 		int[] temp = new int[r - l + 1];
 		int i = l;
 		int j = mid + 1;
-		int k = 0;
+		int count = 0;
 		while (i <= mid && j <= r) {
 			if (arr[i] <= arr[j]) {
-				temp[k++] = arr[i++];
+				temp[count++] = arr[i++];
 			} else {
-				temp[k++] = arr[j++];
+				temp[count++] = arr[j++];
 			}
 		}
-
 		while (i <= mid) {
-			temp[k++] = arr[i++];
+			temp[count++] = arr[i++];
 		}
 		while (j <= r) {
-			temp[k++] = arr[j++];
+			temp[count++] = arr[j++];
 		}
-
 		for (int p = l; p <= r; p++) {
 			arr[p] = temp[p - l];
 		}

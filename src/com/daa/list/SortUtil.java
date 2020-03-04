@@ -12,7 +12,7 @@ public class SortUtil {
 		list.add(8);
 		list.add(-1);
 		list.add(24);
-		list.add(5);
+//		list.add(5);
 		list.print();
 		bubbleSort(list.getHead());
 //		insertionSort(list.getHead());
