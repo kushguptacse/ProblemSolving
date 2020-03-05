@@ -142,9 +142,9 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 	
 	/**
 	 * 
-	 * Reverse link list O(N) . take three pointer prev curr and last.
+	 * Reverse link list O(N) . take three pointer prev curr and next.
 	 * prev point to previous
-	 * curr to the current intially head 
+	 * curr to the current initially head 
 	 * last point next node to the curr.
 	 * 
 	 */
