@@ -13,6 +13,7 @@ import com.daa.tree.BinaryTree;
 
 public class RunApplication {
 	public static void main(String[] args) {
+		testLinkedList();
 		int arr[] = { 1, 2, 3, 4, 5 };
 		int brr[] = { 0, 1, 2 };
 		int res[]=rightArrayRotation1(arr,6, brr);

@@ -149,22 +149,14 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 	 * 
 	 */
 	public void reverse() {
-		
-		if(head==null||head.getNext()==null) {
-			return;
-		}
-		
-		Node<T> last = head.getNext();
 		Node<T> prev = null;
-		Node<T> temp=head;
-		while ( last!=null) {
-			temp.setNext(prev);
-			prev = temp;
-			temp = last;
-			last = last.getNext();
+		while (head != null) {
+			Node<T> next = head.getNext();
+			head.setNext(prev);
+			prev = head;
+			head = next;
 		}
-		temp.setNext(prev);
-		head = temp;
+		head = prev;
 	}
 
 	/**
@@ -175,16 +167,16 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 	}
 
 	public boolean checkPalindrome() {
-		return checkPalindromeString(head);
+		return checkPalindrome(head);
 	}
 
 	private Node<T> left=head;
-	private boolean checkPalindromeString(Node<T> node) {
+	private boolean checkPalindrome(Node<T> node) {
 		if (left == null || node == null) {
 			return true;
 		}
 
-		boolean res = checkPalindromeString(node.getNext());
+		boolean res = checkPalindrome(node.getNext());
 
 		if (res && left.getData().equals(node.getData())) {
 			left = left.getNext();
