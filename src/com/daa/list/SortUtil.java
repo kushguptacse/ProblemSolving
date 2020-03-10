@@ -142,7 +142,7 @@ public class SortUtil {
 	 * @f:off
 	 * Will Follow merge sort algorithm - 
 	 * 1.Divide the list into two halves and then merge two sorted list.
-	 * 2.So, basically we will find middle element of the list and detatch middle.next
+	 * 2.So, basically we will find middle element of the list and detach  middle.next
 	 * So, first half head will have data till middle. 
 	 * and middleNext element will be the starting point of second list.
 	 * 3.And then we merge them together(for merging we can use both iterative solution as well as recursive solution)
@@ -156,11 +156,17 @@ public class SortUtil {
 		if (head == null || head.getNext() == null) {
 			return head;
 		}
+		//find middle element
 		Node<Integer> middle = findMiddleOfLinkedList(head);
+		//point middleNext to the start of second half of list
 		Node<Integer> middleNext = middle.getNext();
+		//set end of first half to null. (for clear separation of two list)
 		middle.setNext(null);
+		//now call merge sort for first half
 		Node<Integer> left = mergeSort(head);
+		//call merge sort for second half
 		Node<Integer> right = mergeSort(middleNext);
+		// merge sorted list
 		return mergeSortedLists(left, right);
 	}
 	

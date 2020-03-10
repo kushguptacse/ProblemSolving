@@ -91,6 +91,8 @@ public final class LinkedListUtil {
 
 	/**
 	 * check if a linked list has a cycle
+	 * take two pointers one slow and other fast. 
+	 * if they meet there is a cycle.
 	 * 
 	 * o(n),o(1)
 	 * 
