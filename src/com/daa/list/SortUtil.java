@@ -14,10 +14,11 @@ public class SortUtil {
 		list.add(24);
 //		list.add(5);
 		list.print();
-		bubbleSort(list.getHead());
+		Node<Integer> head = mergeSort(list.getHead());
+//		bubbleSort(list.getHead());
 //		insertionSort(list.getHead());
 //		selectionSort(list.getHead());
-		list.print();
+		head.print();
 	}
 
 	/**
@@ -136,12 +137,95 @@ public class SortUtil {
 	}
 	
 	/**
-	 * TODO
+	 * Sort the single linked list using merge sort
+	 * 
+	 * @f:off
+	 * Will Follow merge sort algorithm - 
+	 * 1.Divide the list into two halves and then merge two sorted list.
+	 * 2.So, basically we will find middle element of the list and detatch middle.next
+	 * So, first half head will have data till middle. 
+	 * and middleNext element will be the starting point of second list.
+	 * 3.And then we merge them together(for merging we can use both iterative solution as well as recursive solution)
+	 * @f:on
+	 * 
+	 * o(nlogn)
 	 * 
 	 * @param head
-	 * @return sorted list
 	 */
 	public static Node<Integer> mergeSort(Node<Integer> head) {
-		return head;
-	}	
+		if (head == null || head.getNext() == null) {
+			return head;
+		}
+		Node<Integer> middle = findMiddleOfLinkedList(head);
+		Node<Integer> middleNext = middle.getNext();
+		middle.setNext(null);
+		Node<Integer> left = mergeSort(head);
+		Node<Integer> right = mergeSort(middleNext);
+		return mergeSortedLists(left, right);
+	}
+	
+	/**
+	 * merge two sorted list into single one.
+	 * 
+	 * @param first
+	 * @param second
+	 * @return head of the merged sorted list.
+	 */
+	private static Node<Integer> mergeSortedLists(Node<Integer> first, Node<Integer> second) {
+		Node<Integer> dummy = new Node<>(Integer.MAX_VALUE);
+		Node<Integer> head=dummy;
+		while (first != null && second != null) {
+			if (first.getData() <= second.getData()) {
+				dummy.setNext(first);
+				first = first.getNext();
+			} else {
+				dummy.setNext(second);
+				second = second.getNext();
+			}
+			dummy = dummy.getNext();
+		}
+		
+		while (first != null) {
+			dummy.setNext(first);
+			first = first.getNext();
+			dummy = dummy.getNext();
+		}
+		
+		while (second != null) {
+			dummy.setNext(second);
+			second = second.getNext();
+			dummy = dummy.getNext();
+		}
+		return head.getNext();
+	}
+
+	/**
+	 * @f:off
+	 * Find the middle element of the linked list.
+	 * 
+	 * Input: [1,2,3,4,5,6]
+	 * Output: Node 3
+	 *  
+	 * If we want output to be 4 in such case run loop -
+	 * while (fast != null && fast.getNext() != null) 
+	 * @f:on
+	 * 
+	 * o(n)
+	 * 
+	 * @param head
+	 * @return middle element
+	 */
+	public static Node<Integer> findMiddleOfLinkedList(Node<Integer> head) {
+		if (head == null) {
+			return head;
+		}
+		Node<Integer> fast = head;
+		Node<Integer> slow = head;
+		while (fast.getNext() != null && fast.getNext().getNext() != null) {
+			slow = slow.getNext();
+			fast = fast.getNext().getNext();
+		}
+		return slow;
+	}
+
 }

@@ -79,6 +79,7 @@ public final class LinkedListUtil {
 		}
 	}
 
+
 	public static int size(Node<Integer> head) {
 		int i = 0;
 		while (head != null) {
@@ -88,4 +89,30 @@ public final class LinkedListUtil {
 		return i;
 	}
 
+	/**
+	 * check if a linked list has a cycle
+	 * 
+	 * o(n),o(1)
+	 * 
+	 * leetcode 
+	 * 
+	 * @param head
+	 * @return true if exists.
+	 */
+	public static boolean hasCycle(Node<Integer> head) {
+		if (head == null || head.getNext() == null) {
+			return false;
+		}
+		Node<Integer> slow = head;
+		Node<Integer> fast = head.getNext();
+		while (fast != null && fast.getNext() != null) {
+			if (slow == fast) {
+				return true;
+			}
+			slow = slow.getNext();
+			fast = fast.getNext().getNext();
+		}
+		return false;
+	}
+	
 }
