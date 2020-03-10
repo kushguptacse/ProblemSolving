@@ -18,6 +18,8 @@ public final class LinkedListUtil {
 		System.out.println(list.checkPalindrome());
 		LinkedList<Integer> list1 = new LinkedList<>();
 		IntStream.of(1, 2, 4, 7).forEach(list1::add);
+		System.out.println(detectCycle(list1.getHead()));
+		
 		insertInSortedList(list1.getHead(), 5).print();
 	}
 
@@ -102,19 +104,39 @@ public final class LinkedListUtil {
 	 * @return true if exists.
 	 */
 	public static boolean hasCycle(Node<Integer> head) {
-		if (head == null || head.getNext() == null) {
-			return false;
-		}
 		Node<Integer> slow = head;
-		Node<Integer> fast = head.getNext();
+		Node<Integer> fast = head;
 		while (fast != null && fast.getNext() != null) {
+			slow = slow.getNext();
+			fast = fast.getNext().getNext();
 			if (slow == fast) {
 				return true;
 			}
-			slow = slow.getNext();
-			fast = fast.getNext().getNext();
 		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param head
+	 * @return null if no cycle else return the starting point of loop
+	 */
+	public static Node<Integer> detectCycle(Node<Integer> head) {
+        Node<Integer> slow = head;
+		Node<Integer> fast = head.getNext();
+		while (fast != null && fast.getNext() != null) {
+			slow = slow.getNext();
+			fast = fast.getNext().getNext();
+			if (slow == fast) {
+				slow=head;
+				while(slow!=fast) {
+					slow=slow.getNext();
+					fast=fast.getNext();
+				}
+				return fast;
+			}
+		}
+        return null;
+    }
 	
 }
