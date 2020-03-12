@@ -157,7 +157,7 @@ public class SortUtil {
 			return head;
 		}
 		//find middle element
-		Node<Integer> middle = findMiddleOfLinkedList(head);
+		Node<Integer> middle = LinkedListUtil.findMiddle(head);
 		//point middleNext to the start of second half of list
 		Node<Integer> middleNext = middle.getNext();
 		//set end of first half to null. (for clear separation of two list)
@@ -203,35 +203,6 @@ public class SortUtil {
 			dummy = dummy.getNext();
 		}
 		return head.getNext();
-	}
-
-	/**
-	 * @f:off
-	 * Find the middle element of the linked list.
-	 * 
-	 * Input: [1,2,3,4,5,6]
-	 * Output: Node 3
-	 *  
-	 * If we want output to be 4 in such case run loop -
-	 * while (fast != null && fast.getNext() != null) 
-	 * @f:on
-	 * 
-	 * o(n)
-	 * 
-	 * @param head
-	 * @return middle element
-	 */
-	public static Node<Integer> findMiddleOfLinkedList(Node<Integer> head) {
-		if (head == null) {
-			return head;
-		}
-		Node<Integer> fast = head;
-		Node<Integer> slow = head;
-		while (fast.getNext() != null && fast.getNext().getNext() != null) {
-			slow = slow.getNext();
-			fast = fast.getNext().getNext();
-		}
-		return slow;
 	}
 
 }

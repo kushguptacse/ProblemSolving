@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class AlgoMain {
 	public static void main(String[] args) {
+		System.out.println(0<<1);
 //		int res  = new Recurrsion().towerOfHanoi(3, "A", "B", "C");
 //		System.out.println(res);
 //		Integer[] arr = new Integer[] { 4, 3, 2, 10, 12, 1, 5, 6 };
