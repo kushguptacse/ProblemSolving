@@ -334,7 +334,7 @@ public final class SortUtil {
 	}
 
 	/**
-	 * Divide and conquer,R,stable algo,not in-place,not adaptive, nlogn
+	 * Divide and conquer,R,stable algo,not in-place,not adaptive, time- nlogn,space -o(n)
 	 * 
 	 * @param arr
 	 */
@@ -355,6 +355,7 @@ public final class SortUtil {
 	 * 4.Merge the sub array to get final sorted array.
 	 * 
 	 * Best and worst case  - o(nlogn)
+	 * space - o(n)
 	 * 
 	 * @f:on
 	 * 

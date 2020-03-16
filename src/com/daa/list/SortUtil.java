@@ -148,7 +148,8 @@ public class SortUtil {
 	 * 3.And then we merge them together(for merging we can use both iterative solution as well as recursive solution)
 	 * @f:on
 	 * 
-	 * o(nlogn)
+	 * o(nlogn) - time complexity
+	 * o(logn) - space complexity
 	 * 
 	 * @param head
 	 */
