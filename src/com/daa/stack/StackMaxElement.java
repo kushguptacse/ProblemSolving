@@ -24,8 +24,8 @@ import java.util.Stack;
  */
 public class StackMaxElement {
 
-	private final Stack<Integer> stack = new Stack<>();
-	private final Stack<Integer> maxStack = new Stack<>();
+	private final Deque<Integer> stack = new Deque<>();
+	private final Deque<Integer> maxStack = new Deque<>();
 
 	//o(1)
 	public void push(int data) {

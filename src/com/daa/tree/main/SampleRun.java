@@ -1,11 +1,9 @@
 package com.daa.tree.main;
 
-import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
-import java.util.stream.Collectors;
 
 import com.daa.algo.Recursion;
 
@@ -25,8 +23,8 @@ public class SampleRun {
 	}
 
 	static int twoStacks(int x, int[] a, int[] b) {
-		Stack<Integer> stackA = new Stack<>();
-		Stack<Integer> stackB = new Stack<>();
+		Deque<Integer> stackA = new LinkedList<>();
+		Deque<Integer> stackB = new LinkedList<>();
 		for (int i = a.length - 1; i >= 0; i--) {
 			stackA.push(a[i]);
 		}
@@ -36,15 +34,15 @@ public class SampleRun {
 		int sum = 0;
 		int count = -1;
 		while (count < (a.length + b.length)) {
-			if (sum > x || (stackA.empty() && stackB.empty())) {
+			if (sum > x || (stackA.isEmpty() && stackB.isEmpty())) {
 				return count;
 			} else {
 				count++;
 			}
-			if (stackA.empty() && !stackB.empty()) {
+			if (stackA.isEmpty() && !stackB.isEmpty()) {
 				sum = sum + stackB.pop();
 
-			} else if (stackB.empty() && !stackA.empty()) {
+			} else if (stackB.isEmpty() && !stackA.isEmpty()) {
 				sum = sum + stackA.pop();
 
 			} else {

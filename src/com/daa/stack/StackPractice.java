@@ -12,8 +12,11 @@ public class StackPractice {
 	public static void main(String[] args) {
 		int[] op = nextGreatestElement(IntStream.of(11, 3, 13, 21, 5).toArray());
 		System.out.println(Arrays.toString(op));
-		op = nextGreatestElement(IntStream.of(2,4).toArray(), IntStream.of(1,2,3,4).toArray());
+		op = nextGreatestElement(IntStream.of(2, 4).toArray(), IntStream.of(1, 2, 3, 4).toArray());
 		System.out.println(Arrays.toString(op));
+		op = nextGreatestElementCircular(IntStream.of(1, 22, 1).toArray());
+		System.out.println(Arrays.toString(op));
+
 	}
 
 	/**
@@ -46,25 +49,31 @@ public class StackPractice {
 	 * 5.Finally, push current element to the stack.
 	 * 6.after the array is traversed completely the elements remained in the stack has -1 as next greatest element.
 	 * 
+	 * Since we wanted to return output array,
+	 * we can store index of the element instead of actual element in stack. 
+	 * and when we need to pop we uses it as a index of output to store the current element.
+	 * 
 	 * o(n)
 	 * 
 	 * @param arr
 	 * @return output array
 	 */
 	public static int[] nextGreatestElement(int[] arr) {
+		int n = arr.length;
+		int[] res = new int[n];
 		Deque<Integer> stack = new LinkedList<>();
-		Map<Integer, Integer> map = new HashMap<>();
-		int[] output = new int[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			while (!stack.isEmpty() && stack.peek() < arr[i]) {
-				map.put(stack.pop(), arr[i]);
+		// fill array with -1
+		for (int i = 0; i < n; i++) {
+			res[i] = -1;
+		}
+
+		for (int i = 0; i < n; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
+				res[stack.pop()] = arr[i];
 			}
-			stack.push(arr[i]);
+			stack.push(i);
 		}
-		for (int i = 0; i < arr.length; i++) {
-			output[i] = map.getOrDefault(arr[i], -1);
-		}
-		return output;
+		return res;
 	}
 
 	/**
@@ -96,18 +105,40 @@ public class StackPractice {
 		Deque<Integer> stack = new LinkedList<>();
 		Map<Integer, Integer> map = new HashMap<>();
 		int[] output = new int[nums1.length];
-		//here since nums1 is subset of nums2. so we can use nums2 as array to be store on stack and keep track nge
+		// here since nums1 is subset of nums2. so we can use nums2 as array to be store
+		// on stack and keep track nge
 		for (int i = 0; i < nums2.length; i++) {
 			while (!stack.isEmpty() && stack.peek() < nums2[i]) {
 				map.put(stack.pop(), nums2[i]);
 			}
 			stack.push(nums2[i]);
 		}
-		//and after that just filter out values present in nums1
+		// and after that just filter out values present in nums1
 		for (int i = 0; i < nums1.length; i++) {
 			output[i] = map.getOrDefault(nums1[i], -1);
 		}
 		return output;
+	}
+
+	/**
+	 * Find the next greatest element from array in a circular manner.
+	 * 
+	 * @param arr
+	 * @return output array
+	 */
+	public static int[] nextGreatestElementCircular(int[] arr) {
+		int n = arr.length;
+		int[] res = new int[n];
+		Deque<Integer> stack = new LinkedList<>();
+		for (int i = 0; i < n; i++) {
+			res[i] = -1;
+		}
+		for (int i = 0; i < n * 2; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] < arr[i % n])
+				res[stack.pop()] = arr[i % n];
+			stack.push(i % n);
+		}
+		return res;
 	}
 
 }

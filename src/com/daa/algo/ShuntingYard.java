@@ -1,6 +1,6 @@
 package com.daa.algo;
 
-import com.daa.stack.Stack;
+import com.daa.stack.Deque;
 
 /**
  * algo used to solve the mathematical expression
@@ -13,8 +13,8 @@ public class ShuntingYard {
 		System.out.println(res);
 	}
 
-	private Stack<String> operatorStack = new Stack<>();
-	private Stack<Double> operandStack = new Stack<>();
+	private Deque<String> operatorStack = new Deque<>();
+	private Deque<Double> operandStack = new Deque<>();
 
 	/**
 	 * solve the expression by pushing operator in stack1 and operand in stack 2.

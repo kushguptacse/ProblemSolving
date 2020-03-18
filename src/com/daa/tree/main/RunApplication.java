@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 import com.daa.array.Array;
 import com.daa.list.LinkedList;
 import com.daa.list.List;
-import com.daa.stack.Stack;
+import com.daa.stack.Deque;
 import com.daa.stack.StackArray;
 import com.daa.string.StringHelper;
 import com.daa.tree.BinaryTree;
@@ -93,7 +93,7 @@ public class RunApplication {
 		System.out.println("\n" + stack.size());
 	}
 
-	private static void testStack(Stack<Integer> stack) {
+	private static void testStack(Deque<Integer> stack) {
 
 		stack.push(1);
 		System.out.println(stack.pop());

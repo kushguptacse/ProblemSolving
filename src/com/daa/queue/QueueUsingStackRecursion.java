@@ -1,6 +1,7 @@
 package com.daa.queue;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * Insert data in the FIFO order implement Queue using stack.
@@ -39,7 +40,7 @@ public class QueueUsingStackRecursion<T extends Comparable<T>> {
 		System.out.println("size "+obj.size());
 	}
 
-	private Stack<T> stack1 = new Stack<>();
+	private Deque<T> stack1 = new LinkedList<>();
 
 	/**
 	 * add the data to rear of queue- o(logn)

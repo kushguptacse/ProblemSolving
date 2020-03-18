@@ -53,13 +53,13 @@ public class QuickSelect {
 	 */
 	private int kthSmallest(int[] arr, int l, int r, int k) {
 		if (l <= r) {
-			int index = partition(arr, l, r);
-			if (k == index) {
-				return arr[index];
-			} else if (k < index) {
-				return kthSmallest(arr, l, index - 1, k);
+			int p = partition(arr, l, r);
+			if (k == p) {
+				return arr[p];
+			} else if (k < p) {
+				return kthSmallest(arr, l, p - 1, k);
 			}
-			return kthSmallest(arr, index + 1, r, k);
+			return kthSmallest(arr, p + 1, r, k);
 		}
 		return -1;
 

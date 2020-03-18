@@ -40,33 +40,31 @@ public final class SortUtil {
 
 	public static void main(String[] args) {
 		int[] ar = new int[] { 15, 17, 13, 16, 14 };
-		System.out.println("Quick sort -> ");
-		countingSort(ar);
+		System.out.println("before Quick sort -> "+Arrays.toString(ar));
+//		countingSort(ar);
 		quickSort(ar);
-		System.out.println(Arrays.toString(ar));
+		System.out.println("after Quick sort -> "+Arrays.toString(ar));
 		ar = new int[] { 15, 12, 13, 11, 20, 15, 22, 14 };
-		System.out.println("Quick sort -> ");
-		countingSort(ar);
+		System.out.println("before Quick sort -> "+Arrays.toString(ar));
+//		countingSort(ar);
 		quickSort(ar);
-		System.out.println(Arrays.toString(ar));
-
-		ar = new int[] { 6, 5, 9, 0, 8, 2, 4, 7 };
-		System.out.println("Quick sort - ");
-		countingSort(ar);
+		System.out.println("after Quick sort -> "+Arrays.toString(ar));
+		ar = new int[] { 6, 5, 9, 0, 8, 2, 4, 10 };
+		System.out.println("before Quick sort - "+Arrays.toString(ar));
+//		countingSort(ar);
 		quickSort(ar);
-		System.out.println(Arrays.toString(ar));
-
+		System.out.println("after Quick sort -> "+Arrays.toString(ar));
 		ar = new int[] { 10, 7, 8, 9, 1, 5 };
-		System.out.println("Quick sort = ");
-		countingSort(ar);
+		System.out.println("before Quick sort -> "+Arrays.toString(ar));
+//		countingSort(ar);
 		quickSort(ar);
-		System.out.println(Arrays.toString(ar));
+		System.out.println("after Quick sort -> "+Arrays.toString(ar));
 
 		ar = new int[] { 5, 0, 4, 3, 2, 11 };
-		System.out.println("Quick sort : ");
-		countingSort(ar);
+		System.out.println("before Quick sort -> "+Arrays.toString(ar));
+//		countingSort(ar);
 		quickSort(ar);
-		System.out.println(Arrays.toString(ar));
+		System.out.println("after Quick sort -> "+Arrays.toString(ar));
 
 		System.out.println("Insertion sort");
 		insertionSort(new Integer[] { 34, -3, 0, 2, 14, 8, -1, 24 });
@@ -220,7 +218,7 @@ public final class SortUtil {
 	}
 
 	/**
-	 * udemy,geeks
+	 * udemy,geeks - for algo of partition see below code or udemy
 	 * @f:off
 	 * 
 	 * In-place,Not Stable,Not adaptive,Divide and conquer
@@ -231,7 +229,7 @@ public final class SortUtil {
 	 * 
 	 * Steps-
 	 * we will take one element as pivot(here the last one) and will try to put it in right position. 
-	 * by right position we mean that all element to the left of it are small and right to it are greater.
+	 * by right position we mean that all element to the left of it are small and right to it are greater than pivot.
 	 * so, basically we fixing pivot position one by one.
 	 * 
 	 * o(nlogn) - average case o(n^2) - worst case.
@@ -246,44 +244,49 @@ public final class SortUtil {
 
 	private static void quickSortUtil(int[] arr, int low, int high) {
 		if (low < high) {
-			int p = partition(arr, low, high);// pivot position is fixed now
-			quickSortUtil(arr, low, p - 1);// call for elements left of pivot
-			quickSortUtil(arr, p + 1, high);// call for elements right of pivot
+			int pivot = partition(arr, low, high);
+			quickSortUtil(arr, low, pivot - 1);
+			quickSortUtil(arr, pivot + 1, high);
 		}
 	}
 
 	/**
 	 * partition
 	 * 
+	 * 
 	 * @f:off
-	 * 1. select low index element as pivot.
-	 * 2. go from i=low to high-1.
-	 * 3. check arr[i] < arr[high] . i.e. current element is smaller than pivot if yes.
-	 * 4. swap i with low. and increment low by 1.
+	 * In partition algorithm we fix the pivot (here high index element) and if current element is less than pivot
+	 * we swap current element with low and increment low by 1.
+	 * once loop terminates low element will be at index where high should be present so we swap it.
+	 * 1. select high index element as pivot.
+	 * 2. go from j=low to high-1.
+	 * 3. check arr[j] < arr[high] . i.e. current element is smaller than pivot if yes.
+	 * 4. swap j with low. and increment low by 1.
 	 * 
 	 * after loop terminates swap high with low. and return low which is our new pivot position.
 	 * e.g.
 	 * 15, 17, 13, 6, 14
-	 * low            p  
+	 * low            high  
 	 * j             
 	 * 
 	 * step 1 - 
 	 * 15, 17, 13, 6, 14
-	 * low	j	       p
+	 * low	j	       high
 	 * 
 	 * 15, 17, 13, 6, 14
-	 * low	 	j      p
+	 * low	 	j      high
 	 * 
 	 * 13, 17, 15, 6, 14
-	 *     low     j  p
+	 *     low     j  high
 	 * 
 	 * 13, 6, 15, 17, 14
-	 *        low      p
+	 *        low      high
 	 * 
 	 * 
-	 * so,now swap p with low. and return low i.e. index 2. 
-	 * so, that we will have two partition {13,6} {17,14} now and index 2 element is fixed
+	 * So,now swap high with low. and return low i.e. index 2. 
+	 * So,that we will have two partition {13,6} {17,14} now and index 2 element is fixed
 	 * 
+	 * In this algorithm to save variable we will consider high as pivot.
 	 * @f:on
 	 * 
 	 * @param arr
@@ -292,34 +295,27 @@ public final class SortUtil {
 	 * @return new pivot
 	 */
 	private static int partition(int[] arr, int low, int high) {
-		// in worst case it will be o(n^2). i.e. if data is already sorted
+
+		// In worst case it will be o(n^2). i.e. if data is already sorted
 		// we can improve it by using middle element as pivot and then before starting
 		// anything just swap it with high. so, that high will remain pivot
-
-		// un-comment below to make middle element as pivot. below step just change
-		// pivot and move it to end so, that algo remains same.
-
-//		int pivot = (low + high) / 2;
-//		swapIntArray(arr, pivot, high);
-
+		// Find mid of the array
+		int mid = (low + high) / 2;
+		// swap array element present in mid and high index
+		swapIntArray(arr, mid, high);
 		// now pivot is high again.
-		// we goes from start till high-1 because high is reserved for pivot and at end
+		// we goes from low till high-1 because high is reserved for pivot and at end
 		// of loop we will swap pivot with the current low.
-		for (int i = low; i < high; i++) {
-			// check if current element is less than pivot
-			if (arr[i] < arr[high]) {
-				// we are swapping i with low. we are not moving pivot.
-				swapIntArray(arr, i, low);
-				// move low to one more index.
+		for (int j = low; j < high; j++) {
+			if (arr[j] < arr[high]) {
+				swapIntArray(arr, j, low);
 				low++;
 			}
 		}
-		// when i reached high. we know that low is in pivot position. so we just swap
-		// it.
+		// when i reached high,we know that low is in pivot position. so we just swap it
 		swapIntArray(arr, high, low);
 		return low;
 	}
-
 	/**
 	 * swap i index element with j index element
 	 * 

@@ -2,7 +2,7 @@ package com.daa.stack;
 
 import com.daa.list.Node;
 
-public class Stack<T extends Comparable<T>> {
+public class Deque<T extends Comparable<T>> {
 
 	private int size;
 

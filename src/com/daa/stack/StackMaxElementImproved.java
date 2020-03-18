@@ -31,7 +31,7 @@ import java.util.Stack;
  */
 public class StackMaxElementImproved {
 
-	private final Stack<Integer> stack = new Stack<>();
+	private final Deque<Integer> stack = new Deque<>();
 	private int max = -1;
 
 	// o(1)
