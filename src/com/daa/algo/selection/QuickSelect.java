@@ -52,18 +52,14 @@ public class QuickSelect {
 	 * @return kth min element
 	 */
 	private int kthSmallest(int[] arr, int l, int r, int k) {
-		if (l <= r) {
-			int p = partition(arr, l, r);
-			if (k == p) { 
-				return arr[p];
-			} else if (k < p) {
-				return kthSmallest(arr, l, p - 1, k);
-			}
-			return kthSmallest(arr, p + 1, r, k);
+		int p = partition(arr, l, r);
+		if (k == p) {
+			return arr[p];
+		} else if (k < p) {
+			return kthSmallest(arr, l, p - 1, k);
 		}
-		return -1;
-
-	}
+		return kthSmallest(arr, p + 1, r, k);
+	} 
 
 	/**
 	 * See SortUtil partition method for complete description
