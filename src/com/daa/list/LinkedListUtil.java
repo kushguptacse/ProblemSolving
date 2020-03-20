@@ -8,6 +8,9 @@ public final class LinkedListUtil {
 	}
 
 	public static void main(String[] args) {
+		LinkedList<Integer> list3 = new LinkedList<>();
+		IntStream.of(1, 2, 3, 4, 5).forEach(list3::add);
+		oddEvenList(list3.getHead()).print();
 		LinkedList<Character> list = new LinkedList<>();
 		list.add('A');
 		list.add('B');
@@ -15,15 +18,15 @@ public final class LinkedListUtil {
 		list.add('B');
 		list.add('A');
 		list.print();
-		System.out.println("is palindrome : "+list.checkPalindrome());
+		System.out.println("is palindrome : " + list.checkPalindrome());
 		LinkedList<Integer> list2 = new LinkedList<>();
 		IntStream.of(1, 2, 2, 2, 1).forEach(list2::add);
 		list2.print();
-		System.out.println("is palindrome : "+checkPalindromeIterative(list2.getHead()));
+		System.out.println("is palindrome : " + checkPalindromeIterative(list2.getHead()));
 		LinkedList<Integer> list1 = new LinkedList<>();
 		IntStream.of(1, 2, 4, 7).forEach(list1::add);
 		System.out.println(detectCycle(list1.getHead()));
-		
+
 		insertInSortedList(list1.getHead(), 5).print();
 	}
 
@@ -65,6 +68,7 @@ public final class LinkedListUtil {
 
 	/**
 	 * merge two sorted list
+	 * 
 	 * @param node1
 	 * @param node2
 	 * @return merge sorted list
@@ -85,7 +89,6 @@ public final class LinkedListUtil {
 		}
 	}
 
-
 	public static int size(Node<Integer> head) {
 		int i = 0;
 		while (head != null) {
@@ -96,13 +99,12 @@ public final class LinkedListUtil {
 	}
 
 	/**
-	 * check if a linked list has a cycle
-	 * take two pointers one slow and other fast. 
+	 * check if a linked list has a cycle take two pointers one slow and other fast.
 	 * if they meet there is a cycle.
 	 * 
 	 * o(n),o(1)
 	 * 
-	 * leetcode 
+	 * leetcode
 	 * 
 	 * @param head
 	 * @return true if exists.
@@ -119,30 +121,30 @@ public final class LinkedListUtil {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
 	 * @param head
 	 * @return null if no cycle else return the starting point of loop
 	 */
 	public static Node<Integer> detectCycle(Node<Integer> head) {
-        Node<Integer> slow = head;
+		Node<Integer> slow = head;
 		Node<Integer> fast = head.getNext();
 		while (fast != null && fast.getNext() != null) {
 			slow = slow.getNext();
 			fast = fast.getNext().getNext();
 			if (slow == fast) {
-				slow=head;
-				while(slow!=fast) {
-					slow=slow.getNext();
-					fast=fast.getNext();
+				slow = head;
+				while (slow != fast) {
+					slow = slow.getNext();
+					fast = fast.getNext();
 				}
 				return fast;
 			}
 		}
-        return null;
-    }
-	
+		return null;
+	}
+
 	/**
 	 * Write a program to find the node at which the intersection of two singly
 	 * linked lists begins.
@@ -204,7 +206,7 @@ public final class LinkedListUtil {
 		}
 		return len;
 	}
-	
+
 	/**
 	 * @f:off
 	 * 2. In Iterative solution-> 
@@ -228,7 +230,8 @@ public final class LinkedListUtil {
 		middle.setNext(null);
 		// reverse one half
 		right = reverse(right);
-		//iterate with smaller half not null. in this way we ignore middle odd element if present.
+		// iterate with smaller half not null. in this way we ignore middle odd element
+		// if present.
 		while (right != null) {
 			if (head.getData() != right.getData()) {
 				return false;
@@ -241,12 +244,10 @@ public final class LinkedListUtil {
 
 	/**
 	 * 
-	 * Reverse link list O(N). 
+	 * Reverse link list O(N).
 	 * 
-	 * take three pointer prev curr and next.
-	 * prev point to previous
-	 * curr to the current initially head 
-	 * last point next node to the curr.
+	 * take three pointer prev curr and next. prev point to previous curr to the
+	 * current initially head last point next node to the curr.
 	 * 
 	 */
 	private static Node<Integer> reverse(Node<Integer> head) {
@@ -288,5 +289,51 @@ public final class LinkedListUtil {
 		}
 		return slow;
 	}
-	
+
+	/**
+	 * Given a singly linked list, group all odd nodes together followed by the even
+	 * nodes. Please note here we are talking about the node number and not the
+	 * value in the nodes.
+	 * 
+	 * Input: 2->1->3->5->6->4->7->NULL 
+	 * 
+	 * Output: 2->3->6->7->1->5->4->NULL
+	 * 
+	 * @f:off
+	 *  Approach -
+	 *	1.hold odd and even node, now in loop first update odd node
+	 *	odd.next=even.next and odd=even.next;
+	 *	2.now if odd.next is null. that means we dont have anything to be append to even node. so set even.next=null
+	 *	3.else there is element. so , set even.next=odd.next and even=even.next
+	 *	4.once loop finishes we have two different nodes -> odd will be at end element of itself and headEven which we already stored earlier will be starting of even
+	 *	5.so, set odd.next=headEven;
+	 * @f:on
+	 * 
+	 * o(n) time,o(1) space
+	 * 
+	 * 
+	 * @param head
+	 * @return head
+	 */
+	public static Node<Integer> oddEvenList(Node<Integer> head) {
+		if (head == null || head.getNext() == null || head.getNext().getNext() == null) {
+			return head;
+		}
+		Node<Integer> odd = head;
+		Node<Integer> even = head.getNext();
+		Node<Integer> evenHead = even;
+		while(even!=null && even.getNext()!=null) {
+			odd.setNext(even.getNext());
+			odd=odd.getNext();
+			if(odd.getNext()==null) {
+				even.setNext(null);
+			} else {
+				even.setNext(odd.getNext());
+				even=even.getNext();
+			}
+		}
+		odd.setNext(evenHead);
+		return head;
+	}
+
 }
