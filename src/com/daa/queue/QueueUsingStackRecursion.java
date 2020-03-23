@@ -43,7 +43,7 @@ public class QueueUsingStackRecursion<T extends Comparable<T>> {
 	private Deque<T> stack1 = new LinkedList<>();
 
 	/**
-	 * add the data to rear of queue- o(logn)
+	 * add the data to rear of queue
 	 * 
 	 * @param data
 	 */
@@ -52,7 +52,7 @@ public class QueueUsingStackRecursion<T extends Comparable<T>> {
 	}
 
 	/**
-	 * remove the data from front - o(logn)
+	 * remove the data from front
 	 * 
 	 * @return data
 	 */

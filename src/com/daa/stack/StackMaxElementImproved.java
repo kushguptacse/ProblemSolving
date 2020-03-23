@@ -1,7 +1,5 @@
 package com.daa.stack;
 
-import java.util.Stack;
-
 /**
  * Given a Stack, keep track of the maximum value in it. The maximum value may be the top
  * element of the stack, but once a new element is pushed or an element is pop from the

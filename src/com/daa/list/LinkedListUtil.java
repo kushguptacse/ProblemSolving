@@ -322,17 +322,109 @@ public final class LinkedListUtil {
 		Node<Integer> odd = head;
 		Node<Integer> even = head.getNext();
 		Node<Integer> evenHead = even;
-		while(even!=null && even.getNext()!=null) {
+		while (even != null && even.getNext() != null) {
 			odd.setNext(even.getNext());
-			odd=odd.getNext();
-			if(odd.getNext()==null) {
+			odd = odd.getNext();
+			if (odd.getNext() == null) {
 				even.setNext(null);
 			} else {
 				even.setNext(odd.getNext());
-				even=even.getNext();
+				even = even.getNext();
 			}
 		}
 		odd.setNext(evenHead);
+		return head;
+	}
+
+	/**
+	 * Given a linked list, rotate the list to the right by k places, where k is
+	 * non-negative. 
+	 * 
+	 * @f:off
+	 * 
+	 * Input: 1->2->3->4->5->NULL, k = 2 
+	 * Output: 4->5->1->2->3->NULL
+	 * Explanation: 
+	 * rotate 1 steps to the right: 5->1->2->3->4->NULL 
+	 * rotate 2 steps to the right: 4->5->1->2->3->NULL
+	 * 
+	 * Input: 0->1->2->NULL, k = 4
+	 * Output: 2->0->1->NULL
+	 * Explanation:
+	 * rotate 1 steps to the right: 2->0->1->NULL
+	 * rotate 2 steps to the right: 1->2->0->NULL
+	 * rotate 3 steps to the right: 0->1->2->NULL
+	 * rotate 4 steps to the right: 2->0->1->NULL
+	 * 
+	 * @f:on
+	 * 
+	 * o(n),o(1),leetcode
+	 * 
+	 * @param head
+	 * @param k
+	 * @return head of modified list
+	 */
+	public Node<Integer> rotateRight(Node<Integer> head, int k) {
+		if (head == null || head.getNext() == null || k == 0) {
+			return head;
+		}
+		// find length
+		int len = 1;
+		Node<Integer> last = head;
+		while (last.getNext() != null) {
+			last = last.getNext();
+			len++;
+		}
+		k = k % len;
+		if (k == 0) {
+			return head;
+		}
+		// update k = len - k
+		k = len - k;
+		Node<Integer> temp = head;
+		// goto till k. i.e. break point
+		for (int i = 1; i < k; i++) {
+			temp = temp.getNext();
+		}
+		Node<Integer> newHead = temp.getNext();
+		temp.setNext(null);
+		last.setNext(head);
+		return newHead;
+	}
+
+	/**
+	 * Given a linked list, remove the n-th node from the end of list and return its
+	 * head.
+	 * 
+	 * Example:
+	 * 
+	 * Given linked list: 1->2->3->4->5, and n = 2.
+	 * 
+	 * After removing the second node from the end, the linked list becomes
+	 * 1->2->3->5. Note:
+	 * 
+	 * Given n will always be valid.
+	 * 
+	 * o(n),leetcode
+	 * 
+	 * @param head
+	 * @param n
+	 * @return head of modified list
+	 */
+	public Node<Integer> removeNthFromEnd(Node<Integer> head, int n) {
+		Node<Integer> curr = head;
+		for (int i = 0; i < n; i++) {
+			curr = curr.getNext();
+		}
+		if (curr == null) {
+			return head.getNext();
+		}
+		Node<Integer> curr2 = head;
+		while (curr.getNext() != null) {
+			curr2 = curr2.getNext();
+			curr = curr.getNext();
+		}
+		curr2.setNext(curr2.getNext().getNext());
 		return head;
 	}
 

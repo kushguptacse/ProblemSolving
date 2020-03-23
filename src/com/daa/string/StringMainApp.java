@@ -1,6 +1,7 @@
 package com.daa.string;
 
 public class StringMainApp {
+	
 	public static void main(String[] args) {
 		String str="radabdar";
 		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));

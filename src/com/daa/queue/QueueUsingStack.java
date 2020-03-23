@@ -2,7 +2,6 @@ package com.daa.queue;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 
 /**
@@ -26,7 +25,7 @@ public class QueueUsingStack<T extends Comparable<T>> {
 	private int size;
 
 	/**
-	 * add the data to rear of queue- o(logn)
+	 * add the data to rear of queue
 	 * 
 	 * @param data
 	 */
@@ -35,7 +34,7 @@ public class QueueUsingStack<T extends Comparable<T>> {
 	}
 
 	/**
-	 * remove the data from front - o(logn)
+	 * remove the data from front
 	 * 
 	 * @return data
 	 */
@@ -45,7 +44,7 @@ public class QueueUsingStack<T extends Comparable<T>> {
 	}
 
 	/**
-	 * get the data from front without deleting it - o(1)
+	 * get the data from front without deleting it
 	 * 
 	 * @return data
 	 */
@@ -80,7 +79,7 @@ public class QueueUsingStack<T extends Comparable<T>> {
 	 * @return true if empty
 	 */
 	public boolean isEmpty() {
-		return stack1.isEmpty();
+		return stack1.isEmpty() && stack2.isEmpty();
 	}
 
 }
