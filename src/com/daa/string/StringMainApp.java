@@ -1,8 +1,17 @@
 package com.daa.string;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class StringMainApp {
 	
 	public static void main(String[] args) {
+		LinkedHashMap<Integer, String> lhm = new LinkedHashMap<Integer,
+			      String>(16 + 1, .75F, false) {
+			         protected boolean removeEldestEntry(Map.Entry<Integer, String> eldest) {
+			            return size() > 16;
+			         }
+			      };
 		String str="radabdar";
 		System.out.println("Is '"+str+"' palindrome : "+StringHelper.checkPalindrome(str));
 		str="radar";
