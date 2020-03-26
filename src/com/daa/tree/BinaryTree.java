@@ -10,8 +10,8 @@ import com.daa.algo.Recursion;
 import com.daa.math.MathUtil;
 
 /**
- * Binary tree store the data in tree. every node can have at most 2 child. No left child
- * or right child rule. in BST left child value is less than right child i.e. l<r<n.
+ * Binary tree store the data in tree. every node can have at most 2 child. 
+ * No left child or right child rule.
  * 
  * @author G521885
  *
@@ -164,7 +164,8 @@ public class BinaryTree<T> implements Tree<T> {
 	 * 4 5
 	 * 
 	 * @f:on
-
+	 * i.e. whenever we visit node second time we print it.
+	 * ravindra babu
 	 * output -42513
 	 * 
 	 * @return result
@@ -187,7 +188,8 @@ public class BinaryTree<T> implements Tree<T> {
 	 * 
 	 * @f:on
 	 * output - 12453
-	 * 
+	 * i.e. whenever we visit node first time we print it.
+	 * ravindra babu
 	 * @return result
 	 * 
 	 */
@@ -209,7 +211,8 @@ public class BinaryTree<T> implements Tree<T> {
 	 * 4 5
 	 * 
 	 * output - 45231
-	 * 
+	 * i.e. whenever we visit node third time we print it.
+	 * ravindra babu
 	 * @return result
 	 * @f:on
 	 */

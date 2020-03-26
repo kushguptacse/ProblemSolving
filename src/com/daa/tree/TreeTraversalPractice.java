@@ -28,7 +28,8 @@ public class TreeTraversalPractice {
 //		printPostOrder(special);
 //		printLevelOrder(special);
 //		System.out.println("Construct tree from in order and pre order");
-		TreeNode<Integer> node = getTreeFromInOrderAndPreOrder(new int[] { 4, 8, 2, 5, 1, 6, 3, 7 }, new int[] { 1, 2, 4, 8, 5, 3, 6, 7 });
+		TreeNode<Integer> node = getTreeFromInOrderAndPreOrder(new int[] { 4, 8, 2, 5, 1, 6, 3, 7 },
+				new int[] { 1, 2, 4, 8, 5, 3, 6, 7 });
 //		System.out.println("in order :");
 //		printInOrder(node);
 //		System.out.println("pre order :");
@@ -40,10 +41,10 @@ public class TreeTraversalPractice {
 //		node = getTreeFromInOrderAndPostOrder(new int[] { 4, 8, 2, 5, 1, 6, 3, 7 },
 //				new int[] { 8, 4, 5, 2, 6, 7, 3, 1 });
 		System.out.println("in order :");
-		printInOrder(node);
+		printInOrderIterative(node);
 		System.out.println("pre order :");
-		printPreOrder(node);
-		printLevelOrder(node);
+		printPreOrderIterative(node);
+		printLevelOrderIterative(node);
 		System.out.println("Ancestor of node : " + 8);
 		getAllAncestor(8, node);
 		System.out.println();
@@ -56,9 +57,9 @@ public class TreeTraversalPractice {
 		head = BinaryTreeUtil.constructTreeFromConsole(sc);
 
 		System.out.println("pre order :");
-		printPreOrder(root);
+		printPreOrderIterative(root);
 		System.out.println("in order :");
-		printInOrder(root);
+		printInOrderIterative(root);
 		ZigZagTraversal(root);
 		verticalOrderTraversalIterative(root);
 		verticalOrderTraversal(root);
@@ -66,7 +67,7 @@ public class TreeTraversalPractice {
 //		System.out.println("post order :");
 //		printPostOrder(node);
 //		System.out.println(findNode(node, 35));
-		printLevelOrder(root);
+		printLevelOrderIterative(root);
 		System.out.println("size : " + size(root));
 //		printLevelOrderReverse(node);
 		System.out.println("Height of the tree is : " + getHeight(root));
@@ -99,7 +100,22 @@ public class TreeTraversalPractice {
 		sc.close();
 	}
 
-	public static void printPreOrder(TreeNode<Integer> node) {
+	/***
+	 * 
+	 * printPreOrderIterative
+	 * we can re-place recursive call with stack. in pre-order -> NLR
+	 * 
+	 * @f:off
+	 * Pop all items one by one. Do following for every popped item 
+     *a) print it 
+     *b) push its right child 
+     *c) push its left child 
+     *Note that right child is pushed first so that left is processed first 
+	 * @f:on
+	 * 
+	 * @param node
+	 */
+	public static void printPreOrderIterative(TreeNode<Integer> node) {
 		if (node == null) {
 			return;
 		}
@@ -118,7 +134,17 @@ public class TreeTraversalPractice {
 		System.out.println();
 	}
 
-	public static void printPostOrder(TreeNode<Integer> node) {
+	/**
+	 * It is just like reversing the output of pre-order traversal and hence we
+	 * follow same algorithm as pre-order traversal iterative and to reverse the output
+	 * we will take another stack. So, that when we pop from it data will be opposite.
+	 * 
+	 * 
+	 * o(n),o(n)
+	 * 
+	 * @param node
+	 */
+	public static void printPostOrderIterative(TreeNode<Integer> node) {
 		if (node == null) {
 			return;
 		}
@@ -141,7 +167,15 @@ public class TreeTraversalPractice {
 		System.out.println();
 	}
 
-	public static void printInOrder(TreeNode<Integer> node) {
+	/**
+	 * 
+	 * 1.we will push all left nodes first and after that pop element which will be
+	 * the last left node. 2.print node and set current right. now again repeat step
+	 * 1 for current node
+	 * 
+	 * @param node
+	 */
+	public static void printInOrderIterative(TreeNode<Integer> node) {
 		Deque<TreeNode<Integer>> st = new LinkedList<>();
 		while (!st.isEmpty() || node != null) {
 			while (node != null) {
@@ -151,15 +185,14 @@ public class TreeTraversalPractice {
 			node = st.pop();
 			System.out.print(node.getData() + " ");
 			node = node.getRight();
-
 		}
 		System.out.println();
 	}
 
 	/**
-	 * Search node in binary tree. compare root with item. if found return Node. check item in
-	 * left tree recursively if found return Node. if after above call node still null then
-	 * check right tree recursively.
+	 * Search node in binary tree. compare root with item. if found return Node.
+	 * check item in left tree recursively if found return Node. if after above call
+	 * node still null then check right tree recursively.
 	 * 
 	 * @param root
 	 * @param item
@@ -273,7 +306,7 @@ public class TreeTraversalPractice {
 		System.out.println();
 	}
 
-	public static void printLevelOrder(TreeNode<Integer> root) {
+	public static void printLevelOrderIterative(TreeNode<Integer> root) {
 		if (root == null) {
 			return;
 		}
@@ -532,7 +565,8 @@ public class TreeTraversalPractice {
 				queue1.add(node1.getRight());
 				queue2.add(node2.getRight());
 			}
-			if ((node1.getLeft() != null && node2.getLeft() == null) || (node2.getLeft() != null && node1.getLeft() == null)) {
+			if ((node1.getLeft() != null && node2.getLeft() == null)
+					|| (node2.getLeft() != null && node1.getLeft() == null)) {
 				return false;
 			}
 		}
@@ -540,10 +574,10 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * find the diameter of the tree. it is the number of nodes in the longest path of two
-	 * leaf nodes. i.e. count the number of nodes while finding the the longest of two leafs.
-	 * it can be maximum of below three operation - 1. height of the tree 2. diameter of left
-	 * tree 3. diameter of right tree. O(n2)
+	 * find the diameter of the tree. it is the number of nodes in the longest path
+	 * of two leaf nodes. i.e. count the number of nodes while finding the the
+	 * longest of two leafs. it can be maximum of below three operation - 1. height
+	 * of the tree 2. diameter of left tree 3. diameter of right tree. O(n2)
 	 * 
 	 * @param root
 	 * @return diameter
@@ -559,10 +593,10 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * optimized version which take o(n) time instead of o(n2) here we are calculating height
-	 * and diameter together in same recursive call. here we will pass one extra model object
-	 * to store height of the tree. we will return diameter and will update hieght in variable
-	 * at same time.
+	 * optimized version which take o(n) time instead of o(n2) here we are
+	 * calculating height and diameter together in same recursive call. here we will
+	 * pass one extra model object to store height of the tree. we will return
+	 * diameter and will update hieght in variable at same time.
 	 * 
 	 * @param root
 	 * @return diameter
@@ -588,11 +622,12 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * Maximum width of a tree is the maximum number of nodes present in the level. calculate
-	 * the number of nodes at each level and update the max according to nodes.
+	 * Maximum width of a tree is the maximum number of nodes present in the level.
+	 * calculate the number of nodes at each level and update the max according to
+	 * nodes.
 	 * 
-	 * find the number of element at queue and then iterate over that to get all the nodes
-	 * added to queue in particular level.
+	 * find the number of element at queue and then iterate over that to get all the
+	 * nodes added to queue in particular level.
 	 * 
 	 * @param root
 	 * @return max width
@@ -623,8 +658,8 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * Find the level with maximum sum of nodes. use level order approach and calculate sum of
-	 * nodes level wise. and update the max.
+	 * Find the level with maximum sum of nodes. use level order approach and
+	 * calculate sum of nodes level wise. and update the max.
 	 * 
 	 * @param root
 	 * @return maximum sum
@@ -660,8 +695,8 @@ public class TreeTraversalPractice {
 	/**
 	 * Print all root to leaf paths in a tree. O(n2)
 	 * 
-	 * use pre-order traversal and add node.data to index of there order in array. Once you
-	 * reach leaf. loop the array till index and print the data.
+	 * use pre-order traversal and add node.data to index of there order in array.
+	 * Once you reach leaf. loop the array till index and print the data.
 	 * 
 	 * @param root
 	 */
@@ -684,8 +719,8 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * Enter the sum to check whether there exists a path from root to any node. print all
-	 * such paths.
+	 * Enter the sum to check whether there exists a path from root to any node.
+	 * print all such paths.
 	 * 
 	 * @param root
 	 * @param sum
@@ -757,8 +792,8 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * apply identical structure check approach. and add left.data and right.data comparison
-	 * also
+	 * apply identical structure check approach. and add left.data and right.data
+	 * comparison also
 	 * 
 	 * @param root1
 	 * @param root2
@@ -781,8 +816,8 @@ public class TreeTraversalPractice {
 
 	/**
 	 * 
-	 * get node from preorder and search that in inorder array to get its position from left
-	 * or right
+	 * get node from preorder and search that in inorder array to get its position
+	 * from left or right
 	 * 
 	 * @param in
 	 * @param pre
@@ -792,7 +827,8 @@ public class TreeTraversalPractice {
 		return getTreeFromInOrderAndPreOrder(new Model<Integer>(0), in, pre, 0, pre.length - 1);
 	}
 
-	private static TreeNode<Integer> getTreeFromInOrderAndPreOrder(Model<Integer> c, int[] in, int[] pre, int start, int end) {
+	private static TreeNode<Integer> getTreeFromInOrderAndPreOrder(Model<Integer> c, int[] in, int[] pre, int start,
+			int end) {
 		if (start > end) {
 			return null;
 		}
@@ -822,8 +858,8 @@ public class TreeTraversalPractice {
 
 	/**
 	 * 
-	 * Get node from post-order and search that in in-order array to get its position from
-	 * left or right
+	 * Get node from post-order and search that in in-order array to get its
+	 * position from left or right
 	 * 
 	 * @param in   array
 	 * @param post array
@@ -833,7 +869,8 @@ public class TreeTraversalPractice {
 		return getTreeFromInOrderAndPostOrder(new Model<Integer>(post.length - 1), in, post, 0, post.length - 1);
 	}
 
-	private static TreeNode<Integer> getTreeFromInOrderAndPostOrder(Model<Integer> model, int[] in, int[] post, int start, int end) {
+	private static TreeNode<Integer> getTreeFromInOrderAndPostOrder(Model<Integer> model, int[] in, int[] post,
+			int start, int end) {
 		if (start > end) {
 			return null;
 		}
@@ -847,8 +884,8 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * Takes root of a tree and print all ancestor of a given node. i.e. it is just like
-	 * printing the path from root to that node.
+	 * Takes root of a tree and print all ancestor of a given node. i.e. it is just
+	 * like printing the path from root to that node.
 	 * 
 	 * @param data
 	 * @param root
@@ -870,12 +907,13 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * Find the lowest common ancestor of two nodes. Assumption - both nodes are always
-	 * present. if two nodes stated are parent child than parent is lca.
+	 * Find the lowest common ancestor of two nodes. Assumption - both nodes are
+	 * always present. if two nodes stated are parent child than parent is lca.
 	 * 
-	 * The lowest common ancestor between two nodes n1 and n2 is defined as the lowest node in
-	 * T that has both n1 and n2 as descendants if n1 is 2 and n2 =4 and n1 and n2 are child
-	 * of 3. than lca is 3 if n1 is 1 and n2=2 and n1 is child of n2. then lca is 2
+	 * The lowest common ancestor between two nodes n1 and n2 is defined as the
+	 * lowest node in T that has both n1 and n2 as descendants if n1 is 2 and n2 =4
+	 * and n1 and n2 are child of 3. than lca is 3 if n1 is 1 and n2=2 and n1 is
+	 * child of n2. then lca is 2
 	 * 
 	 * @param root
 	 * @param item1
@@ -901,12 +939,13 @@ public class TreeTraversalPractice {
 	/**
 	 * print the tree in zig zag order.
 	 * 
-	 * i.e. print data in level order traversal wise. just print data left to right and right
-	 * to left alternatively take two stacks. one that is holding current level data and
-	 * second using next level data. just on alternate levels add left child first and then
-	 * right child first. in this way zig zag order will be maintained. boolean is kept to
-	 * alter the level once current level finished. in case of current level is empty just
-	 * swap it with with next level stack. as we are popping from current only.
+	 * i.e. print data in level order traversal wise. just print data left to right
+	 * and right to left alternatively take two stacks. one that is holding current
+	 * level data and second using next level data. just on alternate levels add
+	 * left child first and then right child first. in this way zig zag order will
+	 * be maintained. boolean is kept to alter the level once current level
+	 * finished. in case of current level is empty just swap it with with next level
+	 * stack. as we are popping from current only.
 	 * 
 	 * @param root
 	 */
@@ -949,14 +988,14 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * use level order traversal approach and keep treemap to store key as horizontal distance
-	 * (HD) and value as list of integer with corresponding sum tree-map is used to data in
-	 * horizontal distance wise. queue store pair model with first value as node and second as
-	 * HD of that node.
+	 * use level order traversal approach and keep treemap to store key as
+	 * horizontal distance (HD) and value as list of integer with corresponding sum
+	 * tree-map is used to data in horizontal distance wise. queue store pair model
+	 * with first value as node and second as HD of that node.
 	 * 
-	 * Hd formula - HD for root is 0, a right edge (edge connecting to right subtree) is
-	 * considered as +1 horizontal distance and a left edge is considered as -1 horizontal
-	 * distance
+	 * Hd formula - HD for root is 0, a right edge (edge connecting to right
+	 * subtree) is considered as +1 horizontal distance and a left edge is
+	 * considered as -1 horizontal distance
 	 * 
 	 * O(N)
 	 * 
@@ -996,8 +1035,8 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * use tree-map to store HD as key and list of items as values for that hd. pre-order
-	 * approach is used to travsere tree.
+	 * use tree-map to store HD as key and list of items as values for that hd.
+	 * pre-order approach is used to travsere tree.
 	 * 
 	 * @param root
 	 */
@@ -1024,7 +1063,8 @@ public class TreeTraversalPractice {
 	/**
 	 * sum of the vertical nodes in a tree.
 	 * 
-	 * same as above approach just instead of list we just need to keep the sum of nodes.
+	 * same as above approach just instead of list we just need to keep the sum of
+	 * nodes.
 	 * 
 	 * @param root
 	 */
@@ -1091,8 +1131,9 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * construct tree form pre-order only. pre-order data will either 1 or 0. 1 Represent
-	 * parent and 0 child. there will be either 0 child or 2 child at any given node.
+	 * construct tree form pre-order only. pre-order data will either 1 or 0. 1
+	 * Represent parent and 0 child. there will be either 0 child or 2 child at any
+	 * given node.
 	 * 
 	 * @param pre
 	 * @return root node of the tree
@@ -1121,8 +1162,9 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * construct tree form pre-order only. pre-order data will either 1 or 0. 1 Represent
-	 * parent and 0 child. there will be either 0 child or 2 child at any given node.
+	 * construct tree form pre-order only. pre-order data will either 1 or 0. 1
+	 * Represent parent and 0 child. there will be either 0 child or 2 child at any
+	 * given node.
 	 * 
 	 * @param pre
 	 * @return root node of the tree

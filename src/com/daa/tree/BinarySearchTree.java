@@ -8,10 +8,11 @@ import com.daa.model.Model;
 
 /**
  * Binary Search tree stores the data in a binary tree. every node can have at
- * most 2 child. In BST left child value is less than right child i.e. l<r<n.
+ * most 2 child.
  * 
- * In order of binary search tree is sorted data of all the elements in the
- * tree. In balanced binary search tree data can be retrieved in log(n) time
+ * The left subtree of a node contains only nodes with keys lesser than the node’s key.
+ * The right subtree of a node contains only nodes with keys greater than the node’s key.
+ * The left and right subtree each must also be a binary search tree.
  * 
  * @author G521885
  *
@@ -99,9 +100,13 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 
 	/**
 	 * PreOrder (Root, Left, Right)
-	 * 
-	 * 1 / \ 2 3 / \ 4 5
-	 * 
+	 * @f:off
+	 *   1 
+	 *  / \ 
+	 *  2  3 
+	 * / \ 
+	 *4  5
+	 * @f:on
 	 * output - 12453
 	 * 
 	 * @return result
