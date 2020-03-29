@@ -154,7 +154,7 @@ public final class LinkedListUtil {
 	 * @f:off
 	 * Get count of the nodes in the first list, let count be c1.
 	 * Get count of the nodes in the second list, let count be c2.
-	 * Get the difference of counts d = abs(c1 – c2)
+	 * Get the difference of counts d = abs(c1 ï¿½ c2)
 	 * Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.
 	 * Then we can traverse both the lists in parallel till we come across a common node. 
 	 * (Note that getting a common node is done by comparing the address of the nodes)
@@ -250,7 +250,7 @@ public final class LinkedListUtil {
 	 * current initially head last point next node to the curr.
 	 * 
 	 */
-	private static Node<Integer> reverse(Node<Integer> head) {
+	public static Node<Integer> reverse(Node<Integer> head) {
 		Node<Integer> prev = null;
 		while (head != null) {
 			Node<Integer> next = head.getNext();
@@ -260,6 +260,35 @@ public final class LinkedListUtil {
 		}
 		return prev;
 	}
+	/**
+	 * reverse linked list.
+	 * 
+	 * o(n),o(n)
+	 * 
+	 * @param head
+	 * 
+	 * @return head
+	 */
+	public Node<Integer> reverseListRecursive(Node<Integer> head) {
+        return reverseRecursive(head,null);
+    }
+    
+	/**
+	 * reverse the list
+	 * 
+	 * o(n),o(n)
+	 * @param head
+	 * @param prev
+	 * @return head
+	 */
+    private Node<Integer> reverseRecursive(Node<Integer> head,Node<Integer> prev){
+        if(head==null){
+            return prev;
+        }
+        Node<Integer> next=head.getNext();
+        head.setNext(prev);
+        return reverseRecursive(next,head);
+    }
 
 	/**
 	 * @f:off
