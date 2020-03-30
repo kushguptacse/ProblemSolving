@@ -456,5 +456,28 @@ public final class LinkedListUtil {
 		curr2.setNext(curr2.getNext().getNext());
 		return head;
 	}
+	
+	/**
+	 * Given a linked list, swap every two adjacent nodes and return its head.
+	 * 
+	 * You may not modify the values in the list's nodes, only nodes itself may be changed.
+	 * 
+	 * Example:
+	 * 
+	 * Given 1->2->3->4, you should return the list as 2->1->4->3.
+	 * 
+	 * @param head
+	 * @return head
+	 */
+	public static Node<Integer> swapPairsRecursive(Node<Integer> head) {
+		if (head == null || head.getNext() == null) {
+			return head;
+		}
+		Node<Integer> second = head.getNext();
+		Node<Integer> third = second.getNext();
+		second.setNext(head);
+		head.setNext(swapPairsRecursive(third));
+		return second;
+	}
 
 }
