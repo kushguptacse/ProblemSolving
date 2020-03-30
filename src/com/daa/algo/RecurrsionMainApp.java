@@ -12,6 +12,7 @@ import com.daa.list.Node;
 public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
+		practiceBasic(4);
 		System.out.println(Recursion.numberOfSteps(14));
 		new Recursion().towerOfHanoi(3, "x", "y", "z");
 		practice();
@@ -20,6 +21,17 @@ public class RecurrsionMainApp {
 //		checkSubSetSum();
 //		dpTest();
 		new RecurrsionMainApp().testSearch();
+	}
+
+	private static void practiceBasic(int i) {
+		Recursion r = new Recursion();
+		System.out.println("Head ");
+		r.headRecursion(i);
+		System.out.println("tail ");
+		r.tailRecursion(i);
+		System.out.println("Head and tail ");
+		r.headAndTailRecursion(i);
+		System.out.println("----------------------------");
 	}
 
 	public void testGCD() {
