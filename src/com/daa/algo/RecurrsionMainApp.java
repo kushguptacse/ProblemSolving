@@ -31,10 +31,9 @@ public class RecurrsionMainApp {
 		r.tailRecursion(i);
 		System.out.println("Head and tail ");
 		r.headAndTailRecursion(i);
-		System.out.println("----------------------------");
 	}
 
-	public void testGCD() { 
+	public void testGCD() {
 		Recursion obj = new Recursion();
 		int a = 10;
 		int b = 15;
