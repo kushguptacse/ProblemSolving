@@ -67,6 +67,14 @@ public class Recursion {
 		System.out.println(n);
 		tailRecursion(n - 1);
 	}
+	
+	public void headAndTailRecursion(int n) {
+		if (n == 0)
+			return;
+		System.out.println(n);
+		headAndTailRecursion(n-1);
+		System.out.println(n);
+	}
 
 	public int max(int[] a) {
 		return max(a, a.length - 1);
