@@ -10,6 +10,7 @@ public final class LinkedListUtil {
 	public static void main(String[] args) {
 		LinkedList<Integer> list3 = new LinkedList<>();
 		IntStream.of(1, 2, 3, 4, 5).forEach(list3::add);
+		reverseListRecursive(list3.getHead()).print();
 		oddEvenList(list3.getHead()).print();
 		LinkedList<Character> list = new LinkedList<>();
 		list.add('A');
@@ -261,7 +262,7 @@ public final class LinkedListUtil {
 		return prev;
 	}
 
-	/**
+	/**	
 	 * reverse linked list.
 	 * 
 	 * o(n),o(n)
@@ -269,7 +270,7 @@ public final class LinkedListUtil {
 	 * @param head
 	 * @return head
 	 */
-	public Node<Integer> reverseListRecursive(Node<Integer> head) {
+	public static Node<Integer> reverseListRecursive(Node<Integer> head) {
 		// for last node return head.
 		if (head == null || head.getNext() == null) {
 			return head;
@@ -277,12 +278,12 @@ public final class LinkedListUtil {
 		// call method till last node
 		Node<Integer> p = reverseListRecursive(head.getNext());
 		// after above call stack end we will receive last node in p
-		// is second last node and at present head
+		// and at present head is second last node 
 		// set last node next as second last
 		head.getNext().setNext(head);
-		// return head next null
+		// set head next null
 		head.setNext(null);
-		// return last node
+		// return last node, As we are returning same p again and again. we will receive last node only.
 		return p;
 	}
 
