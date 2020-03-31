@@ -260,35 +260,31 @@ public final class LinkedListUtil {
 		}
 		return prev;
 	}
+
 	/**
 	 * reverse linked list.
 	 * 
 	 * o(n),o(n)
 	 * 
 	 * @param head
-	 * 
 	 * @return head
 	 */
 	public Node<Integer> reverseListRecursive(Node<Integer> head) {
-        return reverseRecursive(head,null);
-    }
-    
-	/**
-	 * reverse the list
-	 * 
-	 * o(n),o(n)
-	 * @param head
-	 * @param prev
-	 * @return head
-	 */
-    private Node<Integer> reverseRecursive(Node<Integer> head,Node<Integer> prev){
-        if(head==null){
-            return prev;
-        }
-        Node<Integer> next=head.getNext();
-        head.setNext(prev);
-        return reverseRecursive(next,head);
-    }
+		// for last node return head.
+		if (head == null || head.getNext() == null) {
+			return head;
+		}
+		// call method till last node
+		Node<Integer> p = reverseListRecursive(head.getNext());
+		// after above call stack end we will receive last node in p
+		// is second last node and at present head
+		// set last node next as second last
+		head.getNext().setNext(head);
+		// return head next null
+		head.setNext(null);
+		// return last node
+		return p;
+	}
 
 	/**
 	 * @f:off
@@ -456,11 +452,12 @@ public final class LinkedListUtil {
 		curr2.setNext(curr2.getNext().getNext());
 		return head;
 	}
-	
+
 	/**
 	 * Given a linked list, swap every two adjacent nodes and return its head.
 	 * 
-	 * You may not modify the values in the list's nodes, only nodes itself may be changed.
+	 * You may not modify the values in the list's nodes, only nodes itself may be
+	 * changed.
 	 * 
 	 * Example:
 	 * 
