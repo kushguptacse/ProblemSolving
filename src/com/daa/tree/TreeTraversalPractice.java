@@ -136,8 +136,9 @@ public class TreeTraversalPractice {
 
 	/**
 	 * It is just like reversing the output of pre-order traversal and hence we
-	 * follow same algorithm as pre-order traversal iterative and to reverse the output
-	 * we will take another stack. So, that when we pop from it data will be opposite.
+	 * follow same algorithm as pre-order traversal iterative and to reverse the
+	 * output we will take another stack. So, that when we pop from it data will be
+	 * opposite.
 	 * 
 	 * 
 	 * o(n),o(n)
@@ -976,7 +977,6 @@ public class TreeTraversalPractice {
 					next.push(node.getLeft());
 				}
 			}
-
 			if (current.isEmpty()) {
 				leftToRight = !leftToRight;
 				Deque<TreeNode<Integer>> temp = current;
