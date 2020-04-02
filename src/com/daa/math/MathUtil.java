@@ -212,7 +212,7 @@ public class MathUtil {
 				return false;
 		}
 	}
-
+	
 	/**
 	 * if n =23
 	 * return 2*2+3*3
