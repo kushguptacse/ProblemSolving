@@ -1,9 +1,12 @@
 package com.daa.tree;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
+import com.daa.math.MathUtil;
 import com.daa.model.Model;
 import com.daa.model.Pair;
 
@@ -15,27 +18,27 @@ public class BinaryTreeUtil {
 	private static int preIndex = 0;
 
 	public static void main(String[] args) {
-		try(Scanner sc= new Scanner(System.in)) {
-		TreeNode<Integer> root=constructTreeFromConsole(sc);
-		System.out.println("Remove half nodes from tree : ");
-		root = removeHalfNodes(root);
+		try (Scanner sc = new Scanner(System.in)) {
+			TreeNode<Integer> root = constructTreeFromConsole(sc);
+			System.out.println("Remove half nodes from tree : ");
+			root = removeHalfNodes(root);
 //		TreeNode<Character> root = getTreeFromInAndPreOrder(new Character[] { 'D', 'B', 'E', 'A', 'F', 'C' }, new Character[] { 'A', 'B', 'D', 'E', 'C', 'F' });
-		System.out.println("In order :");
-		printInOrder(root);
-		System.out.println("\nPre order :");
-		printPreOrder(root);
-		System.out.println("\nPost order :");
-		printPostOrder(root);
-		System.out.println("\n-----------------");
-		System.out.println("Remove leaf nodes from tree : ");
-		root = removeLeafNodes(root);
-		System.out.println("In order :");
-		printInOrder(root);
-		System.out.println("\nPre order :");
-		printPreOrder(root);
-		System.out.println("\nPost order :");
-		printPostOrder(root);
-		System.out.println();
+			System.out.println("In order :");
+			printInOrder(root);
+			System.out.println("\nPre order :");
+			printPreOrder(root);
+			System.out.println("\nPost order :");
+			printPostOrder(root);
+			System.out.println("\n-----------------");
+			System.out.println("Remove leaf nodes from tree : ");
+			root = removeLeafNodes(root);
+			System.out.println("In order :");
+			printInOrder(root);
+			System.out.println("\nPre order :");
+			printPreOrder(root);
+			System.out.println("\nPost order :");
+			printPostOrder(root);
+			System.out.println();
 //		BinaryTree<Integer> tree = new BinaryTree<>();
 //		tree.insert(7);
 //		tree.insert(1);
@@ -135,8 +138,9 @@ public class BinaryTreeUtil {
 	/**
 	 * create binary tree from given inorder and pre-order array.
 	 * 
-	 * create node from preorder array and find its index in inorder array. after that set
-	 * left tree from 0,index-1 and right tree from index+1,end return null when start>end
+	 * create node from preorder array and find its index in inorder array. after
+	 * that set left tree from 0,index-1 and right tree from index+1,end return null
+	 * when start>end
 	 * 
 	 * @param in
 	 * @param pre
@@ -173,7 +177,8 @@ public class BinaryTreeUtil {
 	 * 
 	 * calculate max of left tree. calculate max of right tree.
 	 * 
-	 * compare left and right with root and return max. repeat this process for entire tree.
+	 * compare left and right with root and return max. repeat this process for
+	 * entire tree.
 	 * 
 	 * @param root
 	 * @return max of tree
@@ -197,8 +202,8 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * just like level order traversal - add left and right to queue. compare queue poll item
-	 * with max. and repeat it till queue is empty.
+	 * just like level order traversal - add left and right to queue. compare queue
+	 * poll item with max. and repeat it till queue is empty.
 	 * 
 	 * @param root
 	 * @return
@@ -276,8 +281,8 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * if we calculate pre order traversal of a tree. the node before search node is pre order
-	 * predecessor and after that is successor
+	 * if we calculate pre order traversal of a tree. the node before search node is
+	 * pre order predecessor and after that is successor
 	 * 
 	 * @param data - node to be search
 	 * @return pre order Predecessor node
@@ -305,8 +310,8 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * If we calculate pre order traversal of a tree. the node before search node is pre order
-	 * predecessor and after that is successor
+	 * If we calculate pre order traversal of a tree. the node before search node is
+	 * pre order predecessor and after that is successor
 	 * 
 	 * @param data - node to be search
 	 * @return pre order Successor node
@@ -346,8 +351,8 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * If we calculate in order traversal of a tree. the node before search node is in order
-	 * predecessor and after that is successor
+	 * If we calculate in order traversal of a tree. the node before search node is
+	 * in order predecessor and after that is successor
 	 * 
 	 * @param data - node to be search
 	 * @param root - root of tree
@@ -374,41 +379,99 @@ public class BinaryTreeUtil {
 		}
 		inOrderSuccessor(root.getRight(), data, pair);
 	}
-	
+
 	/**
 	 * remove all nodes with 1 child
+	 * 
 	 * @param root
 	 * @return root node of modified tree
 	 */
 	public static TreeNode<Integer> removeHalfNodes(TreeNode<Integer> root) {
-		if(root==null) {
+		if (root == null) {
 			return null;
 		}
 		root.setLeft(removeHalfNodes(root.getLeft()));
 		root.setRight(removeHalfNodes(root.getRight()));
-		if((root.getLeft()==null&&root.getRight()!=null)) {
+		if ((root.getLeft() == null && root.getRight() != null)) {
 			return root.getRight();
 		}
-		if((root.getRight()==null&&root.getLeft()!=null)) {
+		if ((root.getRight() == null && root.getLeft() != null)) {
 			return root.getLeft();
 		}
-		return root;	
+		return root;
 	}
-	
+
 	/**
 	 * remove all leaf
+	 * 
 	 * @param root
 	 * @return root node of modified tree
 	 */
 	public static TreeNode<Integer> removeLeafNodes(TreeNode<Integer> root) {
-		if(root==null) {
+		if (root == null) {
 			return null;
 		}
-		if((root.getLeft()==null&&root.getRight()==null)) {
+		if ((root.getLeft() == null && root.getRight() == null)) {
 			return null;
 		}
 		root.setLeft(removeLeafNodes(root.getLeft()));
 		root.setRight(removeLeafNodes(root.getRight()));
-		return root;	
+		return root;
+	}
+
+	/**
+	 * Given a binary tree, return the tilt of the whole tree. The tilt of a tree
+	 * node is defined as the absolute difference between the sum of all left
+	 * subtree node values and the sum of all right subtree node values. 
+	 * Null nodes are assigned tilt to be zero. Therefore, tilt of the whole tree is defined as
+	 * the sum of all nodes’ tilt.
+	 * 
+	 * @f:off
+	 * Input :
+	 *     4
+	 *    / \
+	 *   2   9
+	 *  / \   \
+	 * 3   5   7
+	 * Output : 15
+	 * Explanation: 
+	 * Tilt of node 3 : 0
+	 * Tilt of node 5 : 0
+	 * Tilt of node 7 : 0
+	 * Tilt of node 2 : |3-5| = 2
+	 * Tilt of node 9 : |0-7| = 7
+	 * Tilt of node 4 : |(3+5+2)-(9+7)| = 6
+	 * Tilt of binary tree : 0 + 0 + 0 + 2 + 7 + 6 = 15 
+	 * 
+	 * o(n)
+	 * @f:on
+	 * 
+	 * @return tilt value
+	 */
+	public static int tiltBinaryTreeRec(TreeNode<Integer> root) {
+		Model<Integer> sum = new Model<>();
+		tiltBinaryTreeRec(root, sum);
+		return sum.getValue();
+	}
+
+	/**
+	 * call left tree and then right.
+	 * we will store the total tilt value inside sum variable and return value of current node
+	 * for e.g. will return 0+0+3 as left and 0+0+5 as right for node 2
+	 * so, will update sum= 0+|3-5| => 2 for node 2.
+	 * we will do for all the nodes like this.
+	 * 
+	 * @param root
+	 * @param sum
+	 * @return tilt value
+	 */
+	private static int tiltBinaryTreeRec(TreeNode<Integer> root, Model<Integer> sum) {
+		if (root == null) {
+			return 0;
+		}
+		int left = tiltBinaryTreeRec(root.getLeft());
+		int right = tiltBinaryTreeRec(root.getRight());
+		sum.setValue(MathUtil.abs(left - right) + sum.getValue());
+		return left + right + root.getData();
 	}
 }
