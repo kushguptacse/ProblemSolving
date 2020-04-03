@@ -1,10 +1,8 @@
 package com.daa.tree;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Set;
 
 import com.daa.math.MathUtil;
 import com.daa.model.Model;

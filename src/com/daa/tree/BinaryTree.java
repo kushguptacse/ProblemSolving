@@ -10,8 +10,8 @@ import com.daa.algo.Recursion;
 import com.daa.math.MathUtil;
 
 /**
- * Binary tree store the data in tree. every node can have at most 2 child. 
- * No left child or right child rule.
+ * Binary tree store the data in tree. every node can have at most 2 child. No
+ * left child or right child rule.
  * 
  * @author G521885
  *
@@ -48,7 +48,7 @@ public class BinaryTree<T> implements Tree<T> {
 	}
 
 	/**
-	 * O(N),O(N)
+	 * O(N),O(N) it is also equal to maximum depth
 	 * 
 	 * @return height or Level of Binary tree
 	 */
@@ -67,6 +67,43 @@ public class BinaryTree<T> implements Tree<T> {
 	}
 
 	/**
+	 * Use level order approach and increment level. and during any iteration if we
+	 * found node.left and right null we will return level.
+	 * 
+	 * o(n)
+	 * 
+	 * o(n)
+	 * 
+	 * @param root
+	 * @return minimum depth
+	 */
+	public int minimumDepthIterative(TreeNode<T> root) {
+		if (root == null) {
+			return 0;
+		}
+		Queue<TreeNode<T>> queue = new LinkedList<>();
+		queue.add(root);
+		int level = 0;
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			level++;
+			for (int i = 0; i < size; i++) {
+				TreeNode<T> node = queue.poll();
+				if (node.getLeft() == null && node.getRight() == null) {
+					return level;
+				}
+				if (node.getLeft() != null) {
+					queue.add(node.getLeft());
+				}
+				if (node.getRight() != null) {
+					queue.add(node.getRight());
+				}
+			}
+		}
+		return level;
+	}
+
+	/**
 	 * 
 	 * 2nCn/(n+1)
 	 * 
@@ -81,8 +118,8 @@ public class BinaryTree<T> implements Tree<T> {
 	}
 
 	/**
-	 * O(N), space - O(N), As if tree is a single linked list than all the nodes needed to be
-	 * in stack at time
+	 * O(N), space - O(N), As if tree is a single linked list than all the nodes
+	 * needed to be in stack at time
 	 * 
 	 * @return number of leaf in binary tree
 	 */
@@ -100,7 +137,7 @@ public class BinaryTree<T> implements Tree<T> {
 		}
 		int c = 0;
 		if (head.getLeft() != null && head.getRight() != null) {
-			c=1;
+			c = 1;
 		}
 		return c + numberOfFullNodes(head.getLeft()) + numberOfFullNodes(head.getRight());
 	}
@@ -117,8 +154,8 @@ public class BinaryTree<T> implements Tree<T> {
 	}
 
 	/**
-	 * O(N), space - O(N), As if tree is a single linked list than all the nodes needed to be
-	 * in stack at time
+	 * O(N), space - O(N), As if tree is a single linked list than all the nodes
+	 * needed to be in stack at time
 	 * 
 	 * @return number of non leaf node
 	 */
@@ -219,7 +256,7 @@ public class BinaryTree<T> implements Tree<T> {
 	@Override
 	public String postOrderTraversal() {
 		StringBuilder sb = new StringBuilder();
-		 postOrder(root, sb);
+		postOrder(root, sb);
 		return sb.toString();
 	}
 
@@ -336,9 +373,9 @@ public class BinaryTree<T> implements Tree<T> {
 	/**
 	 * Convert Binary Tree to Binary Search Tree with same structure.
 	 * 
-	 * Algorithm - 1. Calculate in-Order and add element to list in tree. 2. Sort the list. 3.
-	 * Now calculate In-Order. update data element of binary tree from sorted list while
-	 * calculating In-Order
+	 * Algorithm - 1. Calculate in-Order and add element to list in tree. 2. Sort
+	 * the list. 3. Now calculate In-Order. update data element of binary tree from
+	 * sorted list while calculating In-Order
 	 * 
 	 * O(NlogN)
 	 * 
