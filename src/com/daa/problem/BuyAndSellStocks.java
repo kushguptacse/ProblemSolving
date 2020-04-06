@@ -5,8 +5,11 @@ public class BuyAndSellStocks {
 	public static void main(String[] args) {
 		System.out.println(maxProfit1(new int[] { 7, 1, 5, 3, 6, 4 }));
 		System.out.println(maxProfit1(new int[] { 7, 6, 4, 3, 1 }));
+<<<<<<< HEAD
 		System.out.println(maxProfit2(new int[] { 1, 2, 3, 0, 2 }));
 		System.out.println(maxProfit2(new int[] { 7, 1, 5, 3, 6, 4  }));
+=======
+>>>>>>> branch 'master' of https://github.com/kushguptacse/ProblemSolving.git
 	}
 
 	/**
