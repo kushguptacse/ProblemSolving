@@ -3,6 +3,7 @@ package com.daa.string;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -200,7 +201,7 @@ public final class StringHelper {
 	public static boolean subStringRabinKarpBetter(String source, String str) {
 		int hSource = 0;
 		int hStr = 0;
-		//calculate hashcode of both source and string for first comparison
+		// calculate hashcode of both source and string for first comparison
 		for (int i = 0; i < str.length(); i++) {
 			hSource = hSource + hashFunction(source.charAt(i));
 			hStr = hStr + hashFunction(str.charAt(i));
@@ -220,7 +221,7 @@ public final class StringHelper {
 					return true;
 				}
 			}
-			//to avoid calculation after last index
+			// to avoid calculation after last index
 			if (i < source.length() - str.length()) {
 				hSource = hSource - hashFunction(source.charAt(i)) + hashFunction(source.charAt(i + str.length()));
 			}
@@ -464,6 +465,54 @@ public final class StringHelper {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Given an array of strings, group anagrams together.
+	 * 
+	 * Example:
+	 * 
+	 * Input: ["eat", "tea", "tan", "ate", "nat", "bat"]
+	 * 
+	 * Output: [["ate","eat","tea"], ["nat","tan"], ["bat"] ]
+	 * 
+	 * @param strs
+	 * @return grouped anagrams
+	 */
+	public static List<List<String>> groupAnagrams(String[] strs) {
+		Map<String, List<String>> map = new HashMap<>();
+		for (int i = 0; i < strs.length; i++) {
+			String k = hash(strs[i]);
+			if (!map.containsKey(k)) {
+				map.put(k, new LinkedList<>());
+			}
+			map.get(k).add(strs[i]);
+		}
+		return new ArrayList<>(map.values());
+	}
+
+	/**
+	 * o(n)
+	 * 
+	 * @param str
+	 * @return hash value which will be same for anagram strings
+	 */
+	private static String hash(String str) {
+		int[] ch = new int[26];
+		// count the occurrences of each character in given string
+		for (int i = 0; i < str.length(); i++) {
+			ch[str.charAt(i) - 'a'] += 1;
+		}
+		// now calculate hash value so that for eat hash will be 1a1e1t and for tea also
+		// it will be 1a1e1t
+		StringBuilder h = new StringBuilder();
+		for (int i = 0; i < ch.length; i++) {
+			if (ch[i] != 0) {
+				h.append(ch[i]);// add count
+				h.append((char) ('a' + i));// add character
+			}
+		}
+		return h.toString();
 	}
 
 }
