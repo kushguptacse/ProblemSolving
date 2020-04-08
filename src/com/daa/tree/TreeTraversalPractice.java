@@ -19,6 +19,9 @@ public class TreeTraversalPractice {
 		TreeNode<Integer> head = null;
 		root = BinaryTreeUtil.constructTreeFromConsole(sc);
 		System.out.println("Number of Leaf Nodes : " + numberOfLeaves(root));
+		System.out.println("Minimum depth in a tree : " + BinaryTreeUtil.minimumDepthRecursive(root));
+		System.out.println("Minimum depth in a tree : " + BinaryTreeUtil.minimumDepthIterative(root));		
+		
 //		TreeNode<Integer> special = constructSpecialBinaryTree(new int[] {1,1,0,0,0});
 //		System.out.println("in order :");
 //		printInOrder(special);

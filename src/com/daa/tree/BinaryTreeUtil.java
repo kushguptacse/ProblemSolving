@@ -51,6 +51,50 @@ public class BinaryTreeUtil {
 		}
 	}
 
+	/**
+	 * Use level order approach and increment level. and during any iteration if we
+	 * found node.left and right null we will return level.
+	 * 
+	 * o(n)
+	 * 
+	 * o(n)
+	 * 
+	 * @param root
+	 * @return minimum depth
+	 */
+	public static int minimumDepthIterative(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		}
+		Queue<TreeNode<Integer>> queue = new LinkedList<>();
+		queue.add(root);
+		int level = 0;
+		while (!queue.isEmpty()) {
+			int size = queue.size();
+			level++;
+			for (int i = 0; i < size; i++) {
+				TreeNode<Integer> node = queue.poll();
+				if (node.getLeft() == null && node.getRight() == null) {
+					return level;
+				}
+				if (node.getLeft() != null) {
+					queue.add(node.getLeft());
+				}
+				if (node.getRight() != null) {
+					queue.add(node.getRight());
+				}
+			}
+		}
+		return level;
+	}
+
+	public static int minimumDepthRecursive(TreeNode<Integer> node) {
+		if (node == null) {
+			return 0;
+		}
+		return MathUtil.min(minimumDepthRecursive(node.getLeft()), minimumDepthRecursive(node.getRight())) + 1;
+	}
+
 	public static String preOrderTraversal(TreeNode<Integer> root) {
 		StringBuilder sb = new StringBuilder();
 		preOrder(root, sb);
@@ -453,10 +497,9 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * call left tree and then right.
-	 * we will store the total tilt value inside sum variable and return value of current node
-	 * for e.g. will return 0+0+3 as left and 0+0+5 as right for node 2
-	 * so, will update sum= 0+|3-5| => 2 for node 2.
+	 * call left tree and then right. we will store the total tilt value inside sum
+	 * variable and return value of current node for e.g. will return 0+0+3 as left
+	 * and 0+0+5 as right for node 2 so, will update sum= 0+|3-5| => 2 for node 2.
 	 * we will do for all the nodes like this.
 	 * 
 	 * @param root

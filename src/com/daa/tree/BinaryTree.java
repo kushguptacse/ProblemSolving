@@ -67,43 +67,6 @@ public class BinaryTree<T> implements Tree<T> {
 	}
 
 	/**
-	 * Use level order approach and increment level. and during any iteration if we
-	 * found node.left and right null we will return level.
-	 * 
-	 * o(n)
-	 * 
-	 * o(n)
-	 * 
-	 * @param root
-	 * @return minimum depth
-	 */
-	public int minimumDepthIterative(TreeNode<T> root) {
-		if (root == null) {
-			return 0;
-		}
-		Queue<TreeNode<T>> queue = new LinkedList<>();
-		queue.add(root);
-		int level = 0;
-		while (!queue.isEmpty()) {
-			int size = queue.size();
-			level++;
-			for (int i = 0; i < size; i++) {
-				TreeNode<T> node = queue.poll();
-				if (node.getLeft() == null && node.getRight() == null) {
-					return level;
-				}
-				if (node.getLeft() != null) {
-					queue.add(node.getLeft());
-				}
-				if (node.getRight() != null) {
-					queue.add(node.getRight());
-				}
-			}
-		}
-		return level;
-	}
-
-	/**
 	 * 
 	 * 2nCn/(n+1)
 	 * 
@@ -131,13 +94,18 @@ public class BinaryTree<T> implements Tree<T> {
 		return numberOfFullNodes(root);
 	}
 
+	/**
+	 * 
+	 * @param head
+	 * @return total full nodes
+	 */
 	public int numberOfFullNodes(TreeNode<T> head) {
 		if (head == null) {
 			return 0;
 		}
-		int c = 0;
+		int c = 0;// don’t count node by default
 		if (head.getLeft() != null && head.getRight() != null) {
-			c = 1;
+			c = 1;//this is our node and hence count it and process child further
 		}
 		return c + numberOfFullNodes(head.getLeft()) + numberOfFullNodes(head.getRight());
 	}
