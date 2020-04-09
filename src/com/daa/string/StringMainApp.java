@@ -6,6 +6,7 @@ import java.util.Map;
 public class StringMainApp {
 	
 	public static void main(String[] args) {
+		
 		LinkedHashMap<Integer, String> lhm = new LinkedHashMap<Integer,
 			      String>(16 + 1, .75F, false) {
 			         protected boolean removeEldestEntry(Map.Entry<Integer, String> eldest) {
@@ -54,5 +55,6 @@ public class StringMainApp {
 		System.out.println("length of longest common subsequence : " + res);
 		System.out.println("Length of lcs is : " + StringHelper.longestCommonSubsequence("abdace", "babce"));
 		System.out.println("Length of lcs is : " + StringHelper.longestCommonSubsequence("ABCDGH", "AEDFHR"));
+		System.out.println(StringHelper.backspaceCompare("ac#d", "ab#d"));
 	}
 }

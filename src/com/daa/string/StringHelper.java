@@ -17,6 +17,46 @@ public final class StringHelper {
 	}
 
 	/**
+	 * Given two strings S and T, return if they are equal when both are typed into
+	 * empty text editors. # means a backspace character.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: S = "ab#c", T = "ad#c"
+	 * 
+	 * Output: true Explanation: Both S and T become "ac".
+	 * 
+	 * Approach -
+	 * 
+	 * increment b if current element is backspace else decrement b if b>0. we add
+	 * current character to StringBuilder only if it is not # and also b=0.
+	 * 
+	 * @param s
+	 * @param t
+	 * @return true if both are equal after backspace removal
+	 */
+	public static boolean backspaceCompare(String s, String t) {
+		return removeBackSpace(s).equals(removeBackSpace(t));
+	}
+
+	private static String removeBackSpace(String s) {
+		StringBuilder s1 = new StringBuilder();
+		int b = 0;
+		for (int i = s.length() - 1; i >= 0; i--) {
+			if (s.charAt(i) == '#') {
+				b++;
+			} else {
+				if (b > 0) {
+					b--;
+				} else {
+					s1.append(s.charAt(i));
+				}
+			}
+		}
+		return s1.toString();
+	}
+
+	/**
 	 * UDEMY
 	 * @f:off
 	 * input - "neversaynever"
