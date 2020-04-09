@@ -18,6 +18,8 @@ public class BinaryTreeUtil {
 	public static void main(String[] args) {
 		try (Scanner sc = new Scanner(System.in)) {
 			TreeNode<Integer> root = constructTreeFromConsole(sc);
+			int max = findMax(root);
+			System.out.println("Maimum element in tree is : " + max);
 			System.out.println("Remove half nodes from tree : ");
 			root = removeHalfNodes(root);
 //		TreeNode<Character> root = getTreeFromInAndPreOrder(new Character[] { 'D', 'B', 'E', 'A', 'F', 'C' }, new Character[] { 'A', 'B', 'D', 'E', 'C', 'F' });
@@ -226,21 +228,13 @@ public class BinaryTreeUtil {
 	 * @return max of tree
 	 */
 	public static Integer findMax(TreeNode<Integer> root) {
-		int max = -1;
-		if (root != null) {
-			int l = findMax(root.getLeft());
-			int r = findMax(root.getRight());
-			if (l > r) {
-				max = l;
-			} else {
-				max = r;
-			}
-			if (root.getData() > max) {
-				max = root.getData();
-			}
+		if (root == null) {
+			return -1;
 		}
-
-		return max;
+		int lmax = findMax(root.getLeft());
+		int rmax = findMax(root.getRight());
+		int max = lmax > rmax ? lmax : rmax;
+		return max > root.getData() ? max : root.getData();
 	}
 
 	/**

@@ -105,7 +105,7 @@ public class BinaryTree<T> implements Tree<T> {
 		}
 		int c = 0;// don’t count node by default
 		if (head.getLeft() != null && head.getRight() != null) {
-			c = 1;//this is our node and hence count it and process child further
+			c = 1;// this is our node and hence count it and process child further
 		}
 		return c + numberOfFullNodes(head.getLeft()) + numberOfFullNodes(head.getRight());
 	}
@@ -265,18 +265,21 @@ public class BinaryTree<T> implements Tree<T> {
 		Queue<TreeNode<T>> queue = new LinkedList<>();
 		queue.add(node);
 		while (!queue.isEmpty()) {
-			TreeNode<T> node1 = queue.poll();
-			if (node1.getLeft() != null) {
-				queue.add(node1.getLeft());
-			} else {
-				node1.setLeft(newNode);
-				break;
-			}
-			if (node1.getRight() != null) {
-				queue.add(node1.getRight());
-			} else {
-				node1.setRight(newNode);
-				break;
+			int size = queue.size();
+			for (int i = 0; i < size; i++) {
+				TreeNode<T> next = queue.poll();
+				if (next.getLeft() == null) {
+					next.setLeft(newNode);
+					break;
+				} else {
+					queue.add(next.getLeft());
+				}
+				if (next.getRight() == null) {
+					next.setRight(newNode);
+					break;
+				} else {
+					queue.add(next.getRight());
+				}
 			}
 		}
 	}

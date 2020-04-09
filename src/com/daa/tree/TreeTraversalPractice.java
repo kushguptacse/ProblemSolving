@@ -19,9 +19,11 @@ public class TreeTraversalPractice {
 		TreeNode<Integer> head = null;
 		root = BinaryTreeUtil.constructTreeFromConsole(sc);
 		System.out.println("Number of Leaf Nodes : " + numberOfLeaves(root));
+		int item = 12;
+		System.out.println("Find node with data " + item + " is -> " + findNode(root, item));
 		System.out.println("Minimum depth in a tree : " + BinaryTreeUtil.minimumDepthRecursive(root));
-		System.out.println("Minimum depth in a tree : " + BinaryTreeUtil.minimumDepthIterative(root));		
-		
+		System.out.println("Minimum depth in a tree : " + BinaryTreeUtil.minimumDepthIterative(root));
+
 //		TreeNode<Integer> special = constructSpecialBinaryTree(new int[] {1,1,0,0,0});
 //		System.out.println("in order :");
 //		printInOrder(special);
@@ -200,20 +202,20 @@ public class TreeTraversalPractice {
 	 * 
 	 * @param root
 	 * @param item
-	 * @return
+	 * @return node if exists else null
 	 */
 	public static TreeNode<Integer> findNode(TreeNode<Integer> root, int item) {
 		if (root == null) {
 			return null;
 		}
-		if (root.getData().equals(item)) {
+		if (root.getData() == item) {
 			return root;
 		}
-		TreeNode<Integer> node1 = findNode(root.getLeft(), item);
-		if (node1 == null) {
-			return findNode(root.getRight(), item);
+		TreeNode<Integer> res = findNode(root.getLeft(), item);
+		if (res == null) {
+			res = findNode(root.getRight(), item);
 		}
-		return node1;
+		return res;
 	}
 
 	/**
@@ -283,13 +285,13 @@ public class TreeTraversalPractice {
 	/**
 	 * print the level order traversal of binary tree in reverse order
 	 * 
-	 * 
 	 * @param root
 	 */
 	public static void printLevelOrderReverse(TreeNode<Integer> root) {
 		if (root == null) {
 			return;
 		}
+		
 		Queue<TreeNode<Integer>> queue = new LinkedList<>();
 		queue.add(root);
 		Deque<Integer> stack = new LinkedList<>();
