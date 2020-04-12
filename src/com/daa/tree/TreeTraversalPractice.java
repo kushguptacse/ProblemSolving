@@ -291,7 +291,7 @@ public class TreeTraversalPractice {
 		if (root == null) {
 			return;
 		}
-		
+
 		Queue<TreeNode<Integer>> queue = new LinkedList<>();
 		queue.add(root);
 		Deque<Integer> stack = new LinkedList<>();
@@ -338,7 +338,7 @@ public class TreeTraversalPractice {
 		}
 		int l = getHeight(root.getLeft());
 		int r = getHeight(root.getRight());
-		return l > r ? l + 1 : r + 1;
+		return MathUtil.max(l, r)+1;
 	}
 
 	public static int getHeightIterative(TreeNode<Integer> root) {
@@ -599,32 +599,29 @@ public class TreeTraversalPractice {
 	}
 
 	/**
-	 * optimized version which take o(n) time instead of o(n2) here we are
-	 * calculating height and diameter together in same recursive call. here we will
-	 * pass one extra model object to store height of the tree. we will return
-	 * diameter and will update hieght in variable at same time.
+	 * optimized version which take o(n) time instead of o(n2)
+	 * 
+	 * Diameter of a tree can be calculated by only using the height function,
+	 * because the diameter of a tree is nothing but maximum value of (left_height +
+	 * right_height + 1) for each node.
 	 * 
 	 * @param root
 	 * @return diameter
 	 */
 	public static int diameterOptimized(TreeNode<Integer> root) {
-		return diameterOptimized(root, new Model<>());
+		int[] max = new int[1];
+		diameterOptimized(root, max);
+		return max[0];
 	}
 
-	private static int diameterOptimized(TreeNode<Integer> root, Model<Integer> height) {
-		Model<Integer> leftH = new Model<>();
-		Model<Integer> rightH = new Model<>();
+	private static int diameterOptimized(TreeNode<Integer> root, int[] max) {
 		if (root == null) {
-			height.setValue(0);
 			return 0;
 		}
-
-		int l = diameterOptimized(root.getLeft(), leftH);
-		int r = diameterOptimized(root.getRight(), rightH);
-		int option1 = MathUtil.max(l, r);
-		height.setValue(MathUtil.max(leftH.getValue(), rightH.getValue()) + 1);
-		int option2 = leftH.getValue() + rightH.getValue() + 1;
-		return MathUtil.max(option1, option2);
+		int l = diameterOptimized(root.getLeft(), max);
+		int r = diameterOptimized(root.getRight(), max);
+		max[0] = MathUtil.max(l + r + 1, max[0]); // update maximum by checking current node height
+		return MathUtil.max(l, r) + 1;
 	}
 
 	/**
