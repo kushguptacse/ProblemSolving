@@ -1,6 +1,10 @@
 package com.daa.array;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.daa.math.MathUtil;
 
 public class ArrayPractice {
 
@@ -215,5 +219,34 @@ public class ArrayPractice {
 			res = res ^ nums[i];
 		}
 		return res;
+	}
+
+	/**
+	 * Given a binary array, find the maximum length of a contiguous sub-array with
+	 * equal number of 0 and 1
+	 * 
+	 * Input: [1,0,1,1,0] 
+	 * 
+	 * Output: 4 
+	 * 
+	 * Explanation: [0,1,1,0] is a longest contiguous sub array with equal number of 0 and 1
+	 * 
+	 * @param nums
+	 * @return max length of contiguous array with equal 0 and 1
+	 */
+	public int maxLengthBinary(int[] nums) {
+		int max = 0;
+		int sum = 0;
+		Map<Integer, Integer> map = new HashMap<>();
+		map.put(0, -1);
+		for (int i = 0; i < nums.length; i++) {
+			sum += nums[i] == 0 ? -1 : 1;
+			if (map.containsKey(sum)) {
+				max = MathUtil.max(max, i - map.get(sum));
+			} else {
+				map.put(sum, i);
+			}
+		}
+		return max;
 	}
 }
