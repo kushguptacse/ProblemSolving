@@ -225,11 +225,12 @@ public class ArrayPractice {
 	 * Given a binary array, find the maximum length of a contiguous sub-array with
 	 * equal number of 0 and 1
 	 * 
-	 * Input: [1,0,1,1,0] 
+	 * Input: [1,0,1,1,0]
 	 * 
-	 * Output: 4 
+	 * Output: 4
 	 * 
-	 * Explanation: [0,1,1,0] is a longest contiguous sub array with equal number of 0 and 1
+	 * Explanation: [0,1,1,0] is a longest contiguous sub array with equal number of
+	 * 0 and 1
 	 * 
 	 * @param nums
 	 * @return max length of contiguous array with equal 0 and 1
@@ -248,5 +249,40 @@ public class ArrayPractice {
 			}
 		}
 		return max;
+	}
+
+	/**
+	 * Given an array nums of n integers where n > 1, return an array output such
+	 * that output[i] is equal to the product of all the elements of nums except
+	 * nums[i].
+	 * 
+	 * Example:
+	 * 
+	 * Input: [1,2,3,4]
+	 * 
+	 * Output: [24,12,8,6]
+	 * 
+	 * Note: Please solve it without division and in O(n).
+	 * 
+	 * @param nums
+	 * @return output array - Product of Array Except Self
+	 */
+	public int[] productExceptSelf(int[] nums) {
+		int[] output = new int[nums.length];
+		output[0] = 1;
+		// count multiplication result from left to right in every index.
+		for (int i = 1; i < nums.length; i++) {
+			output[i] = nums[i - 1] * output[i - 1];
+		}
+		//in above example output[]=[1,1,2,6]
+		// now every index has multiplication result till left.
+		//so, go from right to left and multiply remaining element for every index from
+		// right.
+		int m = nums[nums.length - 1];//m will keep multiplication from right till i index
+		for (int i = nums.length - 2; i >= 0; i--) {
+			output[i] = output[i] * m;
+			m = m * nums[i];
+		}
+		return output;
 	}
 }
