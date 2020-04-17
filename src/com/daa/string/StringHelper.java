@@ -556,6 +556,59 @@ public final class StringHelper {
 	}
 
 	/**
+	 * Given a string containing only three types of characters: '(', ')' and '*',
+	 * write a function to check whether this string is valid. We define the
+	 * validity of a string by these rules:
+	 * 
+	 * Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+	 * 
+	 * Any right parenthesis ')' must have a corresponding left parenthesis '('.
+	 * 
+	 * Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+	 * 
+	 * '*' could be treated as a single right parenthesis ')' or a single left
+	 * parenthesis '(' or an empty string.
+	 * 
+	 * An empty string is also valid.
+	 * 
+	 * @f:off
+	 * Input: "(*)" 
+	 * Output: True
+	 * 
+	 * Input: "(*))"
+	 * Output: True
+	 * @f:on
+	 * 
+	 * @param s
+	 * @return true if valid
+	 */
+	public static boolean checkValidString(String s) {
+		int bal = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == '(' || s.charAt(i) == '*') {
+				bal++;
+			} else if (--bal < 0) {
+				return false;
+			}
+		}
+		// terminate if brackets are balanced already.
+		if (bal == 0) {
+			return true;
+		}
+		// repeat again by going right to left
+		bal = 0;
+		for (int i = s.length() - 1; i >= 0; i--) {
+			if (s.charAt(i) == ')' || s.charAt(i) == '*') {
+				bal++;
+			} else if (--bal < 0) {
+				return false;
+			}
+		}
+		// if we reach here it means valid as it passes both loops without failing
+		return true;
+	}
+
+	/**
 	 * Perform String Shifts
 	 * 
 	 * You are given a string s containing lowercase English letters, and a matrix

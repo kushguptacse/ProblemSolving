@@ -3,6 +3,8 @@ package com.daa.array;
 public class Array2D {
 
 	public static void main(String[] args) {
+		int c =numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' }, { '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
+		System.out.println(c);
 		int res = countNegatives(
 				new int[][] { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } });
 		System.out.println("Number of negative number are:" + res);
@@ -94,6 +96,24 @@ public class Array2D {
 			}
 		}
 		return res;
+	}
+
+	public static int numIslands(char[][] grid) {
+		int c = 1;
+		for (int i = 0; i < grid.length - 1; i++) {
+			boolean res = false;
+			for (int j = 0; j < grid[i].length; j++) {
+				int ch =  (grid[i][j]-'0') & (grid[i + 1][j]-'0');
+				if (ch == 1) {
+					res = true;
+					break;
+				}
+			}
+			if (!res) {
+				c++;
+			}
+		}
+		return c;
 	}
 
 }
