@@ -19,6 +19,7 @@ public class BinarySearchTreeUtil {
 	public static void main(String[] args) {
 		try (Scanner sc = new Scanner(System.in)) {
 			TreeNode<Integer> root1 = BinaryTreeUtil.constructTreeFromConsole(sc);
+			System.out.println(insertNode(root1, 6).toString());
 //			System.out.println("print nodes in range 10 and 22 : ");
 //			printNodesInRange(root1, 10, 22);
 //			System.out.println();
@@ -111,10 +112,12 @@ public class BinarySearchTreeUtil {
 		}
 		return MathUtil.max(getHeight(root.getLeft()), getHeight(root.getRight())) + 1;
 	}
+
 	/**
 	 * 
-	 * check if both node smaller than root if yes go left else if both node are greater than
-	 * root go right. if both above conditions failed it means we have lca node.
+	 * check if both node smaller than root if yes go left else if both node are
+	 * greater than root go right. if both above conditions failed it means we have
+	 * lca node.
 	 * 
 	 * @return node which is lowest common ancestor of two nodes
 	 * 
@@ -145,9 +148,9 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * from given in-order array construct binary search tree find the mid element and make it
-	 * head. all the left will be its left and right will be right. repeat the process till
-	 * start<end else return null.
+	 * from given in-order array construct binary search tree find the mid element
+	 * and make it head. all the left will be its left and right will be right.
+	 * repeat the process till start<end else return null.
 	 * 
 	 * @param arr
 	 * @return Root node
@@ -169,6 +172,45 @@ public class BinarySearchTreeUtil {
 
 	private BinarySearchTreeUtil() {
 
+	}
+
+	/**
+	 * Get BST from pre-order traversal
+	 * 
+	 * @param pre
+	 * @return root of the binary search tree
+	 */
+	public static TreeNode<Integer> getBstFromPreOrder(int[] pre) {
+		return getBstFromPreOrder(pre, Integer.MIN_VALUE, Integer.MAX_VALUE, new int[1]);
+	}
+
+	/**
+	 * This solution takes o(n) as every node visited only once.
+	 * 
+	 * we take first index as node and all the nodes from min to that node will be
+	 * in left and current_node to max will be on right.
+	 * 
+	 * Repeat above step for all nodes.
+	 * 
+	 * @param pre
+	 * @param maxValue
+	 * @param minValue
+	 * @param c
+	 * @return Root of the BST
+	 */
+	private static TreeNode<Integer> getBstFromPreOrder(int[] pre, int minValue, int maxValue, int[] c) {
+		if (c[0] >= pre.length) {
+			return null;
+		}
+		int key = pre[c[0]];
+		TreeNode<Integer> node = null;
+		if (key > minValue && key < maxValue) {
+			node = new TreeNode<>(pre[c[0]]);
+			c[0] += 1;
+			node.setLeft(getBstFromPreOrder(pre, minValue, key, c));
+			node.setRight(getBstFromPreOrder(pre, key, maxValue, c));
+		}
+		return node;
 	}
 
 	public static void preOrderFromInOrder(int[] arr) {
@@ -222,8 +264,8 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * in-order which add data to list if flag is true otherwise print the data if list
-	 * contains that data
+	 * in-order which add data to list if flag is true otherwise print the data if
+	 * list contains that data
 	 * 
 	 * @param node
 	 * @param list
@@ -243,8 +285,8 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * search node in BST. check data is greater than root - move right less than root - move
-	 * left if match return;
+	 * search node in BST. check data is greater than root - move right less than
+	 * root - move left if match return;
 	 * 
 	 * @param root
 	 * @param data
@@ -284,9 +326,10 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * if search node has right child. then left most node of right child is its in-order
-	 * successor node. else if data is greater than root. check right tree to search node.
-	 * else set inOrderSuccessor node as root and check left tree to search node.
+	 * if search node has right child. then left most node of right child is its
+	 * in-order successor node. else if data is greater than root. check right tree
+	 * to search node. else set inOrderSuccessor node as root and check left tree to
+	 * search node.
 	 * 
 	 * @param root
 	 * @param data
@@ -318,9 +361,10 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * if search node has left child. then right most node of left child is its inOrder
-	 * Predecessor node. else if data is greater than root. set inOrderPredecessor node as
-	 * root.and check right tree to search node. else check left tree to search node.
+	 * if search node has left child. then right most node of left child is its
+	 * inOrder Predecessor node. else if data is greater than root. set
+	 * inOrderPredecessor node as root.and check right tree to search node. else
+	 * check left tree to search node.
 	 * 
 	 * @param root
 	 * @param data
@@ -353,8 +397,8 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * check if root is null - return new node. now move to left or right acc to data. and
-	 * reach node whose left or right is null. and set accordingly
+	 * check if root is null - return new node. now move to left or right acc to
+	 * data. and reach node whose left or right is null. and set accordingly
 	 * 
 	 * @param root
 	 * @param data
@@ -364,10 +408,10 @@ public class BinarySearchTreeUtil {
 		if (root == null) {
 			return new TreeNode<>(data);
 		}
-		if (root.getData() < data) {
-			root.setRight(insertNode(root.getRight(), data));
-		} else {
+		if (root.getData() > data) {
 			root.setLeft(insertNode(root.getLeft(), data));
+		} else {
+			root.setRight(insertNode(root.getRight(), data));
 		}
 		return root;
 	}
@@ -438,8 +482,8 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * we follow in order traversal and check if prev node is less than current. if not we
-	 * return false. else we repeat process.
+	 * we follow in order traversal and check if prev node is less than current. if
+	 * not we return false. else we repeat process.
 	 * 
 	 * @param root
 	 * @return true if it is a binary search tree
@@ -676,8 +720,8 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
-	 * make two balanced bst into a single balanced bst. store inorder of r1 in arr1 store
-	 * inorder of 2 in arr2 merge arr1 and arr2 into arr3 convert arr3 in bst.
+	 * make two balanced bst into a single balanced bst. store inorder of r1 in arr1
+	 * store inorder of 2 in arr2 merge arr1 and arr2 into arr3 convert arr3 in bst.
 	 * 
 	 * @param root1
 	 * @param root2
@@ -745,7 +789,7 @@ public class BinarySearchTreeUtil {
 		}
 		return size(root.getLeft()) + size(root.getRight()) + 1;
 	}
-	
+
 	public static void printNodesInRange(TreeNode<Integer> root, int min, int max) {
 		if (root == null) {
 			return;
@@ -754,38 +798,39 @@ public class BinarySearchTreeUtil {
 			printNodesInRange(root.getLeft(), min, max);
 		}
 		if (root.getData() >= min && root.getData() <= max) {
-			System.out.print(root.getData()+" ");
+			System.out.print(root.getData() + " ");
 		}
 		if (root.getData() < max) {
 			printNodesInRange(root.getRight(), min, max);
 		}
 	}
-	
+
 	/**
-	 * Traverse the tree in post order fashion. i.e. before deleting node its left and right tree already corrected.
+	 * Traverse the tree in post order fashion. i.e. before deleting node its left
+	 * and right tree already corrected.
+	 * 
 	 * @param root
 	 * @param min
 	 * @param max
 	 * @return root
 	 */
 	public static TreeNode<Integer> removeNodeOutsideRange(TreeNode<Integer> root, int min, int max) {
-		if(root==null) {
+		if (root == null) {
 			return null;
 		}
 		root.setLeft(removeNodeOutsideRange(root.getLeft(), min, max));
 		root.setRight(removeNodeOutsideRange(root.getRight(), min, max));
-		if(root.getData()<min) {
+		if (root.getData() < min) {
 			return root.getRight();
 		}
-		if(root.getData()>max) {
+		if (root.getData() > max) {
 			return root.getLeft();
 		}
 		return root;
 	}
-	
+
 	/**
-	 * to count iterate till node are null.
-	 * if node.data == k . then
+	 * to count iterate till node are null. if node.data == k . then
 	 * 
 	 * @param node
 	 * @param k
@@ -806,5 +851,5 @@ public class BinarySearchTreeUtil {
 		}
 		return c;
 	}
-	
+
 }

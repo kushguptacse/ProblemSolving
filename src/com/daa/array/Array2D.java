@@ -1,9 +1,12 @@
 package com.daa.array;
 
+import com.daa.math.MathUtil;
+
 public class Array2D {
 
 	public static void main(String[] args) {
-		int c =numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' }, { '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
+		int c = numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' },
+				{ '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
 		System.out.println(c);
 		int res = countNegatives(
 				new int[][] { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } });
@@ -98,22 +101,79 @@ public class Array2D {
 		return res;
 	}
 
-	public static int numIslands(char[][] grid) {
-		int c = 1;
-		for (int i = 0; i < grid.length - 1; i++) {
-			boolean res = false;
+	/**
+	 * Given a m x n grid filled with non-negative numbers, find a path from top
+	 * left to bottom right which minimizes the sum of all numbers along its path.
+	 * 
+	 * Note: You can only move either down or right at any point in time.
+	 * 
+	 * Example:
+	 * 
+	 * Input: [ [1,3,1], [1,5,1], [4,2,1] ]
+	 * 
+	 * Output: 7 Explanation: Because the path 1→3→1→1→1 minimizes the sum.
+	 * 
+	 * @param grid
+	 * @return minimum path sum
+	 */
+	public static int minPathSum(int[][] grid) {
+		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
-				int ch =  (grid[i][j]-'0') & (grid[i + 1][j]-'0');
-				if (ch == 1) {
-					res = true;
-					break;
+				int left = i > 0 ? grid[i - 1][j] : Integer.MAX_VALUE;
+				int top = j > 0 ? grid[i][j - 1] : Integer.MAX_VALUE;
+				if (i == 0 && j == 0) {
+					continue;
 				}
+				grid[i][j] += MathUtil.min(left, top);
 			}
-			if (!res) {
-				c++;
+		}
+		return grid[grid.length - 1][grid[0].length - 1];
+	}
+
+	/**
+	 * Given a 2d grid map of '1's (land) and '0's (water), count the number of
+	 * islands. An island is surrounded by water and is formed by connecting
+	 * adjacent lands horizontally or vertically. You may assume all four edges of
+	 * the grid are all surrounded by water.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: 11110 11010 11000 00000
+	 * 
+	 * Output: 1
+	 * 
+	 * @param grid
+	 * @return number of island
+	 */
+	public static int numIslands(char[][] grid) {
+		int c = 0;
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				if (grid[i][j] == '1') {
+					visitIsland(grid, i, j);
+					c++;
+				}
 			}
 		}
 		return c;
+	}
+
+	private static void visitIsland(char[][] grid, int i, int j) {
+		if (grid[i][j] == '1') {
+			grid[i][j] = 'V';
+			if (i - 1 >= 0) {
+				visitIsland(grid, i - 1, j);
+			}
+			if (i + 1 < grid.length) {
+				visitIsland(grid, i + 1, j);
+			}
+			if (j - 1 >= 0) {
+				visitIsland(grid, i, j - 1);
+			}
+			if (j + 1 < grid[i].length) {
+				visitIsland(grid, i, j + 1);
+			}
+		}
 	}
 
 }
