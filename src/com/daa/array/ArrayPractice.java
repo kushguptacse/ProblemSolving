@@ -274,15 +274,50 @@ public class ArrayPractice {
 		for (int i = 1; i < nums.length; i++) {
 			output[i] = nums[i - 1] * output[i - 1];
 		}
-		//in above example output[]=[1,1,2,6]
+		// in above example output[]=[1,1,2,6]
 		// now every index has multiplication result till left.
-		//so, go from right to left and multiply remaining element for every index from
+		// so, go from right to left and multiply remaining element for every index from
 		// right.
-		int m = nums[nums.length - 1];//m will keep multiplication from right till i index
+		int m = nums[nums.length - 1];// m will keep multiplication from right till i index
 		for (int i = nums.length - 2; i >= 0; i--) {
 			output[i] = output[i] * m;
 			m = m * nums[i];
 		}
 		return output;
 	}
+
+	/**
+	 * Given an array of integers and an integer k, you need to find the total
+	 * number of continuous sub arrays whose sum equals to k.
+	 * 
+	 * Example 1: 
+	 * 
+	 * Input:nums = [1,1,1], k = 2 
+	 * 
+	 * Output: 2
+	 * 
+	 * @param nums
+	 * @param k
+	 * @return number of contiguous array whose sum is k.
+	 */
+	public int subarraySum(int[] nums, int k) {
+		if (nums.length < 1) {
+			return 0;
+		}
+		Map<Integer, Integer> map = new HashMap<>();
+		int c = 0;
+		int sum = 0;
+		for (int i = 0; i < nums.length; i++) {
+			sum += nums[i];
+			if (sum == k) {
+				c++;
+			}
+			if (map.containsKey(sum - k)) {
+				c += map.get(sum - k);
+			}
+			map.put(sum, map.getOrDefault(sum, 0) + 1);
+		}
+		return c;
+	}
+
 }

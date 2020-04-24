@@ -175,6 +175,33 @@ public class BinarySearchTreeUtil {
 	}
 
 	/**
+	 * Get BST from post-order traversal
+	 * 
+	 * @param pre
+	 * @return root of the binary search tree
+	 */
+	public static TreeNode<Integer> getBstFromPostOrder(int[] post) {
+		int[] ar = new int[1];
+		ar[0] = post.length - 1;
+		return getBstFromPostOrder(post, Integer.MIN_VALUE, Integer.MAX_VALUE, ar);
+	}
+
+	private static TreeNode<Integer> getBstFromPostOrder(int[] post, int minValue, int maxValue, int[] c) {
+		if (c[0] < 0) {
+			return null;
+		}
+		int key = post[c[0]];
+		TreeNode<Integer> node = null;
+		if (key > minValue && key < maxValue) {
+			node = new TreeNode<>(key);
+			c[0] -= 1;
+			node.setRight(getBstFromPostOrder(post, key, maxValue, c));
+			node.setLeft(getBstFromPostOrder(post, minValue, key, c));
+		}
+		return node;
+	}
+
+	/**
 	 * Get BST from pre-order traversal
 	 * 
 	 * @param pre

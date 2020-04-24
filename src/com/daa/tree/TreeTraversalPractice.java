@@ -880,7 +880,7 @@ public class TreeTraversalPractice {
 		TreeNode<Integer> node = new TreeNode<>(post[model.getValue()]);
 
 		model.setValue(model.getValue() - 1);
-		int mid = findIndex(in, node.getData());
+		int mid = findIndex(in, node.getData());//we can use hashmap to make it perform better
 		node.setRight(getTreeFromInOrderAndPostOrder(model, in, post, mid + 1, end));
 		node.setLeft(getTreeFromInOrderAndPostOrder(model, in, post, start, mid - 1));
 		return node;
