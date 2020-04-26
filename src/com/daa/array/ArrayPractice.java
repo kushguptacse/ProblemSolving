@@ -20,6 +20,40 @@ public class ArrayPractice {
 	}
 
 	/**
+	 * Given an array of non-negative integers, you are initially positioned at the
+	 * first index of the array.
+	 * 
+	 * Each element in the array represents your maximum jump length at that
+	 * position.
+	 * 
+	 * Determine if you are able to reach the last index.
+	 * @f:off
+	 * Example 1:
+	 * 
+	 * Input: [2,3,1,1,4] 
+	 * Output: true Explanation: Jump 1 step from index 0 to 1,
+	 * then 3 steps to the last index. Example 2:
+	 * 
+	 * Input: [3,2,1,0,4] 
+	 * Output: false Explanation: You will always arrive at index
+	 * 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+	 * @f:on
+	 * 
+	 * @param nums
+	 * @return true if possible to go from start to end index
+	 */
+	public static boolean canJumpGame(int[] nums) {
+		int far = 0;
+		for (int i = 0; i < nums.length; i++) {
+			if (far < i) {
+				return false;
+			}
+			far = MathUtil.max(far, i + nums[i]);
+		}
+		return true;
+	}
+
+	/**
 	 * It requires array to be already sorted to work correctly.
 	 * 
 	 * here we check from index start - mid if element to searched < mid else check
@@ -290,9 +324,9 @@ public class ArrayPractice {
 	 * Given an array of integers and an integer k, you need to find the total
 	 * number of continuous sub arrays whose sum equals to k.
 	 * 
-	 * Example 1: 
+	 * Example 1:
 	 * 
-	 * Input:nums = [1,1,1], k = 2 
+	 * Input:nums = [1,1,1], k = 2
 	 * 
 	 * Output: 2
 	 * 
