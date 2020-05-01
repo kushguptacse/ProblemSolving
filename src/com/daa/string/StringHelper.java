@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import com.daa.math.MathUtil;
 
 public final class StringHelper {
+
 	private StringHelper() {
 	}
 
