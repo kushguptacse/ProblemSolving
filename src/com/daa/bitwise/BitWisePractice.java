@@ -6,6 +6,7 @@ import com.daa.list.Node;
 public class BitWisePractice {
 
 	public static void main(String[] args) {
+		System.out.println(5|8);
 		LinkedList<Integer> list = new LinkedList<>();
 		list.add(1);
 		list.add(0);
@@ -46,7 +47,7 @@ public class BitWisePractice {
 	 * 
 	 * Example 1:
 	 * 
-	 * Input: [5,7] 
+	 * Input: [5,7]
 	 * 
 	 * Output: 4
 	 * 
@@ -66,6 +67,29 @@ public class BitWisePractice {
 			c++;
 		}
 		return n << c;
+	}
+
+	/**
+	 * Given a positive integer, output its complement number. The complement
+	 * strategy is to flip the bits of its binary representation.
+	 * 
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: 5
+	 * 
+	 * Output: 2
+	 * 
+	 * Explanation: The binary representation of 5 is 101 (no leading zero bits),
+	 * and its complement is 010. So you need to output 2.
+	 * 
+	 * @param num
+	 * @return complement of number
+	 */
+	public int findComplement(int num) {
+		int digit = (int) (Math.log(num) / Math.log(2)) + 1;
+		int mask = (1 << digit) - 1;
+		return num ^ mask;
 	}
 
 }
