@@ -10,6 +10,30 @@ public class MathUtil {
 		return a < 0 ? -a : a;
 	}
 
+	/**
+	 * You are given an array coordinates, coordinates[i] = [x, y], where [x, y]
+	 * represents the coordinate of a point. Check if these points make a straight
+	 * line in the XY plane.
+	 * 
+	 * @param coordinates
+	 * @return if coordinates form straight line
+	 */
+	public static boolean checkStraightLine(int[][] coordinates) {
+		double m = slope(coordinates, 1);
+		for (int i = 2; i < coordinates.length; i++) {
+			if (m != slope(coordinates, i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static double slope(int[][] coordinates, int i) {
+		int xdif = coordinates[i][0] - coordinates[0][0];
+		int ydif = coordinates[i][1] - coordinates[0][1];
+		return ((ydif * 1.0) / xdif);
+	}
+
 	public static int squareRoot(int num) {
 		int result = 0;
 
@@ -212,10 +236,10 @@ public class MathUtil {
 				return false;
 		}
 	}
-	
+
 	/**
-	 * if n =23
-	 * return 2*2+3*3
+	 * if n =23 return 2*2+3*3
+	 * 
 	 * @param n
 	 * @return sum of quare of digits
 	 */

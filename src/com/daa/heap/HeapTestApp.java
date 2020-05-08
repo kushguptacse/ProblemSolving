@@ -7,10 +7,11 @@ import com.daa.stack.StackUsingHeap;
 
 public class HeapTestApp {
 	public static void main(String[] args) {
-		
-		testQueue();
-		testStack();
-		HeapMin<Integer> heapObj = new HeapMin<>();
+
+//		testQueue();
+//		testStack();
+//		HeapMin<Integer> heapObj = new HeapMin<>();
+		HeapMax heapObj = new HeapMax();
 		try (Scanner sc = new Scanner(System.in)) {
 			System.out.println("Enter the element you want to insert");
 			int data = sc.nextInt();
@@ -30,15 +31,17 @@ public class HeapTestApp {
 			System.out.println(heapObj.toString());
 			System.out.println("--------------***-------------------------");
 			System.out.println("Enter the element you want to delete");
-			data = sc.nextInt(); 
+			data = sc.nextInt();
 			heapObj.deleteByValue(data);
 			System.out.println(heapObj.toString());
 			System.out.println("Enter the index from which you want to delete");
 			data = sc.nextInt();
 			System.out.println("Deleted item : " + heapObj.deleteByIndex(data));
-			for (int i = 0; i < c; i++)
+			for (int i = 0; i < c; i++) {
 				System.out.println("Deleted item from heap : " + heapObj.poll());
-			System.out.println(heapObj.toString());
+				System.out.println(heapObj.toString());
+			}
+			System.out.println("Deleted item from heap : " + heapObj.poll());
 		}
 
 	}

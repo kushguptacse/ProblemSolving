@@ -155,11 +155,11 @@ public class TreeTraversalPractice {
 			return;
 		}
 		Deque<TreeNode<Integer>> stack = new LinkedList<>();
-		Deque<TreeNode<Integer>> result = new LinkedList<>();
+		Deque<Integer> result = new LinkedList<>();
 		stack.push(node);
 		while (!stack.isEmpty()) {
 			node = stack.pop();
-			result.push(node);
+			result.push(node.getData());
 			if (node.getLeft() != null) {
 				stack.push(node.getLeft());
 			}
@@ -168,7 +168,7 @@ public class TreeTraversalPractice {
 			}
 		}
 		while (!result.isEmpty()) {
-			System.out.print(result.pop().getData() + " ");
+			System.out.print(result.pop() + " ");
 		}
 		System.out.println();
 	}
@@ -810,11 +810,10 @@ public class TreeTraversalPractice {
 		if (root1 == null || root2 == null) {
 			return false;
 		}
-		if (root1.getData().equals(root2.getData())) {
-			return mirror(root1.getLeft(), root2.getRight()) && mirror(root1.getRight(), root2.getLeft());
-		} else {
-			return false;
-		}
+		if (!root1.getData().equals(root2.getData())) {
+			return false;			
+		} 
+		return mirror(root1.getLeft(), root2.getRight()) && mirror(root1.getRight(), root2.getLeft());
 	}
 
 	/**

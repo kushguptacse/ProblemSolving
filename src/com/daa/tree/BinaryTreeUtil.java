@@ -54,6 +54,26 @@ public class BinaryTreeUtil {
 	}
 
 	/**
+	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path
+	 * such that adding up all the values along the path equals the given sum.
+	 * 
+	 * Note: A leaf is a node with no children.
+	 * 
+	 * @param root
+	 * @param sum
+	 * @return
+	 */
+	public static boolean hasPathSum(TreeNode<Integer> root, int sum) {
+		if (root == null) {
+			return false;
+		}
+		if (root.getLeft() == null && root.getRight() == null) {
+			return sum == root.getData();
+		}
+		return hasPathSum(root.getLeft(), sum - root.getData()) || hasPathSum(root.getRight(), sum - root.getData());
+	}
+
+	/**
 	 * Use level order approach and increment level. and during any iteration if we
 	 * found node.left and right null we will return level.
 	 * 
