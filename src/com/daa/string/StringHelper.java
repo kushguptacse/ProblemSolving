@@ -479,14 +479,38 @@ public final class StringHelper {
 	 * @return true if number is perfect square
 	 */
 	public static boolean perfectSquare(String numberStr) {
-
 		int num = Integer.parseInt(numberStr);
 		int i = 1;
-		for (; i * i <= num; i++) {
+		for (; i < num / i; i++)
+			;
+		return i * i == num;
+	}
 
+	/**
+	 * use binary search to find perfect square.
+	 * 
+	 * @param numberStr
+	 * @return true if num is perfect square
+	 */
+	public static boolean perfectSquareBest(String numberStr) {
+		int num = Integer.parseInt(numberStr);
+		if (num == 1)
+			return true;
+		int low = 1;
+		int high = num / 2;
+		int mid;
+		while (low <= high) {
+			mid = low + (high - low) / 2;
+			if (mid * mid == num) {
+				return true;
+			}
+			if (mid * mid < num) {
+				low = mid + 1;
+			} else {
+				high = mid - 1;
+			}
 		}
-		int res = i - 1;
-		return res * res == num;
+		return false;
 	}
 
 	/**

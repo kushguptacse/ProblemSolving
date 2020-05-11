@@ -338,7 +338,7 @@ public class TreeTraversalPractice {
 		}
 		int l = getHeight(root.getLeft());
 		int r = getHeight(root.getRight());
-		return MathUtil.max(l, r)+1;
+		return MathUtil.max(l, r) + 1;
 	}
 
 	public static int getHeightIterative(TreeNode<Integer> root) {
@@ -811,8 +811,8 @@ public class TreeTraversalPractice {
 			return false;
 		}
 		if (!root1.getData().equals(root2.getData())) {
-			return false;			
-		} 
+			return false;
+		}
 		return mirror(root1.getLeft(), root2.getRight()) && mirror(root1.getRight(), root2.getLeft());
 	}
 
@@ -879,7 +879,7 @@ public class TreeTraversalPractice {
 		TreeNode<Integer> node = new TreeNode<>(post[model.getValue()]);
 
 		model.setValue(model.getValue() - 1);
-		int mid = findIndex(in, node.getData());//we can use hashmap to make it perform better
+		int mid = findIndex(in, node.getData());// we can use hashmap to make it perform better
 		node.setRight(getTreeFromInOrderAndPostOrder(model, in, post, mid + 1, end));
 		node.setLeft(getTreeFromInOrderAndPostOrder(model, in, post, start, mid - 1));
 		return node;
@@ -1129,6 +1129,57 @@ public class TreeTraversalPractice {
 			}
 		}
 
+	}
+
+	/**
+	 * update next sibling of every node with constant space and o(n) time
+	 * 
+	 * @param root
+	 */
+	public static void nextSiblingWithoutQueue(TreeNodeModified root) {
+
+		if (root == null) {
+			return;
+		}
+		TreeNodeModified levelRoot;
+		TreeNodeModified currRoot = root;
+		while (currRoot != null) {
+			levelRoot = currRoot;
+			while (levelRoot != null) {
+				if (levelRoot.getLeft() != null) {
+					if (levelRoot.getRight() != null) {
+						levelRoot.getLeft().setNextSibling(levelRoot.getRight());
+					} else {
+						levelRoot.getLeft().setNextSibling(getNextSibling(levelRoot));
+					}
+				}
+				if (levelRoot.getRight() != null) {
+					levelRoot.getRight().setNextSibling(getNextSibling(levelRoot));
+				}
+				levelRoot = levelRoot.getNextSibling();
+			}
+			if (currRoot.getLeft() != null) {
+				currRoot = currRoot.getLeft();
+			} else if (currRoot.getRight() != null) {
+				currRoot = currRoot.getRight();
+			} else {
+				currRoot = getNextSibling(currRoot);
+			}
+		}
+	}
+
+	private static TreeNodeModified getNextSibling(TreeNodeModified levelRoot) {
+		TreeNodeModified temp = levelRoot.getNextSibling();
+		while (temp != null) {
+			if (temp.getLeft() != null) {
+				return temp.getLeft();
+			}
+			if (temp.getRight() != null) {
+				return temp.getRight();
+			}
+			temp = temp.getNextSibling();
+		}
+		return temp;
 	}
 
 	/**
