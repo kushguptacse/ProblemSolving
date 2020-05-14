@@ -2,6 +2,7 @@ package com.daa.string;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +39,58 @@ public final class StringHelper {
 	 */
 	public static boolean backspaceCompare(String s, String t) {
 		return removeBackSpace(s).equals(removeBackSpace(t));
+	}
+
+	/**
+	 * Given a non-negative integer num represented as a string, remove k digits
+	 * from the number so that the new number is the smallest possible. Example 1:
+	 * 
+	 * Input: num = "1432219", k = 3
+	 * 
+	 * Output: "1219"
+	 * 
+	 * Explanation: Remove the three digits 4, 3, and 2 to form the new number 1219
+	 * which is the smallest.
+	 * 
+	 * 
+	 * Example 2:
+	 * 
+	 * Input: num = "10200", k = 1
+	 * 
+	 * Output: "200"
+	 * 
+	 * Explanation: Remove the leading 1 and the number is 200. Note that the output
+	 * must not contain leading zeroes.
+	 * 
+	 * @param num
+	 * @param k
+	 * @return lowest number String.
+	 */
+	public String removeKdigits(String num, int k) {
+		if (num.length() <= k) {
+			return "0";
+		}
+		Deque<Character> stack = new LinkedList<>();
+		int i = 0;
+		while (i < num.length()) {
+			while (k > 0 && !stack.isEmpty() && stack.peek() > num.charAt(i)) {
+				stack.pop();
+				k--;
+			}
+			if (!stack.isEmpty() || num.charAt(i) != '0') {
+				stack.push(num.charAt(i));
+			}
+			i++;
+		}
+		while (k > 0) {
+			stack.pop();
+			k--;
+		}
+		String s = "";
+		while (!stack.isEmpty()) {
+			s = stack.pop() + s;
+		}
+		return s.isEmpty() ? "0" : s;
 	}
 
 	private static String removeBackSpace(String s) {
