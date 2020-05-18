@@ -175,7 +175,8 @@ public class BinaryTreeUtil {
 	}
 
 	/**
-	 * 
+	 * check BInarySearchTreeUtil.isBinarySearchTree for simpler logic
+	 * `.
 	 * @param node
 	 * @return True if given Binary Tree is BInary Search Tree
 	 */
@@ -183,6 +184,7 @@ public class BinaryTreeUtil {
 		return isBST(node, new TreeNode<K>(null));
 	}
 
+	
 	private <K extends Comparable<K>> boolean isBST(TreeNode<K> node, TreeNode<K> prev) {
 		if (node == null) {
 			return true;

@@ -6,6 +6,7 @@ import java.util.Map;
 public class StringMainApp {
 
 	public static void main(String[] args) {
+		System.out.println(StringHelper.checkPermutationInclusion("ab", "eidbaooo"));
 		System.out.println(StringHelper.checkValidString("(*))("));
 		System.out.println(StringHelper.stringShift("abcdefg", new int[][] { { 1, 1 }, { 1, 1 }, { 0, 2 }, { 1, 3 } }));
 		int[][] a = new int[][] { { 1, 8 }, { 1, 4 }, { 1, 3 }, { 1, 6 }, { 0, 6 }, { 1, 4 }, { 0, 2 }, { 0, 1 } };

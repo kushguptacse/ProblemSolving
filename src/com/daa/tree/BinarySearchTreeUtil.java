@@ -516,21 +516,17 @@ public class BinarySearchTreeUtil {
 	 * @return true if it is a binary search tree
 	 */
 	public static boolean isBinarySearchTree(TreeNode<Integer> root) {
-		return isBST(root, new Model<>(Integer.MIN_VALUE));
+		return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 
-	private static boolean isBST(TreeNode<Integer> root, Model<Integer> model) {
+	private static boolean isBST(TreeNode<Integer> root, int min, int max) {
 		if (root == null) {
 			return true;
 		}
-		if (!isBST(root.getLeft(), model)) {
+		if (root.getData() < min || root.getData() > max) {
 			return false;
 		}
-		if (root.getData() < model.getValue()) {
-			return false;
-		}
-		model.setValue(root.getData());
-		return isBST(root.getRight(), model);
+		return isBST(root.getLeft(), min, root.getData() - 1) && isBST(root.getRight(), root.getData() + 1, max);
 	}
 
 	public static TreeNode<Integer> getDoublyLinkedList(TreeNode<Integer> root) {
