@@ -42,32 +42,28 @@ public final class StringHelper {
 		}
 
 		int[] ch = new int[26];
-		int[] s1Hash = new int[26];
 		for (int i = 0; i < s1.length(); i++) {
-			s1Hash[s1.charAt(i) - 'a'] += 1;
-			ch[s2.charAt(i) - 'a'] += 1;
+			ch[s1.charAt(i) - 'a'] += 1;
+			ch[s2.charAt(i) - 'a'] -= 1;
 		}
 		int i = 0;
 		for (; i < s2.length() - s1.length(); i++) {
-			if (checkAnagram(ch, s1Hash, i)) {
+			if (checkAnagram(ch)) {
 				return true;
 			}
-			ch[s2.charAt(i) - 'a'] -= 1;
-			ch[s2.charAt(i + s1.length()) - 'a'] += 1;
+			ch[s2.charAt(i) - 'a'] += 1;
+			ch[s2.charAt(i + s1.length()) - 'a'] -= 1;
 		}
-
-		return checkAnagram(ch, s1Hash, i);
+		return checkAnagram(ch);
 	}
 
-	private static boolean checkAnagram(int[] arr, int[] s1Hash, int i) {
-		boolean anagram = true;
+	private static boolean checkAnagram(int[] arr) {
 		for (int j = 0; j < arr.length; j++) {
-			if (arr[j] != s1Hash[j]) {
-				anagram = false;
-				break;
+			if (arr[j] != 0) {
+				return false;
 			}
 		}
-		return anagram;
+		return true;
 	}
 
 	/**

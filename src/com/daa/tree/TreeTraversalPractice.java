@@ -644,8 +644,8 @@ public class TreeTraversalPractice {
 		int max = 0;
 		while (!queue.isEmpty()) {
 			int size = queue.size();
-			if (queue.size() > max) {
-				max = queue.size();
+			if (size > max) {
+				max = size;
 			}
 			while (size-- > 0) {
 				TreeNode<Integer> node = queue.poll();
