@@ -1,10 +1,16 @@
 package com.daa.array;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.daa.math.MathUtil;
 
 public class Array2D {
 
 	public static void main(String[] args) {
+		int[][] res1 = intervalIntersection(new int[][] { { 0, 2 }, { 5, 10 }, { 13, 23 }, { 24, 25 } },
+				new int[][] { { 1, 5 }, { 8, 12 }, { 15, 24 }, { 25, 26 } });
+		printData(res1);
 		int c = numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' },
 				{ '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
 		System.out.println(c);
@@ -22,6 +28,25 @@ public class Array2D {
 		int[][] firstMatrix = { { 3, -2, 5 }, { 3, 0, 4 } };
 		int[][] secondMatrix = { { 2, 3 }, { -9, 0 }, { 0, 4 } };
 		printData(matrixProduct(firstMatrix, secondMatrix, 3, 2));
+	}
+
+	public static int[][] intervalIntersection(int[][] arr, int[][] brr) {
+		List<int[]> output = new ArrayList<>();
+		int i = 0;
+		int j = 0;
+		while (i < arr.length && j < brr.length) {
+			int start = Math.max(arr[i][0], brr[j][0]);
+			int end = Math.min(arr[i][1], brr[j][1]);
+			if (start <= end) {
+				output.add(new int[] { start, end });
+			}
+			if (arr[i][1] <= brr[j][1]) {
+				i++;
+			} else {
+				j++;
+			}
+		}
+		return output.toArray(new int[output.size()][2]);
 	}
 
 	/***

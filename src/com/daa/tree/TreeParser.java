@@ -5,21 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Codec {
+public class TreeParser {
 
 	public static void main(String[] args) {
-		Codec c = new Codec();
-		TreeNode<Integer> root = c.deserialize("[1, 2, 3, null, null, 4, 5]");
+		System.out.println(BinaryTreeUtil.inOrderTraversal(BinarySearchTreeUtil.getBstFromPreOrder(new int[] { 8, 5, 1, 7, 10, 12 })));
+		TreeNode<Integer> root = TreeParser.deserialize("[1, 2, 3, null, null, 4, 5]");
 		System.out.println(BinaryTreeUtil.preOrderTraversal(root));
 		System.out.println(BinaryTreeUtil.inOrderTraversal(root));
-		String s1 = c.serialize(root);
+		String s1 = TreeParser.serialize(root);
 		System.out.println(s1);
-		root = c.deserialize(s1);
+		root = TreeParser.deserialize(s1);
 		System.out.println(BinaryTreeUtil.preOrderTraversal(root));
 		System.out.println(BinaryTreeUtil.inOrderTraversal(root));
 	}
-	
-	public String serialize(TreeNode<Integer> root) {
+
+	public static String serialize(TreeNode<Integer> root) {
 		List<Integer> list = new ArrayList<>();
 		if (root == null) {
 			return list.toString();
@@ -46,7 +46,7 @@ public class Codec {
 	}
 
 	// Decodes your encoded data to tree.
-	public TreeNode<Integer> deserialize(String data) {
+	public static TreeNode<Integer> deserialize(String data) {
 		String[] input = data.substring(1, data.length() - 1).split(", ");
 		if (input[0].isEmpty()) {
 			return null;
@@ -58,7 +58,7 @@ public class Codec {
 		while (!queue.isEmpty()) {
 			TreeNode<Integer> node = queue.poll();
 			if (++i < input.length) {
-				node.setLeft( getNode(++i, input));
+				node.setLeft(getNode(++i, input));
 				if (node.getLeft() != null) {
 					queue.add(node.getLeft());
 				}
@@ -73,7 +73,7 @@ public class Codec {
 		return root;
 	}
 
-	private TreeNode<Integer> getNode(int i, String[] input) {
+	private static TreeNode<Integer> getNode(int i, String[] input) {
 		if (input[i].equals("null")) {
 			return null;
 		}

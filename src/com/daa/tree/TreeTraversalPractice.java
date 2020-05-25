@@ -2,8 +2,10 @@ package com.daa.tree;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -658,6 +660,20 @@ public class TreeTraversalPractice {
 			}
 		}
 		return max;
+	}
+
+	public int maximumWidthRecursive(TreeNode<Integer> root) {
+		Map<Integer, Integer> res = new HashMap<>();
+		maximumWidthRecursive(root, res, 0);
+		return res.values().stream().mapToInt(i -> i).max().orElse(0);
+	}
+
+	private void maximumWidthRecursive(TreeNode<Integer> root, Map<Integer, Integer> map, int level) {
+		if (root != null) {
+			map.put(level, map.getOrDefault(level, 0) + 1);
+			maximumWidthRecursive(root.getLeft(), map, level + 1);
+			maximumWidthRecursive(root.getRight(), map, level + 1);
+		}
 	}
 
 	/**

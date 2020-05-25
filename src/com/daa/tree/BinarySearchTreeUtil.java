@@ -232,7 +232,7 @@ public class BinarySearchTreeUtil {
 		int key = pre[c[0]];
 		TreeNode<Integer> node = null;
 		if (key > minValue && key < maxValue) {
-			node = new TreeNode<>(pre[c[0]]);
+			node = new TreeNode<>(key);
 			c[0] += 1;
 			node.setLeft(getBstFromPreOrder(pre, minValue, key, c));
 			node.setRight(getBstFromPreOrder(pre, key, maxValue, c));
