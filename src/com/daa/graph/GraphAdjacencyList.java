@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
 public class GraphAdjacencyList implements Graph {
 
 	private int noOfVertices;
-	private LinkedList<Integer>[] adjListArray;
+	private List<Integer>[] adjListArray;
 
 	/**
 	 * 
@@ -46,7 +46,7 @@ public class GraphAdjacencyList implements Graph {
 	@SuppressWarnings("unchecked")
 	public GraphAdjacencyList(int v) {
 		this.noOfVertices = v;
-		adjListArray = (LinkedList<Integer>[]) new LinkedList[noOfVertices];
+		adjListArray = (List<Integer>[]) new LinkedList[noOfVertices];
 		for (int i = 0; i < adjListArray.length; i++) {
 			adjListArray[i] = new LinkedList<>();
 		}
@@ -95,7 +95,7 @@ public class GraphAdjacencyList implements Graph {
 		while (!queue.isEmpty()) {
 			int i = queue.poll();
 			System.out.print(i + " ");
-			LinkedList<Integer> list = adjListArray[i];
+			List<Integer> list = adjListArray[i];
 			list.forEach(o -> {
 				if (!visited[o]) {
 					visited[o] = true;
@@ -109,9 +109,9 @@ public class GraphAdjacencyList implements Graph {
 	/**
 	 * Depth First Search.
 	 * 
-	 * first we visit a vertex then we go to first neighbor and visit it and then we go again
-	 * to that node first neighbor. traversed it then we move forward. it is just like
-	 * pre-order traversal of binary tree.
+	 * first we visit a vertex then we go to first neighbor and visit it and then we
+	 * go again to that node first neighbor. traversed it then we move forward. it
+	 * is just like pre-order traversal of binary tree.
 	 * 
 	 * Stack is used. o(V+E)
 	 * 
@@ -167,7 +167,9 @@ public class GraphAdjacencyList implements Graph {
 		Deque<Integer> stack = new LinkedList<>();
 		boolean[] visited = new boolean[noOfVertices];
 		for (int i = 0; i < noOfVertices; i++) {
-			topologicalSortRecursion(i, visited, stack);
+			if (!visited[i]) {
+				topologicalSortRecursion(i, visited, stack);
+			}
 		}
 		while (!stack.isEmpty()) {
 			System.out.print(stack.pop() + " ");
@@ -175,19 +177,19 @@ public class GraphAdjacencyList implements Graph {
 		System.out.println();
 	}
 
-	private void topologicalSortRecursion(int v, boolean[] visited, Deque<Integer> stack) {
-		if (visited[v]) {
-			return;
+	private void topologicalSortRecursion(int source, boolean[] visited, Deque<Integer> stack) {
+		visited[source] = true;
+		for (int j : adjListArray[source]) {
+			if (!visited[j]) {
+				topologicalSortRecursion(j, visited, stack);
+			}
 		}
-		visited[v] = true;
-		List<Integer> list = adjListArray[v];
-		list.forEach(o -> topologicalSortRecursion(o, visited, stack));
-		stack.push(v);
+		stack.push(source);
 	}
 
 	/**
-	 * perform DFS using recursion. In this way we can use recursion call stack. performance
-	 * wise both are same. o(V+E)
+	 * perform DFS using recursion. In this way we can use recursion call stack.
+	 * performance wise both are same. o(V+E) , o(height of tree)
 	 */
 	public void dfs(int v) {
 		if (v < 0 || v >= adjListArray.length) {
@@ -199,10 +201,9 @@ public class GraphAdjacencyList implements Graph {
 	}
 
 	private void dfsRecursionUtil(int v, boolean[] visited) {
-		System.out.print(v + " ");
-		List<Integer> list = adjListArray[v];
 		visited[v] = true;
-		list.forEach(o -> {
+		System.out.print(v + " ");
+		adjListArray[v].forEach(o -> {
 			if (!visited[o]) {
 				dfsRecursionUtil(o, visited);
 			}
@@ -215,13 +216,13 @@ public class GraphAdjacencyList implements Graph {
 	 * @return true if cycle exist
 	 */
 	public boolean isCycleInDirectedGraph() {
+		System.out.println("Test if graph contain cycle");
 		boolean[] visited = new boolean[noOfVertices];
 		boolean[] recStack = new boolean[noOfVertices];
 		for (int i = 0; i < noOfVertices; i++) {
-			if (isCycleInDirectedGraphRec(i, visited, recStack)) {
+			if (isCycleUtil(i, visited, recStack)) {
 				return true;
 			}
-			recStack[i] = false;
 		}
 		return false;
 	}
@@ -244,23 +245,21 @@ public class GraphAdjacencyList implements Graph {
 	 * @param recStack
 	 * @return true if exists.
 	 */
-	private boolean isCycleInDirectedGraphRec(int v, boolean[] visited, boolean[] recStack) {
-		if (visited[v]) {
-			return false;
-		}
-		if (recStack[v]) {
+	private boolean isCycleUtil(int i, boolean[] visited, boolean[] recStack) {
+		if (recStack[i]) {
 			return true;
 		}
-		visited[v] = true;
-		recStack[v] = true;
-
-		List<Integer> list = adjListArray[v];
-		for (Integer o : list) {
-			if (isCycleInDirectedGraphRec(o, visited, recStack)) {
+		if (visited[i]) {
+			return false;
+		}
+		visited[i] = true;
+		recStack[i] = true;
+		for (int j : adjListArray[i]) {
+			if (isCycleUtil(j, visited, recStack)) {
 				return true;
 			}
 		}
-
+		recStack[i] = false;
 		return false;
 	}
 
@@ -304,8 +303,8 @@ public class GraphAdjacencyList implements Graph {
 	}
 
 	/**
-	 * Method to find the articulation point for particular vertex j
-	 * TODO
+	 * Method to find the articulation point for particular vertex j TODO
+	 * 
 	 * @param j
 	 * @param visited
 	 * @param ap

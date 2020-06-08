@@ -1,5 +1,6 @@
 package com.daa.heap;
 
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import com.daa.queue.QueueUsingHeap;
@@ -7,7 +8,10 @@ import com.daa.stack.StackUsingHeap;
 
 public class HeapTestApp {
 	public static void main(String[] args) {
-
+		PriorityQueue<Integer> pq = new PriorityQueue<>((o1,o2)->o2.compareTo(o1));
+		pq.add(2);
+		pq.add(3);
+		System.out.println(pq.remove());
 //		testQueue();
 //		testStack();
 //		HeapMin<Integer> heapObj = new HeapMin<>();

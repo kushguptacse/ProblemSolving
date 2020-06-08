@@ -9,6 +9,11 @@ import com.daa.math.MathUtil;
 public class ArrayPractice {
 
 	public static void main(String[] args) {
+		System.out.println(ArrayPractice.possibleBipartition(10,
+				new int[][] { { 6, 9 }, { 1, 3 }, { 4, 8 }, { 5, 6 }, { 2, 8 }, { 4, 7 }, { 8, 9 }, { 2, 5 }, { 5, 8 },
+						{ 1, 2 }, { 6, 7 }, { 3, 10 }, { 8, 10 }, { 1, 5 }, { 3, 6 }, { 1, 10 }, { 7, 9 }, { 4, 10 },
+						{ 7, 10 }, { 1, 4 }, { 9, 10 }, { 4, 6 }, { 2, 7 }, { 6, 8 }, { 5, 7 }, { 3, 8 }, { 1, 8 },
+						{ 1, 7 }, { 7, 8 }, { 2, 4 } }));
 		System.out.println(ArrayPractice.binarySearch(new int[] { 1, 2, 5, 6 }, 3));
 		int[] arr = new int[] { 0, 1, 2, 5, 0, 6, 0 };
 		searchAndShift(arr, 0);
@@ -465,6 +470,24 @@ public class ArrayPractice {
 			}
 		}
 		return max;
+	}
+
+	public static boolean possibleBipartition(int n, int[][] dislikes) {
+		if (n == 0 || dislikes.length == 0) {
+			return true;
+		}
+		int[] output = new int[n + 1];
+		for (int i = 0; i < dislikes.length; i++) {
+			output[dislikes[i][0]] += 1;
+			output[dislikes[i][1]] += 1;
+		}
+		int val = output[1];
+		for (int i = 2; i < output.length; i++) {
+			if (val != output[i]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

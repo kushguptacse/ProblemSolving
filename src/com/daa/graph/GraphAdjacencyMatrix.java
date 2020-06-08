@@ -49,8 +49,8 @@ public class GraphAdjacencyMatrix implements Graph {
 	}
 
 	/**
-	 * take two vertices and add it to matrix. if i and j is outside the size. it will ignore
-	 * edge. take o(1) time
+	 * take two vertices and add it to matrix. if i and j is outside the size. it
+	 * will ignore edge. take o(1) time
 	 * 
 	 * @param i
 	 * @param j
@@ -99,9 +99,9 @@ public class GraphAdjacencyMatrix implements Graph {
 	/**
 	 * Depth First Search.
 	 * 
-	 * first we visit a vertex then we go to first neighbor and visit it and then we go again
-	 * to that node first neighbor. traversed it then we move forward. it is just like
-	 * pre-order traversal of binary tree.
+	 * first we visit a vertex then we go to first neighbor and visit it and then we
+	 * go again to that node first neighbor. traversed it then we move forward. it
+	 * is just like pre-order traversal of binary tree.
 	 * 
 	 * Stack is used. o(V+E)
 	 * 
@@ -132,8 +132,8 @@ public class GraphAdjacencyMatrix implements Graph {
 	}
 
 	/**
-	 * if vertices are invalid return false else will remove the edges from i to j and j to i.
-	 * o(1)
+	 * if vertices are invalid return false else will remove the edges from i to j
+	 * and j to i. o(1)
 	 * 
 	 * @param i
 	 * @param j
@@ -149,8 +149,8 @@ public class GraphAdjacencyMatrix implements Graph {
 	}
 
 	/**
-	 * check if there is edge between two vertices. if outside range index is passed false is
-	 * returned. o(1)
+	 * check if there is edge between two vertices. if outside range index is passed
+	 * false is returned. o(1)
 	 * 
 	 * @param i
 	 * @param j
@@ -266,4 +266,7 @@ public class GraphAdjacencyMatrix implements Graph {
 		}
 	}
 
+	public void toplogicalSort() {
+		
+	}
 }

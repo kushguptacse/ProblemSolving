@@ -720,21 +720,21 @@ public class TreeTraversalPractice {
 	 * @param root
 	 */
 	public static void printRootToLeafPaths(TreeNode<Integer> root) {
-		printRootToLeafPaths(root, new ArrayList<>());
+		printRootToLeafPaths(root, new StringBuilder());
 	}
 
-	private static void printRootToLeafPaths(TreeNode<Integer> root, List<Integer> list) {
-		if (root == null) {
-			return;
+	private static void printRootToLeafPaths(TreeNode<Integer> root, StringBuilder sb) {
+		if (root != null) {
+			sb.append(root.getData());
+			int len = sb.length();
+			if (root.getLeft() == null && root.getRight() == null) {
+				System.out.println(sb.toString());
+			} else {
+				printRootToLeafPaths(root.getLeft(), sb.append("->"));
+				sb.delete(len, sb.length());
+				printRootToLeafPaths(root.getRight(), sb.append("->"));
+			}
 		}
-		list.add(root.getData());
-		if (root.getLeft() == null && root.getRight() == null) {
-			list.forEach(i -> System.out.print(i + " "));
-			System.out.println();
-		}
-		printRootToLeafPaths(root.getLeft(), list);
-		printRootToLeafPaths(root.getRight(), list);
-		list.remove(list.size() - 1);
 	}
 
 	/**

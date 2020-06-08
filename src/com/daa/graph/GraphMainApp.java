@@ -5,6 +5,17 @@ package com.daa.graph;
  */
 public class GraphMainApp {
 	public static void main(String[] args) {
+		GraphAdjacencyMatrix g = new GraphAdjacencyMatrix(4);
+		g.addEdge(0, 1);
+		g.addEdge(0, 2);
+		g.addEdge(0, 3);
+		g.addEdge(2, 0);
+		g.addEdge(2, 1);
+		g.addEdge(1, 3);
+		g.bfs(0);
+		g.dfs(0);
+		testAdjacencyMatrix();
+		
 		GraphAdjacencyList li = new GraphAdjacencyList(7);
 		li.addEdge(0, 1);
 		li.addEdge(0, 2);
@@ -22,13 +33,6 @@ public class GraphMainApp {
 		li.addEdge(6, 5);
 		li.printInAndOutDegree();
 
-		GraphAdjacencyMatrix g = new GraphAdjacencyMatrix(4);
-		g.addEdge(0, 1);
-		g.addEdge(0, 2);
-		g.addEdge(0, 3);
-		g.addEdge(2, 0);
-		g.addEdge(2, 1);
-		g.addEdge(1, 3);
 
 		int s = 2, d = 3;
 		g.countPathDFS(s, d);
@@ -53,7 +57,6 @@ public class GraphMainApp {
 		testDFS(new GraphAdjacencyMatrix(4));
 		testBFSAndDfs(new GraphAdjacencyMatrix(5), new GraphAdjacencyMatrix(4));
 		testBFSAndDfs(new GraphAdjacencyList(5), new GraphAdjacencyList(4));
-		testAdjacencyMatrix();
 		testAdjacencyList();
 	}
 

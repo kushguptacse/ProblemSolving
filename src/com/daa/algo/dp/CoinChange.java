@@ -31,7 +31,7 @@ public class CoinChange {
 	 * doesn’t matter. so, here result will contain - { [1,1,1,1],[1,1,2],[1,3],[2,2] } and
 	 * answer will be 4.
 	 * 
-	 * Time Complexity - if we apply naive approach and check every combo. then every can has
+	 * Time Complexity - if we apply naive approach and check every combo. then every call has
 	 * two possibility- to be included or not included in result set.so, for n coins - 2^n
 	 * 
 	 * By using DP we can reduce number of function calls. o(n*m)
@@ -57,7 +57,7 @@ public class CoinChange {
 				if (coins[i - 1] > j) {
 					table[i][j] = table[i - 1][j];
 				} else {
-					// else set table[i][j]=table[i-1][j]+table[i][j-coins[i-1]
+					// else set table[i][j] = table[i-1][j] + table[i][j-coins[i-1]
 					// i.e. we need to add current coin into previous value. here current count index is 1 and
 					// to get column it is current column - coin present at that index in coin array.
 					// TODO - IMPORTANT POINT - Whenever we can re-use array values. in that case if element

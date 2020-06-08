@@ -8,10 +8,13 @@ import java.util.Queue;
 public class TreeParser {
 
 	public static void main(String[] args) {
-		System.out.println(BinaryTreeUtil.inOrderTraversal(BinarySearchTreeUtil.getBstFromPreOrder(new int[] { 8, 5, 1, 7, 10, 12 })));
-		TreeNode<Integer> root = TreeParser.deserialize("[1, 2, 3, null, null, 4, 5]");
+		TreeNode<Integer> root = TreeParser.deserialize("[1, 2, 3, 4, 5, null, 6]");
 		System.out.println(BinaryTreeUtil.preOrderTraversal(root));
 		System.out.println(BinaryTreeUtil.inOrderTraversal(root));
+
+		TreeTraversalPractice.printRootToLeafPaths(root);
+		System.out.println(BinaryTreeUtil
+				.inOrderTraversal(BinarySearchTreeUtil.getBstFromPreOrder(new int[] { 8, 5, 1, 7, 10, 12 })));
 		String s1 = TreeParser.serialize(root);
 		System.out.println(s1);
 		root = TreeParser.deserialize(s1);
@@ -58,7 +61,7 @@ public class TreeParser {
 		while (!queue.isEmpty()) {
 			TreeNode<Integer> node = queue.poll();
 			if (++i < input.length) {
-				node.setLeft(getNode(++i, input));
+				node.setLeft(getNode(i, input));
 				if (node.getLeft() != null) {
 					queue.add(node.getLeft());
 				}

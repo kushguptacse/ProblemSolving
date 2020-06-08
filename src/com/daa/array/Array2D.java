@@ -8,6 +8,7 @@ import com.daa.math.MathUtil;
 public class Array2D {
 
 	public static void main(String[] args) {
+		System.out.println(searchMatrix(new int[][] { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 50 } }, 3));
 		int[][] res1 = intervalIntersection(new int[][] { { 0, 2 }, { 5, 10 }, { 13, 23 }, { 24, 25 } },
 				new int[][] { { 1, 5 }, { 8, 12 }, { 15, 24 }, { 25, 26 } });
 		printData(res1);
@@ -47,6 +48,34 @@ public class Array2D {
 			}
 		}
 		return output.toArray(new int[output.size()][2]);
+	}
+
+	/**
+	 * search element in a sorted 2-d matrix. Integers in each row are sorted from
+	 * left to right. The first integer of each row is greater than the last integer
+	 * of the previous row.
+	 * 
+	 * @param matrix
+	 * @param target
+	 * @return
+	 */
+	public static boolean searchMatrix(int[][] matrix, int target) {
+		for (int i = 0; i < matrix.length; i++) {
+			int start = 0;
+			int end = matrix[0].length * matrix.length - 1;
+			while (start <= end) {
+				int midIndex = start + (end - start) / 2;
+				int mid = matrix[midIndex / matrix[0].length][midIndex % matrix[0].length];
+				if (mid == target) {
+					return true;
+				} else if (mid < target) {
+					start = midIndex + 1;
+				} else {
+					end = midIndex - 1;
+				}
+			}
+		}
+		return false;
 	}
 
 	/***
