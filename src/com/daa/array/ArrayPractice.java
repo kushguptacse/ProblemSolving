@@ -9,11 +9,6 @@ import com.daa.math.MathUtil;
 public class ArrayPractice {
 
 	public static void main(String[] args) {
-		System.out.println(ArrayPractice.possibleBipartition(10,
-				new int[][] { { 6, 9 }, { 1, 3 }, { 4, 8 }, { 5, 6 }, { 2, 8 }, { 4, 7 }, { 8, 9 }, { 2, 5 }, { 5, 8 },
-						{ 1, 2 }, { 6, 7 }, { 3, 10 }, { 8, 10 }, { 1, 5 }, { 3, 6 }, { 1, 10 }, { 7, 9 }, { 4, 10 },
-						{ 7, 10 }, { 1, 4 }, { 9, 10 }, { 4, 6 }, { 2, 7 }, { 6, 8 }, { 5, 7 }, { 3, 8 }, { 1, 8 },
-						{ 1, 7 }, { 7, 8 }, { 2, 4 } }));
 		System.out.println(ArrayPractice.binarySearch(new int[] { 1, 2, 5, 6 }, 3));
 		int[] arr = new int[] { 0, 1, 2, 5, 0, 6, 0 };
 		searchAndShift(arr, 0);
@@ -22,6 +17,53 @@ public class ArrayPractice {
 		int[] nums2 = new int[] { 3, 4 };
 		merge(nums1, 1, nums2, 2);
 		System.out.println(Arrays.toString(nums1));
+	}
+
+	/**
+	 * Given a fixed length array arr of integers, duplicate each occurrence of
+	 * zero, shifting the remaining elements to the right.
+	 * 
+	 * Note that elements beyond the length of the original array are not written.
+	 * Do the above modifications to the input array in place, do not return
+	 * anything from your function.
+	 * 
+	 * 
+	 * Example 1: Input: [1,0,2,3,0,4,5,0]
+	 * 
+	 * Explanation: After calling your function, the input array is modified to:
+	 * [1,0,0,2,3,0,0,4]
+	 * 
+	 * Example 2: Input: [1,2,3]
+	 * 
+	 * Explanation: After calling your function, the input array is modified to:
+	 * [1,2,3]
+	 * 
+	 * @param arr
+	 */
+	public void duplicateZeros(int[] arr) {
+		int zeroC = 0;
+		int size = arr.length - 1;
+		for (int i = 0; i <= size - zeroC; i++) {
+			if (arr[i] == 0) {
+				if (i == size - zeroC) {
+					arr[size] = 0;
+					size--;
+					break;
+				}
+				zeroC++;
+			}
+		}
+
+		for (int i = size - zeroC; i >= 0; i--) {
+			if (arr[i] == 0) {
+				arr[i + zeroC] = 0;
+				zeroC--;
+				arr[i + zeroC] = 0;
+			} else {
+				arr[i + zeroC] = arr[i];
+			}
+		}
+
 	}
 
 	/**
@@ -470,24 +512,6 @@ public class ArrayPractice {
 			}
 		}
 		return max;
-	}
-
-	public static boolean possibleBipartition(int n, int[][] dislikes) {
-		if (n == 0 || dislikes.length == 0) {
-			return true;
-		}
-		int[] output = new int[n + 1];
-		for (int i = 0; i < dislikes.length; i++) {
-			output[dislikes[i][0]] += 1;
-			output[dislikes[i][1]] += 1;
-		}
-		int val = output[1];
-		for (int i = 2; i < output.length; i++) {
-			if (val != output[i]) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**

@@ -18,6 +18,44 @@ public final class StringHelper {
 	private StringHelper() {
 	}
 
+	public static String validIPAddress(String ip) {
+		if (ip.isEmpty() || ip.charAt(ip.length() - 1) == ':' || ip.charAt(ip.length() - 1) == '.') {
+			return "Neither";
+		}
+		String ipv4[] = ip.split("\\.");
+		if (ipv4.length == 4) {
+			for (int i = 0; i < ipv4.length; i++) {
+				try {
+					int val = Integer.parseInt(ipv4[i]);
+					if (ipv4[i].charAt(0) == '-' || val > 255 || (ipv4[i].charAt(0) == '0' && ipv4[i].length() > 1)) {
+						return "Neither";
+					}
+				} catch (Exception e) {
+					return "Neither";
+				}
+
+			}
+			return "IPv4";
+		}
+		String ipv6[] = ip.split(":");
+		if (ipv6.length == 8) {
+			for (int i = 0; i < ipv6.length; i++) {
+				try {
+					int val = Integer.parseInt(ipv6[i], 16);
+					if (ipv6[i].charAt(0) == '-' || val > 65535 || (ipv6[i].length() > 4)) {
+						return "Neither";
+					}
+
+				} catch (Exception e) {
+					return "Neither";
+				}
+
+			}
+			return "IPv6";
+		}
+		return "Neither";
+	}
+
 	/**
 	 * Permutation in String Solution Given two strings s1 and s2, write a function
 	 * to return true if s2 contains the permutation of s1. In other words, one of

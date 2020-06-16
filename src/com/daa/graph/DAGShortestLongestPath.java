@@ -1,5 +1,6 @@
 package com.daa.graph;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class DAGShortestLongestPath {
 	public static void main(String[] args) {
 		test1();
 		test2();
+		System.out.println(Arrays.toString("123:2::2:3".split("\\.|:")));
+		System.out.println(Integer.parseInt("ffff", 16));
 	}
 
 	private static void test2() {

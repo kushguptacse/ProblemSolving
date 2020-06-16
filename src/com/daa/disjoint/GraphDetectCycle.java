@@ -3,7 +3,7 @@ package com.daa.disjoint;
 import com.daa.math.MathUtil;
 
 /**
- * Find and union operation of disjoint set is used to detect cycle in graph. for better
+ * Find and union operation of disjoint set is used to detect cycle in un-directed graph. for better
  * Find- caching is used. for better union- rank is used.
  * 
  * @f:on

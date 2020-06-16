@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
- * in case of negative weight it will works as compared to Dijkstra. but take o(ve) time.
- * it can detect negative weight cycle also if present.
+ * in case of negative weight it will works as compared to Dijkstra. but take
+ * o(ve) time. it can detect negative weight cycle also if present.
  * 
- * if we know ther is no cycle and graph is directed (DAG). then in such case DAG shortest
- * path algo can be used. o(E+V) is time complexity of DAG Shortest Path Algo.
+ * if we know ther is no cycle and graph is directed (DAG). then in such case
+ * DAG shortest path algo can be used. o(E+V) is time complexity of DAG Shortest
+ * Path Algo.
  * 
  * Dynamic Programming
  * 
@@ -69,16 +70,15 @@ public class BellManFordAlgo {
 	}
 
 	/**
-	 * Here we will relax every edge v-1 times. In Adjacancy list implementation we keep
-	 * List<Edge> where Edge has data <source,dest,weight>. than it will take O(VE) time. we
-	 * can start from any order. as we will any way relax every node v-1 times. After relaxing
-	 * v-1 times. we will try one more time to see if further any distance can be updated. if
-	 * yes- it means cycle exists.
+	 * Here we will relax every edge v-1 times. In Adjacancy list implementation we
+	 * keep List<Edge> where Edge has data <source,dest,weight>. than it will take
+	 * O(VE) time. we can start from any order. as we will any way relax every node
+	 * v-1 times. After relaxing v-1 times. we will try one more time to see if
+	 * further any distance can be updated. if yes- it means cycle exists.
 	 * 
 	 * @param source
 	 */
-	public boolean shortestPath(int source) {
-
+	public boolean shortestPathPossible(int source) {
 		int[] dist = new int[noOfVertices];
 		// initialize all the distance to max value as per Algo
 		IntStream.range(0, dist.length).forEach(i -> dist[i] = Integer.MAX_VALUE);
@@ -114,7 +114,7 @@ public class BellManFordAlgo {
 		g.addEdge(0, 4, 3);
 		g.addEdge(2, 1, 2);
 		g.addEdge(2, 3, 4);
-		System.out.println(g.shortestPath(0));
+		System.out.println(g.shortestPathPossible(0));
 	}
 
 	private static void test2() {
@@ -133,7 +133,7 @@ public class BellManFordAlgo {
 		g.addEdge(6, 7, 1);
 		g.addEdge(6, 8, 6);
 		g.addEdge(7, 8, 7);
-		System.out.println(g.shortestPath(0));
+		System.out.println(g.shortestPathPossible(0));
 	}
 
 	private static void test3() {
@@ -147,7 +147,7 @@ public class BellManFordAlgo {
 		g.addEdge(4, 1, 1);
 		g.addEdge(4, 2, 8);
 		g.addEdge(4, 3, 2);
-		System.out.println(g.shortestPath(0));
+		System.out.println(g.shortestPathPossible(0));
 	}
 
 	private static void test4() {
@@ -160,7 +160,7 @@ public class BellManFordAlgo {
 		g.addEdge(3, 2, 5);
 		g.addEdge(3, 1, 1);
 		g.addEdge(4, 3, -3);
-		System.out.println(g.shortestPath(0));
+		System.out.println(g.shortestPathPossible(0));
 	}
 
 	private static void test5() {
@@ -175,7 +175,7 @@ public class BellManFordAlgo {
 		g.addEdge(5, 6, 5);
 		g.addEdge(6, 7, 4);
 		g.addEdge(5, 7, 3);
-		System.out.println(g.shortestPath(0));
+		System.out.println(g.shortestPathPossible(0));
 	}
 
 }

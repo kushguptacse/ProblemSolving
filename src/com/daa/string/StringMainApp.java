@@ -6,6 +6,8 @@ import java.util.Map;
 public class StringMainApp {
 
 	public static void main(String[] args) {
+		System.out.println(StringHelper.validIPAddress("0.0.0.-0"));
+		System.out.println(StringHelper.validIPAddress("2001:0db8:85a3:0:0:8A2E:0370:7334"));
 		System.out.println(StringHelper.checkPermutationInclusion("ab", "eidbaooo"));
 		System.out.println(StringHelper.checkValidString("(*))("));
 		System.out.println(StringHelper.stringShift("abcdefg", new int[][] { { 1, 1 }, { 1, 1 }, { 0, 2 }, { 1, 3 } }));

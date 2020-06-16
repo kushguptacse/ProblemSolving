@@ -10,9 +10,10 @@ import com.daa.model.Model;
  * Binary Search tree stores the data in a binary tree. every node can have at
  * most 2 child.
  * 
- * The left subtree of a node contains only nodes with keys lesser than the node’s key.
- * The right subtree of a node contains only nodes with keys greater than the node’s key.
- * The left and right subtree each must also be a binary search tree.
+ * The left subtree of a node contains only nodes with keys lesser than the
+ * node’s key. The right subtree of a node contains only nodes with keys greater
+ * than the node’s key. The left and right subtree each must also be a binary
+ * search tree.
  * 
  * @author G521885
  *
@@ -114,13 +115,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	 */
 	private void preOrderTraversal(TreeNode<T> node, StringBuilder sb) {
 		if (node == null) {
-			return ;
+			return;
 		}
 		sb.append(node.getData()).append(" ");
 		preOrderTraversal(node.getLeft(), sb);
 		preOrderTraversal(node.getRight(), sb);
 	}
-	
 
 	/**
 	 * Find the Minimum element of BST. just go to farthest left child and that
@@ -201,14 +201,13 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 
 	private void inOrderTraversal(TreeNode<T> node, StringBuilder sb) {
 		if (node == null) {
-			return ;
+			return;
 		}
 		inOrderTraversal(node.getLeft(), sb);
 		sb.append(node.getData()).append(" ");
 		inOrderTraversal(node.getRight(), sb);
 	}
 
-	
 	@Override
 	public String postOrderTraversal() {
 		StringBuilder sb = new StringBuilder();
@@ -227,7 +226,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	 */
 	private void postOrderTraversal(TreeNode<T> node, StringBuilder sb) {
 		if (node == null) {
-			return ;
+			return;
 		}
 		postOrderTraversal(node.getLeft(), sb);
 		postOrderTraversal(node.getRight(), sb);
@@ -250,7 +249,8 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	private TreeNode<T> search(TreeNode<T> node, T data) {
 		if (node == null || data.compareTo(node.getData()) == 0) {
 			return node;
-		} else if (data.compareTo(node.getData()) < 0) {
+		}
+		if (data.compareTo(node.getData()) < 0) {
 			return search(node.getLeft(), data);
 		}
 		return search(node.getRight(), data);
@@ -303,15 +303,16 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 		return node;
 
 	}
-	
+
 	/**
-	 * Remove nodes from BST if it is outside the given range. the result should itself be BST
+	 * Remove nodes from BST if it is outside the given range. the result should
+	 * itself be BST
 	 * 
 	 * @param min
 	 * @param max
 	 */
-	public void removeNodeOutsideRange(T min,T max) {
-		root=removeNodeOutsideRange(root ,min, max);
+	public void removeNodeOutsideRange(T min, T max) {
+		root = removeNodeOutsideRange(root, min, max);
 	}
 
 	/**
@@ -322,14 +323,14 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	 * @param max
 	 */
 	private TreeNode<T> removeNodeOutsideRange(TreeNode<T> node, T min, T max) {
-		if(node==null) {
+		if (node == null) {
 			return node;
 		}
 		node.setLeft(removeNodeOutsideRange(node.getLeft(), min, max));
 		node.setRight(removeNodeOutsideRange(node.getRight(), min, max));
-		if(node.getData().compareTo(min)<0) {
+		if (node.getData().compareTo(min) < 0) {
 			return node.getRight();
-		} else if(node.getData().compareTo(max)>0) {
+		} else if (node.getData().compareTo(max) > 0) {
 			return node.getLeft();
 		}
 		return node;
@@ -367,20 +368,20 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 	}
 
 	private int sumOfBinarySearchTree(TreeNode<T> node) {
-		if(node==null) {
+		if (node == null) {
 			return 0;
 		}
 		int l = sumOfBinarySearchTree(node.getLeft());
 		int r = sumOfBinarySearchTree(node.getRight());
-		
-		return l+r+(Integer)node.getData();
+
+		return l + r + (Integer) node.getData();
 	}
-	
+
 	public T findKthSmallestItem(int k) {
 		TreeNode<T> node = findKthSmallestItem(root, new Model<Integer>(k));
 		return node == null ? null : node.getData();
 	}
-	
+
 	private TreeNode<T> findKthSmallestItem(TreeNode<T> root, Model<Integer> k) {
 		if (root == null) {
 			return null;
@@ -395,69 +396,72 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 		k.setValue(k.getValue() - 1);
 		return findKthSmallestItem(root.getRight(), k);
 	}
-	
+
 	public boolean isComplete() {
 		return isComplete(root);
 	}
 
 	private boolean isComplete(TreeNode<T> node) {
-		if(node==null || (node.getLeft()==null && node.getRight()==null)) {
+		if (node == null || (node.getLeft() == null && node.getRight() == null)) {
 			return true;
 		}
-		if(node.getLeft()!=null && node.getRight()!=null) {
-			return isComplete(node.getLeft()) && isComplete(node.getRight());			
+		if (node.getLeft() != null && node.getRight() != null) {
+			return isComplete(node.getLeft()) && isComplete(node.getRight());
 		}
 		return false;
-		
+
 	}
-	
+
 	/**
 	 * O(N) time complexity and O(N) space for queue
 	 * 
 	 * @return Level order string
 	 */
 	public String levelOrderTraversal() {
-		if(root==null) {
+		if (root == null) {
 			return "";
-		} 
-		Queue<TreeNode<T>> queue= new LinkedList<>();
+		}
+		Queue<TreeNode<T>> queue = new LinkedList<>();
 		StringBuilder sb = new StringBuilder();
 		queue.add(root);
-		while(!queue.isEmpty()) {
+		while (!queue.isEmpty()) {
 			TreeNode<T> temp = queue.poll();
 			sb.append(temp.getData()).append(" ");
-			if(temp.getLeft()!=null) {
+			if (temp.getLeft() != null) {
 				queue.add(temp.getLeft());
-			} 
-			if(temp.getRight()!=null) {
+			}
+			if (temp.getRight() != null) {
 				queue.add(temp.getRight());
 			}
 		}
 		return sb.toString().trim();
 	}
-	
+
 	/**
-	 * check whether there is a node on which no child can be added. like if a leaf node has 1 value it is dead-end
-	 * it is possible if for any leaf node with value i. tree already have i+1 and i-1 value nodes
+	 * check whether there is a node on which no child can be added. like if a leaf
+	 * node has 1 value it is dead-end it is possible if for any leaf node with
+	 * value i. tree already have i+1 and i-1 value nodes
 	 * 
 	 * @return true if dead-end exists
 	 */
 	public boolean isDeadEnd(TreeNode<Integer> head) {
-		return checkDeadEnd(head,1,Integer.MAX_VALUE);
+		return checkDeadEnd(head, 1, Integer.MAX_VALUE);
 	}
-	
-	private boolean checkDeadEnd(TreeNode<Integer> node,int min,int max) {
-		if (node==null) {
+
+	private boolean checkDeadEnd(TreeNode<Integer> node, int min, int max) {
+		if (node == null) {
 			return false;
 		}
-		if(min==max) {
+		if (min == max) {
 			return true;
 		}
-		return checkDeadEnd(node.getLeft(), min, node.getData()-1)||checkDeadEnd(node.getRight(), node.getData()+1, max);
+		return checkDeadEnd(node.getLeft(), min, node.getData() - 1)
+				|| checkDeadEnd(node.getRight(), node.getData() + 1, max);
 	}
-	
+
 	/**
-	 * changeKey() changes old key value present in the tree and changes it to new key value.
+	 * changeKey() changes old key value present in the tree and changes it to new
+	 * key value.
 	 * 
 	 * @param oldKey
 	 * @param newKey
@@ -466,12 +470,12 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
 		root = removeNode(root, oldKey);
 		insert(newKey);
 	}
-	
+
 	/**
 	 * @return the root
 	 */
 	public TreeNode<T> getRoot() {
 		return root;
 	}
-	
+
 }
