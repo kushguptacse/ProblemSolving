@@ -1,6 +1,7 @@
 package com.daa.array;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,27 +25,27 @@ public final class ArrayUtil {
 	 * @param b
 	 * @return merged sorted array
 	 */
-	public static int[] mergeTwoSortedArray(int[] a,int[] b) {
-		int[] arr = new int[a.length+b.length];
-		int i=0;
-		int j=0;
-		int k=0;
-		while(i<a.length&&j<b.length) {
-			if(a[i]<b[j]) {
-				arr[k]=a[i++];
+	public static int[] mergeTwoSortedArray(int[] a, int[] b) {
+		int[] arr = new int[a.length + b.length];
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		while (i < a.length && j < b.length) {
+			if (a[i] < b[j]) {
+				arr[k] = a[i++];
 			} else {
-				arr[k]=b[j++];
+				arr[k] = b[j++];
 			}
 			k++;
 		}
-		
-		while(i<a.length) {
-			arr[k]=a[i++];
+
+		while (i < a.length) {
+			arr[k] = a[i++];
 			k++;
 		}
-		
-		while(j<b.length) {
-			arr[k]=b[j++];
+
+		while (j < b.length) {
+			arr[k] = b[j++];
 			k++;
 		}
 		return arr;
@@ -57,6 +58,7 @@ public final class ArrayUtil {
 	 * @return true if sorted
 	 */
 	public static boolean isSorted(int[] arr) {
+		
 		return isSorted(arr,0);
 	}
 

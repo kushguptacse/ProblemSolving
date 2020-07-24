@@ -3,12 +3,21 @@ package com.daa.array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.daa.math.MathUtil;
 
 public class ArrayPractice {
 
 	public static void main(String[] args) {
+		int num = 534972;
+		System.out.println(num + " : " + nextGreaterElement(num));
+		num = 538467;
+		int res = nextSmallestElement(num);
+		System.out.println(num + " : " + res);
+		num = nextGreaterElement(res);
+		System.out.println(res + " : " + num);
+		System.out.println(num + " : " + nextSmallestElement(num));
+		num = 230918;
+		System.out.println(num + " : " + nextSmallestElement(num));
 		System.out.println(ArrayPractice.binarySearch(new int[] { 1, 2, 5, 6 }, 3));
 		int[] arr = new int[] { 0, 1, 2, 5, 0, 6, 0 };
 		searchAndShift(arr, 0);
@@ -17,6 +26,169 @@ public class ArrayPractice {
 		int[] nums2 = new int[] { 3, 4 };
 		merge(nums1, 1, nums2, 2);
 		System.out.println(Arrays.toString(nums1));
+	}
+
+	private static int nextSmallestElement(int n) {
+		char[] num = String.valueOf(n).toCharArray();
+		int i = num.length - 1;
+		while (i > 0 && num[i] >= num[i - 1]) {
+			i--;
+		}
+		if (i == 0) {
+			return -1;
+		}
+		i--;
+		int j = num.length - 1;
+		while (num[j] >= num[i]) {
+			j--;
+		}
+		swap(num, j, i);
+		reverse(num, i + 1);
+		return Integer.parseInt(String.valueOf(num));
+	}
+
+	public static int nextGreaterElement(int n) {
+		char[] num = String.valueOf(n).toCharArray();
+		int i = num.length - 1;
+		while (i > 0 && num[i] <= num[i - 1]) {
+			i--;
+		}
+		if (i == 0) {
+			return -1;
+		}
+		i--;
+		int j = num.length - 1;
+		while (num[j] <= num[i]) {
+			j--;
+		}
+		swap(num, i, j);
+		reverse(num, i + 1);
+		long val = Long.parseLong(String.valueOf(num));
+		return val > Integer.MAX_VALUE ? -1 : (int) val;
+	}
+
+	private static void reverse(char[] num, int l) {
+		int h = num.length - 1;
+		while (l < h) {
+			swap(num, l++, h--);
+		}
+	}
+
+	private static void swap(char[] num, int i, int j) {
+		num[i] ^= num[j];
+		num[j] ^= num[i];
+		num[i] ^= num[j];
+	}
+
+	public int hIndex(int[] citations) {
+		int start = 0;
+		int end = citations.length - 1;
+		while (start <= end) {
+			int mid = end - (end - start) / 2;
+			if (citations[mid] == citations.length - mid) {
+				return citations.length - mid;
+			} else if (citations[mid] > citations.length - mid) {
+				end = mid - 1;
+			} else {
+				start = mid + 1;
+			}
+		}
+		return citations.length - start;
+	}
+
+	/**
+	 * Given two arrays of integers nums and index. Your task is to create target
+	 * array under the following rules:
+	 * 
+	 * Initially target array is empty. From left to right read nums[i] and
+	 * index[i], insert at index index[i] the value nums[i] in target array. Repeat
+	 * the previous step until there are no elements to read in nums and index.
+	 * Return the target array.
+	 * 
+	 * It is guaranteed that the insertion operations will be valid.
+	 * 
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: nums = [1,2,3,4,0], index = [0,1,2,3,0]
+	 * 
+	 * Output: [0,1,2,3,4]
+	 *@f:off 
+	 *Explanation:
+	 *nums       index     target
+	 *1            0        [1]
+	 *2            1        [1,2]
+	 *3            2        [1,2,3]
+	 *4            3        [1,2,3,4]
+	 *0            0        [0,1,2,3,4]
+	 *@f:on 
+	 * @param nums
+	 * @param index
+	 * @return
+	 */
+	public int[] createTargetArray(int[] nums, int[] index) {
+		int[] op = new int[nums.length];
+		op[0] = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			int ind = index[i];
+			if (ind < i) {
+				for (int j = i; j > ind; j--) {
+					op[j] = op[j - 1];
+				}
+			}
+			op[ind] = nums[i];
+		}
+		return op;
+	}
+
+	/**
+	 * Balanced strings are those who have equal quantity of 'L' and 'R' characters.
+	 * 
+	 * Given a balanced string s split it in the maximum amount of balanced strings.
+	 * 
+	 * Return the maximum amount of splitted balanced strings.
+	 * 
+	 * 
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: s = "RLRRLLRLRL" Output: 4
+	 * 
+	 * Explanation: s can be split into "RL", "RRLL", "RL", "RL", each substring
+	 * contains same number of 'L' and 'R'. Example 2:
+	 * 
+	 * Input: s = "RLLLLRRRLR" Output: 3
+	 * 
+	 * Explanation: s can be split into "RL", "LLLRRR", "LR", each substring
+	 * contains same number of 'L' and 'R'. Example 3:
+	 * 
+	 * Input: s = "LLLLRRRR" Output: 1
+	 * 
+	 * Explanation: s can be split into "LLLLRRRR". Example 4:
+	 * 
+	 * Input: s = "RLRRRLLRLL" Output: 2
+	 * 
+	 * Explanation: s can be split into "RL", "RRRLLRLL", since each substring
+	 * contains an equal number of 'L' and 'R'
+	 * 
+	 * 
+	 * Constraints:
+	 * 
+	 * 1 <= s.length <= 1000 s[i] = 'L' or 'R'
+	 * 
+	 * @param s
+	 * @return count
+	 */
+	public int balancedStringSplit(String s) {
+		int c = 0;
+		int j = 0;
+		for (int i = 0; i < s.length(); i++) {
+			j += s.charAt(i) == 'R' ? 1 : -1;
+			if (j == 0) {
+				c++;
+			}
+		}
+		return c;
 	}
 
 	/**

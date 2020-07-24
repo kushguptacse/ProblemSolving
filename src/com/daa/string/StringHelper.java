@@ -212,6 +212,8 @@ public final class StringHelper {
 	 * 
 	 * o(n^2)
 	 * 
+	 * better approach is to use binary search along with rabinKarp
+	 * 
 	 * @param text1
 	 * @return length of the longest common/repeated subString
 	 */
