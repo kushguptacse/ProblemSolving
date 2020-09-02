@@ -2,12 +2,17 @@ package com.daa.array;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import com.daa.math.MathUtil;
 
 public class ArrayPractice {
 
 	public static void main(String[] args) {
+		System.out.println(containsNearbyDuplicate(new int[] { 1, 2, 3, 4 }, 3));
 		int num = 534972;
 		System.out.println(num + " : " + nextGreaterElement(num));
 		num = 538467;
@@ -753,6 +758,77 @@ public class ArrayPractice {
 			map.put(sum, map.getOrDefault(sum, 0) + 1);
 		}
 		return c;
+	}
+
+	/**
+	 * Given an array of integers and an integer k, find out whether there are two
+	 * distinct indices i and j in the array such that nums[i] = nums[j] and the
+	 * absolute difference between i and j is at most k.
+	 * 
+	 * Example 1: Input: nums = [1,2,3,1], k = 3 Output: true
+	 * 
+	 * Example 2: Input: nums = [1,0,1,1], k = 1 Output: true
+	 * 
+	 * Example 3: Input: nums = [1,2,3,1,2,3], k = 2 Output: false
+	 * 
+	 * @param nums
+	 * @param k
+	 * @return true if such combination possible
+	 */
+	public static boolean containsNearbyDuplicate(int[] nums, int k) {
+		Set<Integer> set = new HashSet<>();
+		for (int i = 0; i < nums.length; i++) {
+			if (set.contains(nums[i])) {
+				return true;
+			}
+			set.add(nums[i]);
+			if (set.size() > k) {
+				set.remove(nums[i - k]);
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Given an array of integers, find out whether there are two distinct indices i
+	 * and j in the array such that the absolute difference between nums[i] and
+	 * nums[j] is at most t and the absolute difference between i and j is at most
+	 * k.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: nums = [1,2,3,1], k = 3, t = 0 Output: true
+	 * 
+	 * Example 2:
+	 * 
+	 * Input: nums = [1,0,1,1], k = 1, t = 2 Output: true
+	 * 
+	 * Example 3:
+	 * 
+	 * Input: nums = [1,5,9,1,5,9], k = 2, t = 3 Output: false
+	 * 
+	 * @param nums
+	 * @param k
+	 * @param t
+	 * @return true if such combination exists.
+	 */
+	public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+		TreeSet<Long> set = new TreeSet<>();
+		for (int i = 0; i < nums.length; i++) {
+			Long floor = set.floor((long) nums[i]);
+			if (floor != null && nums[i] - floor <= t) {
+				return true;
+			}
+			Long ceiling = set.ceiling((long) nums[i]);
+			if (ceiling != null && ceiling - nums[i] <= t) {
+				return true;
+			}
+			set.add((long) nums[i]);
+			if (set.size() > k) {// if size exceed - slide window
+				set.remove((long) nums[i - k]);
+			}
+		}
+		return false;
 	}
 
 }

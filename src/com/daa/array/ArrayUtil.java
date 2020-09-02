@@ -1,7 +1,6 @@
 package com.daa.array;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -112,10 +111,17 @@ public final class ArrayUtil {
 	    return A;
 	}
 
-	private static void swap(int[] a, int i, int pos) {
-		int temp=a[i];
-		a[i]=a[pos];
-		a[pos]=temp;
+	/**
+	 * swap array element from i with j index
+	 * 
+	 * @param int array
+	 * @param index i
+	 * @param index j
+	 */
+	public static void swap(int[] a, int i, int j) {
+		int temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
 	}
 	
 	/**
