@@ -11,7 +11,7 @@ import com.daa.math.MathUtil;
  * @f:off
  * Approach - 
  * 1. brute force take o(nm) time. as we need to shift back to search item again.
- * 2. rabinkarp is better than traditional approach as it calculate hash code. 
+ * 2. rabin-karp is better than traditional approach as it calculate hash code. 
  *    We just match hashcode and once hashcode matched we check the content. o(n+m)
  * 3. In Rabin-Karp worst case o(nm). i.e. every comparison has same hashcode and string are different.
  *    It's performance depends on hashcode implementation.

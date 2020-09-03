@@ -14,9 +14,11 @@ public class Permutation {
 		List<List<Integer>> list = permutation.permute(new int[] { 1, 2, 3 });
 		list.forEach(System.out::println);
 		permutation.permute("abc").forEach(System.out::println);
+		System.out.println("***********");
+		permutation.permuteUnique("baa").forEach(System.out::println);
 
 	}
-	
+
 	/**
 	 * return all permutations of array. array contains unique elements.
 	 * 
@@ -28,7 +30,7 @@ public class Permutation {
 		permutations(nums, 0, list);
 		return list;
 	}
-	
+
 	/**
 	 * print all possible unique permutation of array.
 	 * 
@@ -41,7 +43,6 @@ public class Permutation {
 		return list;
 	}
 
-
 	/**
 	 * print all possible permutation of a String.
 	 * 
@@ -52,6 +53,34 @@ public class Permutation {
 		List<String> list = new ArrayList<>();
 		permuteString(str, "", list);
 		return list;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param n
+	 * @return list of various unique combination
+	 */
+	public List<String> permuteUnique(String str) {
+		List<String> list = new ArrayList<>();
+		permuteUniqueString(str, "", list);
+		return list;
+	}
+
+	private void permuteUniqueString(String str, String prefix, List<String> list) {
+		if (str.length() == 0) {
+			list.add(prefix);
+			return;
+		}
+		Set<Character> set = new HashSet<>();
+		for (int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			if (set.add(ch)) {
+				String res = str.substring(0, i) + str.substring(i + 1);
+				permuteUniqueString(res, prefix + ch, list);
+			}
+		}
+		
 	}
 
 	private void permuteString(String str, String prefix, List<String> list) {
@@ -82,7 +111,6 @@ public class Permutation {
 		}
 
 	}
-
 
 	private void permuteUnique(int[] nums, int i, List<List<Integer>> list) {
 		if (i == nums.length) {
