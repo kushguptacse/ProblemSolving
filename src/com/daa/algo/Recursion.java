@@ -4,6 +4,7 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.daa.array.ArrayUtil;
 import com.daa.math.MathUtil;
 
 /**
@@ -44,13 +45,13 @@ public class Recursion {
 	 * @return number of steps
 	 */
 	public static int numberOfSteps(int num) {
-		if(num==0) {
+		if (num == 0) {
 			return 0;
 		}
 		if (num % 2 == 0) {
-			return numberOfSteps(num / 2)+1;
+			return numberOfSteps(num / 2) + 1;
 		} else {
-			return numberOfSteps(num - 1)+1;
+			return numberOfSteps(num - 1) + 1;
 		}
 	}
 
@@ -67,13 +68,27 @@ public class Recursion {
 		System.out.println(n);
 		tailRecursion(n - 1);
 	}
-	
+
 	public void headAndTailRecursion(int n) {
 		if (n == 0)
 			return;
 		System.out.println(n);
-		headAndTailRecursion(n-1);
+		headAndTailRecursion(n - 1);
 		System.out.println(n);
+	}
+
+	public boolean isPalindrome(String str) {
+		return isPalindrome(str, 0, str.length() - 1);
+	}
+
+	private boolean isPalindrome(String str, int i, int length) {
+		if (i >= length) {
+			return true;
+		}
+		if (str.charAt(i) == str.charAt(length)) {
+			return isPalindrome(str, i + 1, length - 1);
+		}
+		return false;
 	}
 
 	public int max(int[] a) {
@@ -92,29 +107,22 @@ public class Recursion {
 		}
 	}
 
-	public int printFibonacci(int n) {
-		int a = 0;
-		int b = 1;
-		int c = 0;
-		System.out.print(a + " " + b + " ");
-		for (int i = 2; i <= n; i++) {
-			c = a + b;
-			System.out.print(c + " ");
-			a = b;
-			b = c;
+	public void printFibonacci(int n) {
+		if (n >= 0) {
+			printFibonacci(n - 1);
+			System.out.print(sumFibonacci(n) + " ");
 		}
-		System.out.println();
-		return b;
+	}
+
+	public void printFibonacciReverse(int n) {
+		if (n >= 0) {
+			System.out.print(sumFibonacci(n) + " ");
+			printFibonacciReverse(n - 1);
+		}
 	}
 
 	public int sumFibonacci(int n) {
-		if (n <= 1) {
-			return n;
-		}
-
-		int res = sumFibonacci(n - 1);
-		int r2 = sumFibonacci(n - 2);
-		return res + r2;
+		return n < 2 ? n : sumFibonacci(n - 1) + sumFibonacci(n - 2);
 	}
 
 	/**
@@ -297,25 +305,23 @@ public class Recursion {
 	 * @param ch
 	 * @return reverse array
 	 */
-	public char[] reverseArray(char[] ch) {
+	public int[] reverseArray(int[] ch) {
 		reverseArray(ch, 0, ch.length - 1);
 		return ch;
 	}
 
 	/**
-	 * reverse the character array
+	 * reverse the array
 	 * 
 	 * @param ch
 	 * @param start
 	 * @param end
 	 */
-	private void reverseArray(char[] ch, int start, int end) {
+	private void reverseArray(int[] ch, int start, int end) {
 		if (start >= ch.length / 2) {
 			return;
 		}
-		char temp = ch[start];
-		ch[start] = ch[end];
-		ch[end] = temp;
+		ArrayUtil.swap(ch, start, end);
 		reverseArray(ch, start + 1, end - 1);
 	}
 

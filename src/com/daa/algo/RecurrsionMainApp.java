@@ -12,7 +12,20 @@ import com.daa.list.Node;
 public class RecurrsionMainApp {
 
 	public static void main(String[] args) {
+		Recursion obj = new Recursion();
+		String str = "1221";
+		System.out.println(str + " is palindrome : " + obj.isPalindrome(str));
+		str = "12121";
+		System.out.println(str + " is palindrome : " + obj.isPalindrome(str));
+		str = "1231";
+		System.out.println(str + " is palindrome : " + obj.isPalindrome(str));
+		str = "1223";
+		System.out.println(str + " is palindrome : " + obj.isPalindrome(str));
+		str = "malayalam";
+		System.out.println(str + " is palindrome : " + obj.isPalindrome(str));
+
 		practiceBasic(4);
+		practiceFibonnaci(10);
 		System.out.println(Recursion.numberOfSteps(14));
 		new Recursion().towerOfHanoi(3, "x", "y", "z");
 		practice();
@@ -21,6 +34,15 @@ public class RecurrsionMainApp {
 //		checkSubSetSum();
 //		dpTest();
 		new RecurrsionMainApp().testSearch();
+	}
+
+	private static void practiceFibonnaci(int i) {
+		System.out.println("sum: " + new Recursion().sumFibonacci(i));
+		System.out.println("fibonnaci series for n= " + i);
+		new Recursion().printFibonacci(i);
+		System.out.println("");
+		new Recursion().printFibonacciReverse(i);
+		System.out.println();
 	}
 
 	private static void practiceBasic(int i) {

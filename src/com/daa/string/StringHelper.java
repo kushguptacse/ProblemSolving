@@ -749,7 +749,21 @@ public final class StringHelper {
 	 * @return true if repeated substring exists
 	 */
 	public boolean repeatedSubstringPattern(String s) {
-		return (s + s).substring(1, 2 * s.length() - 1).contains(s);
+		int len = s.length();
+		for (int i = len / 2; i >= 1; i--) { // check for half length first
+			if (len % i == 0) { // if not true sub-parts cannot make it to s
+				String res = s.substring(0, i);
+				int k = len / i; // number of times s repeats
+				StringBuilder sb = new StringBuilder();
+				for (int j = 0; j < k; j++) {
+					sb.append(res); //repeat res k times 
+				}
+				if (s.equals(sb.toString())) { // check if original can make to sb
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
