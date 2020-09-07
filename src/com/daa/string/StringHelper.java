@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -756,7 +758,7 @@ public final class StringHelper {
 				int k = len / i; // number of times s repeats
 				StringBuilder sb = new StringBuilder();
 				for (int j = 0; j < k; j++) {
-					sb.append(res); //repeat res k times 
+					sb.append(res); // repeat res k times
 				}
 				if (s.equals(sb.toString())) { // check if original can make to sb
 					return true;
@@ -890,6 +892,54 @@ public final class StringHelper {
 		String suf = s.substring(s.length() - n, s.length());
 		s = s.substring(0, s.length() - suf.length());
 		return suf + s;
+	}
+
+	/**
+	 * Given a pattern and a string str, find if str follows the same pattern.
+	 * 
+	 * Here follow means a full match, such that there is a bijection between a
+	 * letter in pattern and a non-empty word in str.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: pattern = "abba", str = "dog cat cat dog" Output: true
+	 * 
+	 * Example 2:
+	 * 
+	 * Input:pattern = "abba", str = "dog cat cat fish" Output: false
+	 * 
+	 * Example 3:
+	 * 
+	 * Input: pattern = "aaaa", str = "dog cat cat dog" Output: false
+	 * 
+	 * Example 4:
+	 * 
+	 * Input: pattern = "abba", str = "dog dog dog dog" Output: false
+	 * 
+	 * @param pattern
+	 * @param str1
+	 * @return true if pattern followed
+	 */
+	public boolean wordPattern(String pattern, String str1) {
+		Map<Character, String> map = new HashMap<>();
+		Set<String> set = new HashSet<>();
+		String[] str = str1.split(" ");
+		if (pattern.length() != str.length) {
+			return false;
+		}
+		for (int i = 0; i < pattern.length(); i++) {
+			char ch = pattern.charAt(i);
+			if (map.containsKey(ch)) {
+				if (!map.get(ch).equals(str[i])) {
+					return false;
+				}
+			} else {
+				map.put(ch, str[i]);
+				if (!set.add(str[i]))
+					return false;
+			}
+		}
+		return true;
 	}
 
 }
