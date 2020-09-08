@@ -4,7 +4,7 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 
 	private Node<T> head;
 	private int size;
-	
+
 	@Override
 	public int size() {
 		return size;
@@ -13,14 +13,14 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 	@Override
 	public boolean add(T item) {
 		Node<T> newNode = new Node<>(item);
-		if(head==null) {
-			head=newNode;
+		if (head == null) {
+			head = newNode;
 			size++;
 			return true;
 		}
 		Node<T> temp = head;
-		while (temp.getNext()!=null) {
-			temp=temp.getNext();
+		while (temp.getNext() != null) {
+			temp = temp.getNext();
 		}
 		size++;
 		temp.setNext(newNode);
@@ -29,37 +29,37 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 
 	@Override
 	public boolean remove(T item) {
-		if(head==null) {
+		if (head == null) {
 			return false;
 		}
-		
-		if(item.equals(head.getData())) {
-			head=head.getNext();
+
+		if (item.equals(head.getData())) {
+			head = head.getNext();
 			size--;
 			return true;
 		}
-		
+
 		Node<T> temp = head.getNext();
 		Node<T> prev = head;
-		while(temp!=null) {
-			if(item.equals(temp.getData())) {
+		while (temp != null) {
+			if (item.equals(temp.getData())) {
 				prev.setNext(temp.getNext());
 				size--;
 				return true;
 			}
-			prev=prev.getNext();
-			temp=temp.getNext();
+			prev = prev.getNext();
+			temp = temp.getNext();
 		}
-		
+
 		return false;
 	}
 
 	@Override
 	public void print() {
 		Node<T> temp = head;
-		while(temp!=null) {
-			System.out.print(temp.getData()+"->");
-			temp=temp.getNext();
+		while (temp != null) {
+			System.out.print(temp.getData() + "->");
+			temp = temp.getNext();
 		}
 		System.out.println();
 	}
@@ -67,7 +67,7 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 	@Override
 	public boolean add(int index, T item) {
 		Node<T> newNode = new Node<T>(item);
-		if (index<0 || index>size) {
+		if (index < 0 || index > size) {
 			return false;
 		}
 		if (index == 0) {
@@ -124,9 +124,10 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 
 		return null;
 	}
-	
+
 	/**
-	 * O(N/2) 
+	 * O(N/2)
+	 * 
 	 * @return content of MiddleNode
 	 */
 	public T findMiddleNode() {
@@ -139,15 +140,13 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 
 		return slow == null ? null : slow.getData();
 	}
-	
+
 	/**
 	 * 
-	 * Reverse link list O(N). 
+	 * Reverse link list O(N).
 	 * 
-	 * take three pointer prev curr and next.
-	 * prev point to previous
-	 * curr to the current initially head 
-	 * last point next node to the curr.
+	 * take three pointer prev curr and next. prev point to previous curr to the
+	 * current initially head last point next node to the curr.
 	 * 
 	 */
 	public void reverse() {
@@ -172,7 +171,8 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 		return checkPalindrome(head);
 	}
 
-	private Node<T> left=head;
+	private Node<T> left = head;
+
 	private boolean checkPalindrome(Node<T> node) {
 		if (left == null || node == null) {
 			return true;
@@ -187,7 +187,28 @@ public class LinkedList<T extends Comparable<T>> implements List<T>{
 		return false;
 
 	}
-	
-	
-	
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ListIterator();
+	}
+
+	private class ListIterator implements Iterator<T> {
+
+		private Node<T> node = head;
+
+		@Override
+		public T next() {
+			T data = node.getData();
+			node = node.getNext();
+			return data;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return node != null;
+		}
+
+	}
+
 }
