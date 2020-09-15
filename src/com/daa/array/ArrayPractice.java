@@ -1,8 +1,10 @@
 package com.daa.array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -847,6 +849,46 @@ public class ArrayPractice {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Given a set of non-overlapping intervals, insert a new interval into the
+	 * intervals (merge if necessary).
+	 * 
+	 * You may assume that the intervals were initially sorted according to their
+	 * start times.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: intervals = [[1,3],[6,9]], newInterval = [2,5] Output: [[1,5],[6,9]]
+	 * 
+	 * Example 2:
+	 * 
+	 * Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+	 * Output: [[1,2],[3,10],[12,16]]
+	 * 
+	 * Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
+	 * 
+	 * @param intervals
+	 * @param newInterval
+	 * @return merged array
+	 */
+	public int[][] insert(int[][] intervals, int[] newInterval) {
+		List<int[]> op = new ArrayList<>();
+		int i = 0;
+		while (i < intervals.length && newInterval[0] > intervals[i][1]) {
+			op.add(intervals[i++]);
+		}
+		int[] mergeArray = new int[] { newInterval[0], newInterval[1] };
+		while (i < intervals.length && newInterval[1] >= intervals[i][0]) {
+			mergeArray[0] = Math.min(intervals[i][0], mergeArray[0]);
+			mergeArray[1] = Math.max(intervals[i++][1], mergeArray[1]);
+		}
+		op.add(mergeArray);
+		while (i < intervals.length) {
+			op.add(intervals[i++]);
+		}
+		return op.toArray(new int[op.size()][]);
 	}
 
 }
