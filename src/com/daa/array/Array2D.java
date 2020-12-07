@@ -8,6 +8,9 @@ import com.daa.math.MathUtil;
 public class Array2D {
 
 	public static void main(String[] args) {
+		printData(new Array2D().spiralOrderGenerate(3));
+		int a[][] = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+		System.out.println(new Array2D().spiralOrder(a));
 		System.out.println(searchMatrix(new int[][] { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 50 } }, 3));
 		int[][] res1 = intervalIntersection(new int[][] { { 0, 2 }, { 5, 10 }, { 13, 23 }, { 24, 25 } },
 				new int[][] { { 1, 5 }, { 8, 12 }, { 15, 24 }, { 25, 26 } });
@@ -90,6 +93,88 @@ public class Array2D {
 	}
 
 	/**
+	 * print spiral order traversal of 2d matrix
+	 * 
+	 * @param matrix
+	 * @return list of data arranged in spiral order
+	 */
+	public List<Integer> spiralOrder(int[][] matrix) {
+		List<Integer> list = new ArrayList<>();
+		int rs = 0;
+		int re = matrix.length - 1;
+		int cs = 0;
+		int ce = matrix[0].length - 1;
+		while (rs <= re && cs <= ce) {
+			// go right
+			for (int i = cs; i <= ce; i++) {
+				list.add(matrix[rs][i]);
+			}
+			rs++;
+			// go down
+			for (int i = rs; i <= re; i++) {
+				list.add(matrix[i][ce]);
+			}
+			ce--;
+			if (rs <= re) {
+				// go left
+				for (int i = ce; i >= cs; i--) {
+					list.add(matrix[re][i]);
+				}
+				re--;
+			}
+			if (cs <= ce) {
+				// go up
+				for (int i = re; i >= rs; i--) {
+					list.add(matrix[i][cs]);
+				}
+				cs++;
+			}
+		}
+		return list;
+
+	}
+
+	/**
+	 * given a value n. print the n*n array where element starts from 1 and goes
+	 * towards n in spiral order.
+	 * 
+	 * @param n
+	 * @return 2d matrix
+	 */
+	public int[][] spiralOrderGenerate(int n) {
+		int[][] matrix = new int[n][n];
+		int rs = 0;
+		int re = matrix.length - 1;
+		int cs = 0;
+		int ce = matrix[0].length - 1;
+		n = 0;
+		while (rs <= re && cs <= ce) {
+			// go right
+			for (int i = cs; i <= ce; i++) {
+				matrix[rs][i] = n++;
+			}
+			rs++;
+			// go down
+			for (int i = rs; i <= re; i++) {
+				matrix[i][ce] = n++;
+			}
+			ce--;
+			// go left
+			for (int i = ce; i >= cs; i--) {
+				matrix[re][i] = n++;
+			}
+			re--;
+			// go up
+			for (int i = re; i >= rs; i--) {
+				matrix[i][cs] = n++;
+			}
+			cs++;
+		}
+		return matrix;
+
+	}
+
+	/**
 	 * search element in a sorted 2-d matrix. Integers in each row are sorted from
 	 * left to right. The first integer of each row is greater than the last integer
 	 * of the previous row.
@@ -125,12 +210,12 @@ public class Array2D {
 	 * 
 	 * Input: grid = [[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]] Output: 8
 	 * 
-	 * @f:off
-	 * 1.Use binary search approach for every individual array (row wise). 
-	 * 2.if mid number is negative ignore all right and try from start to mid-1.
-	 * 3.if mid is positive check from mid+1 to end
-	 * 4.after loop terminates start will reach to the point where last negative number is.
-	 * 5.to use column decreasing property we update end to start value. so that we compare from 0 to start for second row
+	 * @f:off 1.Use binary search approach for every individual array (row wise).
+	 *        2.if mid number is negative ignore all right and try from start to
+	 *        mid-1. 3.if mid is positive check from mid+1 to end 4.after loop
+	 *        terminates start will reach to the point where last negative number
+	 *        is. 5.to use column decreasing property we update end to start value.
+	 *        so that we compare from 0 to start for second row
 	 * @f:on
 	 * 
 	 * @param grid
