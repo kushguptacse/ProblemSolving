@@ -34,6 +34,25 @@ public class ArrayPractice {
 		merge(nums1, 1, nums2, 2);
 		System.out.println(Arrays.toString(nums1));
 	}
+	
+	/**
+	 * Given an array arr[] and positive integer K, the task is to count total
+	 * number of pairs in the array whose sum is divisible by K.
+	 * 
+	 * @param arr
+	 * @param k
+	 * @return count of such pairs.
+	 */
+	public static int numPairsDivisibleBy60(int[] time) {
+		int k = 60;
+		int[] hash = new int[k];
+		int count = 0;
+		for (int t : time) {
+			count += hash[(k - (t % k)) % k];
+			hash[t % k]++;
+		}
+		return count;
+	}
 
 	private static int nextSmallestElement(int n) {
 		char[] num = String.valueOf(n).toCharArray();
@@ -138,15 +157,10 @@ public class ArrayPractice {
 	 * Input: nums = [1,2,3,4,0], index = [0,1,2,3,0]
 	 * 
 	 * Output: [0,1,2,3,4]
-	 *@f:off 
-	 *Explanation:
-	 *nums       index     target
-	 *1            0        [1]
-	 *2            1        [1,2]
-	 *3            2        [1,2,3]
-	 *4            3        [1,2,3,4]
-	 *0            0        [0,1,2,3,4]
-	 *@f:on 
+	 * 
+	 * @f:off Explanation: nums index target 1 0 [1] 2 1 [1,2] 3 2 [1,2,3] 4 3
+	 *        [1,2,3,4] 0 0 [0,1,2,3,4]
+	 * @f:on
 	 * @param nums
 	 * @param index
 	 * @return
@@ -312,16 +326,15 @@ public class ArrayPractice {
 	 * position.
 	 * 
 	 * Determine if you are able to reach the last index.
-	 * @f:off
-	 * Example 1:
 	 * 
-	 * Input: [2,3,1,1,4] 
-	 * Output: true Explanation: Jump 1 step from index 0 to 1,
-	 * then 3 steps to the last index. Example 2:
+	 * @f:off Example 1:
 	 * 
-	 * Input: [3,2,1,0,4] 
-	 * Output: false Explanation: You will always arrive at index
-	 * 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+	 *        Input: [2,3,1,1,4] Output: true Explanation: Jump 1 step from index 0
+	 *        to 1, then 3 steps to the last index. Example 2:
+	 * 
+	 *        Input: [3,2,1,0,4] Output: false Explanation: You will always arrive
+	 *        at index 3 no matter what. Its maximum jump length is 0, which makes
+	 *        it impossible to reach the last index.
 	 * @f:on
 	 * 
 	 * @param nums
@@ -561,8 +574,8 @@ public class ArrayPractice {
 	}
 
 	/**
-	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements
-	 * appear twice and others appear once.
+	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some
+	 * elements appear twice and others appear once.
 	 * 
 	 * print all the duplicates in this array.
 	 * 
@@ -618,23 +631,18 @@ public class ArrayPractice {
 	}
 
 	/**
-	 * @f:off
-	 * Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as
-	 * one sorted array.
+	 * @f:off Given two sorted integer arrays nums1 and nums2, merge nums2 into
+	 *        nums1 as one sorted array.
 	 * 
-	 * Note:
+	 *        Note:
 	 * 
-	 * The number of elements initialized in nums1 and nums2 are m and n
-	 * respectively. 
-	 * You may assume that nums1 has enough space (size that is greater or equal to m + n) 
-	 * to hold additional elements from nums2. 
+	 *        The number of elements initialized in nums1 and nums2 are m and n
+	 *        respectively. You may assume that nums1 has enough space (size that is
+	 *        greater or equal to m + n) to hold additional elements from nums2.
 	 * 
-	 * Example:
-	 * Input: 
-	 * nums1 = [1,2,3,0,0,0], m = 3 
-	 * nums2 = [2,5,6], n = 3
-	 * Output: [1,2,2,3,5,6]
-     *
+	 *        Example: Input: nums1 = [1,2,3,0,0,0], m = 3 nums2 = [2,5,6], n = 3
+	 *        Output: [1,2,2,3,5,6]
+	 *
 	 * @f:on
 	 * 
 	 * @param nums1
