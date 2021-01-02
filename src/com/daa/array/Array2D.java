@@ -1,37 +1,45 @@
 package com.daa.array;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.daa.math.MathUtil;
 
 public class Array2D {
 
 	public static void main(String[] args) {
-		printData(new Array2D().spiralOrderGenerate(3));
-		int a[][] = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
-		System.out.println(new Array2D().spiralOrder(a));
-		System.out.println(searchMatrix(new int[][] { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 50 } }, 3));
-		int[][] res1 = intervalIntersection(new int[][] { { 0, 2 }, { 5, 10 }, { 13, 23 }, { 24, 25 } },
-				new int[][] { { 1, 5 }, { 8, 12 }, { 15, 24 }, { 25, 26 } });
-		printData(res1);
-		int c = numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' },
-				{ '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
-		System.out.println(c);
-		int res = countNegatives(
-				new int[][] { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } });
-		System.out.println("Number of negative number are:" + res);
-		printData(matrixProduct(new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } },
-				new int[][] { { 2, 3, 4 }, { 5, 6, 7 }, { 8, 9, 1 } }, 3, 3));
-		System.out.println("---");
-		printData(matrixProduct(new int[][] { { 1, 2 }, { 3, 4 } }, new int[][] { { 1, 1 }, { 1, 1 } }, 2, 2));
-		int mat1[][] = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
-		int mat2[][] = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
-		printData(matrixProduct(mat1, mat2, 4, 4));
-		System.out.println("-------------------");
-		int[][] firstMatrix = { { 3, -2, 5 }, { 3, 0, 4 } };
-		int[][] secondMatrix = { { 2, 3 }, { -9, 0 }, { 0, 4 } };
-		printData(matrixProduct(firstMatrix, secondMatrix, 3, 2));
+		System.out.println(new Array2D().canFormArray(new int[] { 49, 18, 16 }, new int[][] { { 16, 18, 49 } }));
+//		int arr[][] = { { 1, 1 }, { 1, 0 } };
+//		new Array2D().gameOfLife(arr);
+//		printData(arr);
+//		int a2[][] = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
+//		System.out.println(Arrays.toString(new Array2D().diagonalTraversal(a2)));
+//		printData(new Array2D().spiralOrderGenerate(3));
+//		int a[][] = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16 } };
+//		System.out.println(new Array2D().spiralOrder(a));
+//		System.out.println(searchMatrix(new int[][] { { 1, 3, 5, 7 }, { 10, 11, 16, 20 }, { 23, 30, 34, 50 } }, 3));
+//		int[][] res1 = intervalIntersection(new int[][] { { 0, 2 }, { 5, 10 }, { 13, 23 }, { 24, 25 } },
+//				new int[][] { { 1, 5 }, { 8, 12 }, { 15, 24 }, { 25, 26 } });
+//		printData(res1);
+//		int c = numIslands(new char[][] { { '1', '1', '0', '0', '0' }, { '1', '1', '0', '0', '0' },
+//				{ '0', '0', '1', '0', '0' }, { '0', '0', '0', '1', '1' } });
+//		System.out.println(c);
+//		int res = countNegatives(
+//				new int[][] { { 4, 3, 2, -1 }, { 3, 2, 1, -1 }, { 1, 1, -1, -2 }, { -1, -1, -2, -3 } });
+//		System.out.println("Number of negative number are:" + res);
+//		printData(matrixProduct(new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } },
+//				new int[][] { { 2, 3, 4 }, { 5, 6, 7 }, { 8, 9, 1 } }, 3, 3));
+//		System.out.println("---");
+//		printData(matrixProduct(new int[][] { { 1, 2 }, { 3, 4 } }, new int[][] { { 1, 1 }, { 1, 1 } }, 2, 2));
+//		int mat1[][] = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
+//		int mat2[][] = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
+//		printData(matrixProduct(mat1, mat2, 4, 4));
+//		System.out.println("-------------------");
+//		int[][] firstMatrix = { { 3, -2, 5 }, { 3, 0, 4 } };
+//		int[][] secondMatrix = { { 2, 3 }, { -9, 0 }, { 0, 4 } };
+//		printData(matrixProduct(firstMatrix, secondMatrix, 3, 2));
 	}
 
 	/**
@@ -131,6 +139,139 @@ public class Array2D {
 			}
 		}
 		return list;
+	}
+
+	public int[] diagonalTraversal(int[][] matrix) {
+		if (matrix == null || matrix.length == 0) {
+			return new int[0];
+		}
+		Map<Integer, List<Integer>> map = new HashMap<>();
+		int[] op = new int[matrix.length * matrix[0].length];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				map.computeIfAbsent(i + j, x -> new ArrayList<>()).add(matrix[i][j]);
+			}
+		}
+		int c = 0;
+		for (int i = 0; i < matrix.length + matrix[0].length - 1; i++) {
+			List<Integer> list = map.get(i);
+			if (i % 2 == 0) {
+				for (int j = list.size() - 1; j >= 0; j--) {
+					op[c++] = list.get(j);
+				}
+			} else {
+				for (int item : list) {
+					op[c++] = item;
+				}
+			}
+		}
+		return op;
+	}
+
+	public int[] diagonalTraversal2(int[][] matrix) {
+		if (matrix == null || matrix.length == 0) {
+			return new int[0];
+		}
+		int n = matrix.length;
+		int row = 0;
+		int col = 0;
+		int m = matrix[0].length;
+		int c = 0;
+		int[] op = new int[n * m];
+		while (c < n * m) {
+			op[c++] = matrix[row][col];
+			if ((row + col) % 2 == 0) { // in even case go up
+				if (col == m - 1) {
+					row++;
+				} else if (row == 0) {
+					col++;
+				} else {
+					row--;
+					col++;
+				}
+			} else { // in odd case go down
+				if (row == n - 1) {
+					col++;
+				} else if (col == 0) {
+					row++;
+				} else {
+					row++;
+					col--;
+				}
+			}
+		}
+		return op;
+	}
+
+	/**
+	 * The board is made up of an m x n grid of cells, where each cell has an
+	 * initial state: live (represented by a 1) or dead (represented by a 0). Each
+	 * cell interacts with its eight neighbors (horizontal, vertical, diagonal)
+	 * using the following four rules (taken from the above Wikipedia article):
+	 * 
+	 * Any live cell with fewer than two live neighbors dies as if caused by
+	 * under-population. Any live cell with two or three live neighbors lives on to
+	 * the next generation. Any live cell with more than three live neighbors dies,
+	 * as if by over-population. Any dead cell with exactly three live neighbors
+	 * becomes a live cell, as if by reproduction. The next state is created by
+	 * applying the above rules simultaneously to every cell in the current state,
+	 * where births and deaths occur simultaneously. Given the current state of the
+	 * m x n grid board, return the next state.
+	 * 
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: board = [[0,1,0],[0,0,1],[1,1,1],[0,0,0]]
+	 * 
+	 * Output: [[0,0,0],[1,0,1],[0,1,1],[0,1,0]]
+	 * 
+	 * @param board
+	 */
+	public void gameOfLife(int[][] board) {
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				int count = 0;
+				if (i - 1 >= 0 && j - 1 >= 0 && Math.abs(board[i - 1][j - 1]) == 1) {
+					count++;
+				}
+				if (i - 1 >= 0 && Math.abs(board[i - 1][j]) == 1) {
+					count++;
+				}
+				if (i - 1 >= 0 && j + 1 < board[0].length && Math.abs(board[i - 1][j + 1]) == 1) {
+					count++;
+				}
+				if (j - 1 >= 0 && Math.abs(board[i][j - 1]) == 1) {
+					count++;
+				}
+				if (j + 1 < board[0].length && Math.abs(board[i][j + 1]) == 1) {
+					count++;
+				}
+				if (i + 1 < board.length && j - 1 >= 0 && Math.abs(board[i + 1][j - 1]) == 1) {
+					count++;
+				}
+				if (i + 1 < board.length && Math.abs(board[i + 1][j]) == 1) {
+					count++;
+				}
+				if (i + 1 < board.length && j + 1 < board[0].length && Math.abs(board[i + 1][j + 1]) == 1) {
+					count++;
+				}
+				if (board[i][j] == 0 && count == 3) {
+					board[i][j] = 2;
+				} else if (board[i][j] == 1 && (count < 2 || count > 3)) {
+					board[i][j] = -1;
+				}
+
+			}
+		}
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[i][j] == 2) {
+					board[i][j] = 1;
+				} else if (board[i][j] == -1) {
+					board[i][j] = 0;
+				}
+			}
+		}
 
 	}
 
@@ -172,6 +313,24 @@ public class Array2D {
 		}
 		return matrix;
 
+	}
+
+	public boolean canFormArray(int[] arr, int[][] pieces) {
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < arr.length; i++) {
+			map.put(arr[i], i);
+		}
+		for (int i = 0; i < pieces.length; i++) {
+			int pre = -1;
+			for (int j = 0; j < pieces[i].length; j++) {
+				int index = map.getOrDefault(pieces[i][j], -1);
+				if (index == -1 || (pre != -1 && index != pre + 1)) {
+					return false;
+				}
+				pre = index;
+			}
+		}
+		return true;
 	}
 
 	/**

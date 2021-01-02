@@ -14,6 +14,11 @@ import com.daa.math.MathUtil;
 public class ArrayPractice {
 
 	public static void main(String[] args) {
+		int[] nums = new int[] { 1, 1, 1, 2, 2, 3, 4 };
+		// int[] nums = new int[] { 1, 1, 2, 2, 2, 2, 3, 3 };
+		System.out.println(new ArrayPractice().removeDuplicates(nums,2));
+		System.out.println(Arrays.toString(nums));
+		System.out.println(validMountainArray(new int[] { 0, 3, 2, 1 }));
 		System.out.println(containsNearbyDuplicate(new int[] { 1, 2, 3, 4 }, 3));
 		int num = 534972;
 		System.out.println(num + " : " + nextGreaterElement(num));
@@ -34,7 +39,72 @@ public class ArrayPractice {
 		merge(nums1, 1, nums2, 2);
 		System.out.println(Arrays.toString(nums1));
 	}
-	
+
+	public static boolean validMountainArray(int[] arr) {
+		int i = 0;
+		while (i < arr.length - 1 && arr[i] < arr[i + 1]) {
+			i++;
+		}
+		if (i == 0 || i == arr.length - 1) {
+			return false;
+		} else {
+			while (i < arr.length - 1 && arr[i] > arr[i + 1]) {
+				i++;
+			}
+		}
+		return i == arr.length - 1;
+	}
+
+	/**
+	 * Given a sorted array nums, remove the duplicates in-place such that
+	 * duplicates appeared at most k times and return the new length.
+	 * 
+	 * Do not allocate extra space for another array; you must do this by modifying
+	 * the input array in-place with O(1) extra memory.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input: nums = [1,1,1,2,2,3],k=2
+	 * 
+	 * Output: 5, nums = [1,1,2,2,3]
+	 * 
+	 * Explanation: Your function should return length = 5, with the first five
+	 * elements of nums being 1, 1, 2, 2 and 3 respectively. It doesn't matter what
+	 * you leave beyond the returned length.
+	 * 
+	 * Example 2:
+	 * 
+	 * Input: nums = [0,0,1,1,1,1,2,3,3],k=2
+	 * 
+	 * Output: 7,nums = [0,0,1,1,2,3,3]
+	 * 
+	 * Explanation: Your function should return length = 7, with the first seven
+	 * elements of nums being modified to 0, 0, 1, 1, 2, 3 and 3 respectively. It
+	 * doesn't matter what values are set beyond the returned length.
+	 * 
+	 * @param nums
+	 * @return length of the array
+	 */
+	public int removeDuplicates(int[] nums, int k) {
+		if (nums.length == 0) {
+			return 0;
+		}
+		int length = 1;
+		int count = 1;
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i] == nums[i - 1]) {
+				if (count < k) {
+					nums[length++] = nums[i];
+					count++;
+				}
+			} else {
+				nums[length++] = nums[i];
+				count = 1;
+			}
+		}
+		return length;
+	}
+
 	/**
 	 * Given an array arr[] and positive integer K, the task is to count total
 	 * number of pairs in the array whose sum is divisible by K.

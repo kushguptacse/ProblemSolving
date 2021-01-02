@@ -17,8 +17,40 @@ import com.daa.math.MathUtil;
 
 public final class StringHelper {
 
+	public static void main(String[] args) {
+		String s = decodeAtIndex("leet2code3", 5);
+		System.out.println(s);
+	}
+
 	private StringHelper() {
 	}
+	
+	public static String decodeAtIndex(String str, int k) {
+        long size =0 ;
+        for(int i=0;i<str.length();i++) {
+            char ch=str.charAt(i);
+            if(Character.isDigit(ch)) {
+                size*=ch-'0';
+            } else {
+                size++;
+            }
+        }
+        
+       for (int i = str.length()-1; i >= 0; --i) {
+            char c = str.charAt(i);
+            if (Character.isDigit(c)) {
+                size /= c - '0';
+                k %= size;
+            } else {
+                if(k==0 || k==size) {
+                    return Character.toString(c);
+                }
+                size--;
+            }
+                
+        }
+        return "";
+    }
 
 	public static String validIPAddress(String ip) {
 		if (ip.isEmpty() || ip.charAt(ip.length() - 1) == ':' || ip.charAt(ip.length() - 1) == '.') {
@@ -200,21 +232,18 @@ public final class StringHelper {
 
 	/**
 	 * UDEMY
-	 * @f:off
-	 * input - "neversaynever"
-	 * output - "never"
 	 * 
-	 * Steps - 
-	 * 1. Find the list of all possible suffix of string passed.
-	 * 2. sort the list of suffix.
-	 * 3. After that find longestCommonPrefix of ith element and i+1th element.
-	 * save the longer value to max.
-	 * keep repeating it till we complete the list. 
+	 * @f:off input - "neversaynever" output - "never"
+	 * 
+	 *        Steps - 1. Find the list of all possible suffix of string passed. 2.
+	 *        sort the list of suffix. 3. After that find longestCommonPrefix of ith
+	 *        element and i+1th element. save the longer value to max. keep
+	 *        repeating it till we complete the list.
 	 * @f:on
 	 * 
-	 * o(n^2)
+	 *       o(n^2)
 	 * 
-	 * better approach is to use binary search along with rabinKarp
+	 *       better approach is to use binary search along with rabinKarp
 	 * 
 	 * @param text1
 	 * @return length of the longest common/repeated subString
@@ -362,19 +391,18 @@ public final class StringHelper {
 	 * Abdul bari
 	 * 
 	 * check whether a given string str is substring of source.
-	 * @f:off
-	 * worst case - o(n*m)
-	 * Best case - o(n+m)
-	 * Rabin Karp Algorithm - 
-	 * it uses hashcode of a string and instead of matching character one by one. 
-	 * we just match hashcode and once hashcode matched we check the content.
-	 * it saves time of un-necessary comparison all the time.
-	 * but in worst case it might be possible that we might get hashcode same on every check.
-	 * o(n*m) in worst case.
-	 * to calculate hashcode again we just subtract hashcode of first character
-	 * and add hashcode of next character in previous value.
 	 * 
-	 * For better performance make hash code function better to avoid un-necessary comparison.
+	 * @f:off worst case - o(n*m) Best case - o(n+m) Rabin Karp Algorithm - it uses
+	 *        hashcode of a string and instead of matching character one by one. we
+	 *        just match hashcode and once hashcode matched we check the content. it
+	 *        saves time of un-necessary comparison all the time. but in worst case
+	 *        it might be possible that we might get hashcode same on every check.
+	 *        o(n*m) in worst case. to calculate hashcode again we just subtract
+	 *        hashcode of first character and add hashcode of next character in
+	 *        previous value.
+	 * 
+	 *        For better performance make hash code function better to avoid
+	 *        un-necessary comparison.
 	 * 
 	 * @f:on
 	 * 
@@ -584,17 +612,14 @@ public final class StringHelper {
 	}
 
 	/**
-	 * Time complexity - o(2^n).
-	 * A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
-	 * For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
+	 * Time complexity - o(2^n). A subsequence is a sequence that appears in the
+	 * same relative order, but not necessarily contiguous. For example, “abc”,
+	 * “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
 	 * 
-	 * @f:off
-	 * As every character has possibility of either to get included or not included
-	 * String s1 = abdace
-	 * String s2 = babce
-	 * LCS are - bace,abce,bce,ce,e
-	 * so answer is 4.
-	 * LCS for input Sequences “ABCDGH” and “AEDFHR” is ADH of length 3
+	 * @f:off As every character has possibility of either to get included or not
+	 *        included String s1 = abdace String s2 = babce LCS are -
+	 *        bace,abce,bce,ce,e so answer is 4. LCS for input Sequences “ABCDGH”
+	 *        and “AEDFHR” is ADH of length 3
 	 * 
 	 * @f:on
 	 * @param ch1
@@ -784,12 +809,9 @@ public final class StringHelper {
 	 * 
 	 * An empty string is also valid.
 	 * 
-	 * @f:off
-	 * Input: "(*)" 
-	 * Output: True
+	 * @f:off Input: "(*)" Output: True
 	 * 
-	 * Input: "(*))"
-	 * Output: True
+	 *        Input: "(*))" Output: True
 	 * @f:on
 	 * 
 	 * @param s
@@ -834,21 +856,19 @@ public final class StringHelper {
 	 * 
 	 * Return the final string after all operations.
 	 * 
-	 * @f:off
-	 * Example:
+	 * @f:off Example:
 	 * 
-	 * Input: s = "abcdefg", shift = [[1,1],[1,1],[0,2],[1,3]] 
+	 *        Input: s = "abcdefg", shift = [[1,1],[1,1],[0,2],[1,3]]
 	 * 
-	 * Output: "efgabcd"
+	 *        Output: "efgabcd"
 	 * 
-	 * Explanation: 
-	 * [1,1] means shift to right by 1. "abcdefg" -> "gabcdef" 
-	 * [1,1] means shift to right by 1. "gabcdef" -> "fgabcde" 
-	 * [0,2] means shift to left by 2. "fgabcde" -> "abcdefg" 
-	 * [1,3] means shift to right by 3. "abcdefg" -> "efgabcd"
+	 *        Explanation: [1,1] means shift to right by 1. "abcdefg" -> "gabcdef"
+	 *        [1,1] means shift to right by 1. "gabcdef" -> "fgabcde" [0,2] means
+	 *        shift to left by 2. "fgabcde" -> "abcdefg" [1,3] means shift to right
+	 *        by 3. "abcdefg" -> "efgabcd"
 	 * @f:on
 	 * 
-	 * LEETCODE,o(n)
+	 *       LEETCODE,o(n)
 	 * 
 	 * @param s
 	 * @param shift

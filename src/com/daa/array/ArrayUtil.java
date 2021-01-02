@@ -11,12 +11,28 @@ public final class ArrayUtil {
 	
 	public static void main(String[] args) {
 //		System.out.println(isSorted(new int[] {111,222,322}));
+		System.out.println(increasingTriplet(new int[] {1,2,3,1,2,1}));
 		reorder(new int[]{24,56,74,-23,87,91},new int[] {2,3,4,1,5,6});
 		int[] res=sortAwithB(new int[]{24,56,74,-23,87,91},new int[] {2,3,4,1,5,6});
 		System.out.println("Array after reordering is : ");
 		Arrays.stream(res).forEach(i->System.out.print(i+" "));
 		System.out.println();
 	}
+	
+	public static boolean increasingTriplet(int[] nums) {
+        int first=nums[0];
+        int second=Integer.MAX_VALUE;
+        for(int i=1;i<nums.length;i++) { 
+            if(nums[i]<=first) {
+                first=nums[i];
+            } else if(nums[i]<=second) {
+                second=nums[i];
+            } else {
+            	return true;
+            }
+        }
+        return false;
+    }
 	
 	/**
 	 * 

@@ -530,4 +530,30 @@ public class BinaryTreeUtil {
 		sum.setValue(MathUtil.abs(left - right) + sum.getValue());
 		return left + right + root.getData();
 	}
+	
+	/**
+	 * check if a tree is height balanced.
+	 * @param root
+	 * @return true if it is balanced.
+	 */
+	public boolean isBalanced(TreeNode<Integer> root) {
+        
+        return height(root)!=-1;
+    }
+    
+    private int height(TreeNode<Integer> node) {
+        if(node==null) {
+            return 0;
+        }
+        int l = height(node.getLeft());
+        if(l<0) {
+        	return -1;
+        }
+        int r = height(node.getRight());
+        if(r<0||Math.abs(l-r)>1) {
+        	return -1;
+        }
+        return Math.max(l,r)+1;
+    }
+	
 }
